@@ -10,7 +10,7 @@ class AdminController extends Controller
 {
     public function showLoginForm()
     {
-        return view('admin.auth.login'); 
+        return view('admin.auth.login');
     }
 
     // Proses login admin
@@ -25,17 +25,28 @@ class AdminController extends Controller
         // Periksa apakah checkbox "remember me" dicentang
         $remember = $request->has('remember-me');
 
-        // Coba autentikasi admin
-        if (Auth::guard('admin')->attempt($credentials, $remember)) {
-            // Redirect ke dashboard admin jika login berhasil
-            return redirect()->intended(route('admin.dashboard'));
+        // Cek apakah email ada di database
+        $admin = \App\Models\Admin::where('email', $request->email)->first();
+
+        if (!$admin) {
+            // Jika email tidak ditemukan
+            return back()->withErrors([
+                'email' => 'The email address is not registered.',
+            ])->withInput($request->except('password'));
         }
 
-        // Jika gagal login
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->withInput($request->except('password')); // Jaga input email agar tidak hilang
+        // Cek apakah password sesuai dengan email yang ada
+        if (!Auth::guard('admin')->attempt($credentials, $remember)) {
+            // Jika password salah
+            return back()->withErrors([
+                'password' => 'The password is incorrect.',
+            ])->withInput($request->except('password'));
+        }
+
+        // Redirect ke dashboard admin jika login berhasil
+        return redirect()->intended(route('admin.dashboard'));
     }
+
 
     // Logout admin
     public function logout()
