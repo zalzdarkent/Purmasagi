@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Rute untuk tampilan umum
 Route::get('/', function () {
-    return view('welcome');
+    return view('client.welcome'); // Ganti 'welcome' dengan view yang sesuai
+})->name('home');
+
+// Rute untuk login umum
+// Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+// Route::post('login', [LoginController::class, 'login']);
+// Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Route untuk halaman login admin
+Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+// Route yang memerlukan login admin
+Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard'); // Mengarahkan ke dashboard jika sudah login
+    Route::resource('course', CoursesController::class); // Akses ke resource courses
+    Route::resource('content', ContentController::class);
 });
