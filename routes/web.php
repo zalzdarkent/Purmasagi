@@ -19,8 +19,32 @@ use Illuminate\Support\Facades\Route;
 
 // Rute untuk tampilan umum
 Route::get('/', function () {
-    return view('client.welcome'); // Ganti 'welcome' dengan view yang sesuai
+    return view('client.pages.home');
 })->name('home');
+
+Route::get('/courses', function () {
+    return view('client.pages.courses');
+})->name('courses');
+
+Route::get('/lectures', function () {
+    return view('client.pages.lectures');
+})->name('lectures');
+
+Route::get('/course/{course_id}', function ($course_id) {
+    return view('client.pages.detail');
+})->name('detail');
+
+// temporary route
+Route::get('/signin', function () {
+    return view('client.pages.signin');
+})->name('signin');
+
+Route::get('/signup', function () {
+    return view('client.pages.signup');
+})->name('signup');
+
+
+
 
 // Rute untuk login umum
 // Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
