@@ -26,22 +26,20 @@ Route::get('/courses', function () {
     return view('client.pages.courses');
 })->name('courses');
 
-Route::get('/lectures', function () {
-    return view('client.pages.lectures');
-})->name('lectures');
+Route::get('/teachers', function () {
+    return view('client.pages.teachers');
+})->name('teachers');
 
-Route::get('/course/{course_id}', function ($course_id) {
-    return view('client.pages.detail');
-})->name('detail');
+// Route::get('/course/{course_id}', function ($course_id) {
+//     return view('client.pages.detail');
+// })->name('detail');
 
 // temporary route
-Route::get('/signin', function () {
-    return view('client.pages.signin');
-})->name('signin');
+Route::get('/', [CoursesController::class, 'indexHomeClient']);
+Route::get('/courses', [CoursesController::class, 'indexCoursesClient']);
+Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
 
-Route::get('/signup', function () {
-    return view('client.pages.signup');
-})->name('signup');
+
 
 
 

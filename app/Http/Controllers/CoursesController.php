@@ -14,6 +14,20 @@ class CoursesController extends Controller
     {
         $courses = Course::all();
         return view('admin.course.index', compact('courses'));
+
+    }
+
+    public function indexHomeClient()
+    {
+        $courses = Course::orderBy('created_at', 'desc')->limit(3)->get();     
+        return view('client.pages.home')->with('courses', $courses);
+    }
+
+    public function indexCoursesClient()
+    {
+        $courses = Course::all();
+        return view('client.pages.courses')->with('courses', $courses);
+
     }
 
     /**
@@ -49,7 +63,10 @@ class CoursesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course = Course::find($id);
+        return view('client.pages.detail', compact('course'));
+
+
     }
 
     /**

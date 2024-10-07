@@ -1,6 +1,6 @@
 <div
-    class="block h-48 w-72 max-w-sm transform rounded-lg border border-gray-200 bg-white p-6 shadow transition duration-300 ease-in-out hover:-translate-y-4 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 md:w-1/2 lg:w-1/4">
-    <h1 class="mb-2 text-center text-4xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $count }}</h1>
-    <h3 class="mb-2 text-center text-xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $title }}</h3>
-    <p class="hover:an mb-2 font-normal text-gray-700 dark:text-gray-400">{{ $description }}</p>
+    class="m-2 mb-6 flex h-min max-h-72 w-72 max-w-sm transform flex-col rounded-lg border border-gray-200 bg-white p-6 text-gray-900 shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:bg-indigo-900 hover:text-white md:mb-0">
+    <h1 class="mb-2 text-center text-4xl font-bold tracking-tight">{{ $count }}</h1>
+    <h3 class="mb-2 text-center text-xl font-bold tracking-tight">{{ $title }}</h3>
+    <p class="my-2 flex-grow text-center font-normal tracking-tight">{{ $description }}</p>
 </div>

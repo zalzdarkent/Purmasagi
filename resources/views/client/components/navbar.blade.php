@@ -55,21 +55,22 @@
         {{-- Navigation --}}
         <div class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto" id="navbar-user">
             <ul
-                class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium rtl:space-x-reverse dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
+                class="mt-4 flex flex-col gap-y-4 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium rtl:space-x-reverse dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
                 <li>
-                    <a href="#"
-                        class="block rounded bg-blue-700 px-3 py-2 text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+                    <a href="/"
+                        class="{{ request()->fullUrlIs(url('/')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline"
                         aria-current="page">Beranda</a>
                 </li>
                 <li>
                     <a href="/courses"
-                        class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500">Kuliah</a>
+                        class="{{ request()->fullUrlIs(url('/courses')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Kelas</a>
                 </li>
                 <li>
-                    <a href="/lecturers"
-                        class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500">Dosen</a>
+                    <a href="/teachers"
+                        class="{{ request()->fullUrlIs(url('/teachers')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Guru</a>
                 </li>
             </ul>
         </div>
+
     </div>
 </nav>

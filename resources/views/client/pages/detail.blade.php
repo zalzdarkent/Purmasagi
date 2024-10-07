@@ -4,24 +4,26 @@
 
 @section('container')
     {{-- Hero --}}
-    <div class="relative isolate overflow-hidden pt-14">
-        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+    <div class="relative isolate overflow-hidden">
+        <img src="{{ $course->image ? $course->image : '../assets/img/coba/laravel.jpg' }}" alt="{{ $course->title }}"
             alt="" class="absolute inset-0 -z-10 h-full w-full object-cover">
+        <div class="opacity-85 absolute inset-0 -z-10 bg-black"></div>
+
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
             <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                 style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
             </div>
         </div>
-        <div class="mx-auto max-w-2xl py-4">
+        <div class="mx-auto max-w-2xl px-6 py-16">
             <div class="text-center">
-                <h1 class="text-balance text-4xl font-bold tracking-tight text-white sm:text-6xl">Data to enrich your online
-                    business</h1>
-                <p class="mt-6 text-lg leading-8 text-gray-300">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                    qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
-                <div class="mt-10 flex items-center justify-center gap-x-6">
+                <h1 class="text-balance text-4xl font-bold tracking-tight text-white">Daftar Kelas</h1>
+                <p class="mt-6 text-base leading-8 text-gray-300 lg:text-lg">Anim aute id magna aliqua ad ad non
+                <div class="mt-5 flex items-center justify-center gap-x-6 lg:mt-10">
                     <a href="#"
-                        class="w-32 rounded-md bg-indigo-500 px-3.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Daftar</a>
+                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Daftar
+                    </a>
                 </div>
+
             </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -33,15 +35,15 @@
     </div>
 
     {{-- Courses --}}
-    <div class="mx-auto my-6 max-w-2xl text-gray-700">
+    <div class="mx-auto my-6 max-w-2xl px-8 text-gray-700 sm:px-6">
         <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2>
 
         <div class="space-y-4">
             <div class="rounded-lg border border-gray-300">
                 <button
-                    class="flex w-full items-center justify-between rounded-lg bg-white p-4 text-left focus:outline-none focus:ring focus:ring-blue-500"
-                    onclick="toggleFAQ(1)">
-                    <span class="text-lg font-medium">Pertemuan 1</span>
+                    class="flex w-full items-center justify-between rounded-lg bg-white p-4 text-left focus:outline-none focus:ring focus:ring-indigo-500"
+                    onclick="toggle(1)">
+                    <span class="text-base font-medium lg:text-lg">Pertemuan 1</span>
 
                     <svg id="faq-icon-1" class="h-6 w-6 transition-transform duration-200" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,9 +57,11 @@
                     </svg>
                 </button>
                 <div id="faq-answer-1" class="hidden border-t border-gray-200 p-4">
-                    <p>You can enroll in a course by clicking on the "Enroll Now" button on the course page.</p>
+                    <p class="mb-4 text-base text-gray-500 lg:text-lg">You can enroll in a course by clicking on the "Enroll
+                        Now"
+                        button on the course page.</p>
                     <button data-modal-target="default-modal" data-modal-toggle="default-modal"
-                        class="mt-2 flex rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
                         type="button">
                         <svg viewBox="0 0 24 24" class="mr-2 h-4 w-4" fill="none" xmlns="http://www.w3.org/2000/svg"
                             stroke="#ffffff">
@@ -71,7 +75,6 @@
                         </svg>
                         Play
                     </button>
-
                 </div>
             </div>
         </div>
