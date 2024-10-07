@@ -1,9 +1,10 @@
 <script>
-    function toggle(faqNumber) {
-        const answer = document.getElementById(`faq-answer-${faqNumber}`);
-        const icon = document.getElementById(`faq-icon-${faqNumber}`);
+    // Toggle Pertemuan (Detail Page)
+    function toggle(number) {
+        const pertemuan = document.getElementById(`pertemuan-${number}`);
+        const icon = document.getElementById(`pertemuan-icon-${number}`);
 
-        answer.classList.toggle('hidden');
+        pertemuan.classList.toggle('hidden');
         icon.classList.toggle('rotate-180');
     }
 </script>

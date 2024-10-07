@@ -45,7 +45,7 @@
                     onclick="toggle(1)">
                     <span class="text-base font-medium lg:text-lg">Pertemuan 1</span>
 
-                    <svg id="faq-icon-1" class="h-6 w-6 transition-transform duration-200" viewBox="0 0 24 24"
+                    <svg id="pertemuan-icon-1" class="h-6 w-6 transition-transform duration-200" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -56,8 +56,8 @@
                         </g>
                     </svg>
                 </button>
-                <div id="faq-answer-1" class="hidden border-t border-gray-200 p-4">
-                    <p class="mb-4 text-base text-gray-500 lg:text-lg">You can enroll in a course by clicking on the "Enroll
+                <div id="pertemuan-1" class="hidden border-t border-gray-200 p-4">
+                    <p class="mb-4 text-base text-gray-500">You can enroll in a course by clicking on the "Enroll
                         Now"
                         button on the course page.</p>
                     <button data-modal-target="default-modal" data-modal-toggle="default-modal"

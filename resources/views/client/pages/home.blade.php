@@ -83,14 +83,17 @@
 
         {{-- CTA  --}}
         <div class="mb-10 flex flex-col items-center justify-between md:flex-row">
-            <div class="w-full space-y-4 md:w-1/2 md:p-4">
+            <div class="w-full space-y-6 md:w-1/2 md:p-4">
                 <h1 class="text-4xl font-bold text-gray-900">Temukan Pengajar Terbaik!</h1>
                 <p class="text-gray-700 lg:text-lg">Cari pengajar yang sesuai dengan kebutuhanmu dan mulailah belajar dengan
                     mudah dan nyaman.</p>
-                <a href="/teachers"
-                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Cari
-                    Sekarang
-                </a>
+                <div class="mt-10">
+                    <a href="/teachers"
+                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                        Cari
+                        Sekarang
+                    </a>
+                </div>
             </div>
             <div class="mt-8 w-full md:mt-0 md:w-1/2">
                 <img src="../assets/img/coba/lecture.jpg" alt="Teacher Picture"
