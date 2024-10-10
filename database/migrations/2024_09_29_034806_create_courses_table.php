@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string("judul");
+            $table->string("thumbnail")->nullable();
             $table->string("deskripsi");
             $table->timestamps();
         });
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('course_id');
             $table->string("pertemuan");
+            $table->string("deskripsi_konten");
             $table->string("video");
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();

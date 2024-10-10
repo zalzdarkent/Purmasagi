@@ -30,6 +30,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Thumbnail</th>
                             <th>Title</th>
                             <th>Description</th>
                             <th>Options</th>
@@ -43,6 +44,11 @@
                         @else
                             @foreach ($courses as $course)
                                 <tr>
+                                    <td>
+                                        <!-- Menampilkan Thumbnail dengan ukuran 200x200 -->
+                                        <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->judul }}"
+                                            style="width: 100px">
+                                    </td>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                         <strong>{{ $course->judul }}</strong>
                                     </td>
@@ -84,7 +90,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('course.store') }}" method="post">
+                    <form action="{{ route('course.store') }}" method="post" enctype="multipart/form-data"
+                        id="addCourseForm">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-judul">Judul <span
@@ -97,7 +104,12 @@
                             <textarea name="deskripsi" id="desc" class="form-control" cols="30" rows="5"
                                 placeholder="Type your course description" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="mb-3">
+                            <label class="form-label" for="thumbnail">Thumbnail <span style="color: red">*</span></label>
+                            <input type="file" name="thumbnail" class="form-control" id="thumbnail" required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
                     </form>
                 </div>
             </div>
@@ -113,9 +125,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('course.update', ':id') }}" method="post" id="editCourseForm">
+                    <form action="{{ route('course.update', ':id') }}" method="post" id="editCourseForm"
+                        enctype="multipart/form-data">
                         @csrf
-                        @method('PUT') <!-- Pastikan untuk menggunakan metode PUT untuk pembaruan -->
+                        @method('PUT') <!-- Make sure to use the PUT method for updates -->
                         <div class="mb-3">
                             <label class="form-label" for="edit-judul">Judul <span style="color: red">*</span></label>
                             <input type="text" name="judul" class="form-control" id="edit-judul"
@@ -125,6 +138,13 @@
                             <label class="form-label" for="edit-desc">Deskripsi <span style="color: red">*</span></label>
                             <textarea name="deskripsi" id="edit-desc" class="form-control" cols="30" rows="5"
                                 placeholder="Type your course description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="edit-thumbnail">Thumbnail (optional)</label>
+                            <input type="file" name="thumbnail" class="form-control" id="edit-thumbnail" />
+                        </div>
+                        <div class="mb-3">
+                            <img id="current-thumbnail" src="" alt="" style="width: 200px;" />
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -140,16 +160,21 @@
                 const courseId = this.getAttribute('data-id');
                 const courseTitle = this.getAttribute('data-judul');
                 const courseDescription = this.getAttribute('data-deskripsi');
+                const courseThumbnail = this.getAttribute('data-thumbnail'); // Get the thumbnail path
 
-                // Ganti URL pada action form edit
+                // Replace URL in edit form action
                 const form = document.getElementById('editCourseForm');
                 form.action = form.action.replace(':id', courseId);
 
-                // Mengisi field modal dengan data kursus
+                // Fill modal fields with course data
                 document.getElementById('edit-judul').value = courseTitle;
                 document.getElementById('edit-desc').value = courseDescription;
 
-                // Tampilkan modal
+                // Set current thumbnail image
+                document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}" +
+                    courseThumbnail;
+
+                // Show modal
                 var editModal = new bootstrap.Modal(document.getElementById('editCourseModal'));
                 editModal.show();
             });

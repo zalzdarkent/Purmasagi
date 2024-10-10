@@ -49,9 +49,13 @@
                     <div
                         class="mx-auto mb-6 w-full max-w-md rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
                         <a href="#">
-                            <img class="rounded-t-lg"
-                                src="{{ $course->image ? $course->image : '../assets/img/coba/laravel.jpg' }}"
-                                alt="{{ $course->title }}" />
+                            @if ($course->thumbnail)
+                                <img class="rounded-t-lg" src="{{ asset('storage/' . $course->thumbnail) }}"
+                                    alt="{{ $course->judul }}" />
+                            @else
+                                <img class="rounded-t-lg" src="{{ asset('assets/img/coba/laravel.jpg') }}"
+                                    alt="{{ $course->judul }}" />
+                            @endif
                         </a>
                         <div class="p-5">
                             <a href="#">

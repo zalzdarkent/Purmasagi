@@ -1,10 +1,11 @@
 @extends('admin.layouts.app')
 
 @section('container')
+    {{-- <p>Kegiatan</p> --}}
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Button to Open the Modal -->
         <div class="d-flex justify-content-start mb-3">
-            <a href="{{ route('content.create') }}" class="btn btn-success">
+            <a href="{{ route('kegiatan.create') }}" type="button" class="btn btn-success">
                 Tambah Data
             </a>
         </div>
@@ -23,55 +24,47 @@
             </div>
         @endif
 
-        <!-- Basic Bootstrap Table -->
         <div class="card">
-            <h5 class="card-header">Content List</h5>
+            <h5 class="card-header">Daftar Kegiatan</h5>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Pertemuan</th>
-                            <th>Title</th>
-                            <th>Video</th>
-                            <th>Deskripsi Pertemuan</th>
-                            <th>Deskripsi Konten</th>
+                            <th>Gambar Kegiatan</th>
+                            <th>Deskripsi Kegiatan</th>
+                            <th>Waktu Kegiatan</th>
                             <th>Options</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @if ($contents->isEmpty())
+                        @if ($kegiatans->isEmpty())
                             <tr>
                                 <td colspan="3" class="text-center">No data available</td>
                             </tr>
                         @else
-                            @foreach ($contents as $content)
+                            @foreach ($kegiatans as $kegiatan)
                                 <tr>
                                     <td>
-                                        <strong>{{ $content->pertemuan }}</strong>
+                                        <!-- Menampilkan Thumbnail dengan ukuran 200x200 -->
+                                        <img src="{{ asset('storage/' . $kegiatan->gambar_kegiatan) }}"
+                                            alt="gambar kegiatan" style="width: 150px">
                                     </td>
-                                    <td>{{ $content->course->judul }}</td> <!-- Menampilkan judul kursus -->
-                                    <td>
-                                        <!-- Ikon Play -->
-                                        <a href="{{ asset('storage/' . $content->video) }}" target="_blank"
-                                            class="btn btn-link text-primary">
-                                            <i class="menu-icon tf-icons bx bx-play-circle"></i> Play
-                                        </a>
-                                    </td>
-                                    <td>{{ Str::limit($content->course->deskripsi, 20) }}</td>
-                                    <td>{{ Str::limit($content->deskripsi_konten, 20) }}</td>
+                                    <td>{{ $kegiatan->deskripsi_kegiatan }}</td>
+                                    <td>{{ $kegiatan->waktu }}</td>
                                     <td>
                                         <!-- Tombol Edit -->
-                                        <a href="{{route('content.edit', $content->id)}}" class="btn btn-primary btn-sm me-2 btn-edit">
+                                        <a href="{{ route('kegiatan.edit', $kegiatan->id) }}"
+                                            class="btn btn-primary btn-sm me-2 btn-edit">
                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <!-- Tombol Hapus -->
-                                        <form id="delete-form-{{ $content->id }}"
-                                            action="{{ route('content.destroy', $content->id) }}" method="POST"
+                                        <form id="delete-form-{{ $kegiatan->id }}"
+                                            action="{{ route('kegiatan.destroy', $kegiatan->id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete('{{ $content->id }}')">
+                                                onclick="confirmDelete('{{ $kegiatan->id }}')">
                                                 <i class="bx bx-trash me-1"></i> Delete
                                             </button>
                                         </form>

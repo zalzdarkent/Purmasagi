@@ -8,7 +8,7 @@
     </li>
 
     <li class="menu-header small text-uppercase">
-        <span class="menu-header-text">Pages</span>
+        <span class="menu-header-text">Main</span>
     </li>
     <li class="menu-item {{ Route::is('course.*') || Route::is('content.*') ? 'open active' : ''}}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -21,9 +21,27 @@
                     <div data-i18n="Account">Course</div>
                 </a>
             </li>
-            <li class="menu-item {{ Route::is('content.create') ? 'active' : '' }}">
-                <a href="{{route("content.create")}}" class="menu-link">
+            <li class="menu-item {{ Route::is('content.index') ? 'active' : '' }}">
+                <a href="{{route("content.index")}}" class="menu-link">
                     <div data-i18n="Notifications">Content</div>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="menu-item {{ Route::is('kegiatan.*') ? 'open active' : ''}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons bx bx-calendar-event"></i>
+            <div data-i18n="Account Settings">Kegiatan</div>
+        </a>
+        <ul class="menu-sub">
+            <li class="menu-item {{ Route::is('kegiatan.create') ? 'active' : '' }}">
+                <a href="{{route("kegiatan.create")}}" class="menu-link">
+                    <div data-i18n="Account">Tambah Kegiatan</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Route::is('kegiatan.index') ? 'active' : '' }}">
+                <a href="{{route("kegiatan.index")}}" class="menu-link">
+                    <div data-i18n="Notifications">Daftar Kegiatan</div>
                 </a>
             </li>
         </ul>

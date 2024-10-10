@@ -38,6 +38,9 @@
     <div class="mx-auto my-6 max-w-2xl px-8 text-gray-700 sm:px-6">
         <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2>
 
+        <div class="container">
+            
+        </div>
         <div class="space-y-4">
             <div class="rounded-lg border border-gray-300">
                 <button

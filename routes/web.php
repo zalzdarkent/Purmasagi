@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\KegiatanController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Rute untuk tampilan umum
-Route::get('/', function () {
-    return view('client.pages.home');
-})->name('home');
+// Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/courses', function () {
     return view('client.pages.courses');
@@ -59,4 +59,5 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard'); // Mengarahkan ke dashboard jika sudah login
     Route::resource('course', CoursesController::class); // Akses ke resource courses
     Route::resource('content', ContentController::class);
+    Route::resource('kegiatan', KegiatanController::class);
 });

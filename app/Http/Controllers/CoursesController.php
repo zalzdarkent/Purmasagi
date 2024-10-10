@@ -14,12 +14,11 @@ class CoursesController extends Controller
     {
         $courses = Course::all();
         return view('admin.course.index', compact('courses'));
-
     }
 
     public function indexHomeClient()
     {
-        $courses = Course::orderBy('created_at', 'desc')->limit(3)->get();     
+        $courses = Course::orderBy('created_at', 'desc')->limit(3)->get();
         return view('client.pages.home')->with('courses', $courses);
     }
 
@@ -27,7 +26,6 @@ class CoursesController extends Controller
     {
         $courses = Course::all();
         return view('client.pages.courses')->with('courses', $courses);
-
     }
 
     /**
@@ -44,29 +42,45 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input, termasuk thumbnail
         $validasi = $request->validate([
             'judul' => 'required|max:255',
             'deskripsi' => 'required|max:255',
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file gambar
         ]);
 
-        // dd($request->all()); 
+        // Proses untuk menyimpan file gambar
+        if ($request->hasFile('thumbnail')) {
+            // Ambil file gambar
+            $file = $request->file('thumbnail');
+            $fileName = $file->hashName(); // Menggunakan hash untuk nama file yang unik
 
-        Course::create([
-            'judul' => $validasi['judul'],
-            'deskripsi' => $validasi['deskripsi']
-        ]);
-        return redirect()->route('course.index')->with('success', 'Course has been saved');
+            // Simpan file ke dalam folder 'public/thumbnails'
+            $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
+
+            // Buat entri data course dengan thumbnail
+            Course::create([
+                'judul' => $validasi['judul'],
+                'deskripsi' => $validasi['deskripsi'],
+                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail
+            ]);
+
+            return redirect()->route('course.index')->with('success', 'Course has been saved');
+        } else {
+            return redirect()->route('course.index')->with('error', 'Thumbnail is required');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $course = Course::find($id);
+        // Ambil kursus berdasarkan ID, beserta isinya (contents)
+        $course = Course::with('contents')->findOrFail($id);
+
+        // Kembalikan ke view detail.blade.php dengan data course
         return view('client.pages.detail', compact('course'));
-
-
     }
 
     /**
@@ -82,21 +96,47 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validate input
         $validasi = $request->validate([
             'judul' => 'required|sometimes|max:255',
             'deskripsi' => 'required|sometimes|max:255',
+            'thumbnail' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Mencari kursus berdasarkan ID
+        // Find the course by ID
         $course = Course::findOrFail($id);
 
-        // Memperbarui data kursus
+        // Store the old thumbnail path
+        $oldThumbnailPath = $course->thumbnail;
+
+        // Update course data (without thumbnail first)
         $course->update([
             'judul' => $validasi['judul'],
             'deskripsi' => $validasi['deskripsi']
         ]);
 
-        // Mengalihkan pengguna kembali ke daftar kursus dengan pesan sukses
+        // Check if a new thumbnail was uploaded
+        if ($request->hasFile('thumbnail')) {
+            // Process the new thumbnail
+            $file = $request->file('thumbnail');
+            $fileName = $file->hashName(); // Create a unique file name
+
+            // Save the new file to 'public/thumbnails'
+            $file->storeAs('public/thumbnails', $fileName); // Using Storage facade to save
+
+            // Update the thumbnail path in the course record
+            $course->update(['thumbnail' => 'thumbnails/' . $fileName]);
+
+            // Delete the old thumbnail file if it exists
+            if ($oldThumbnailPath) {
+                $oldFilePath = storage_path('app/public/' . $oldThumbnailPath);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Delete the old thumbnail file
+                }
+            }
+        }
+
+        // Redirect back with success message
         return redirect()->route('course.index')->with('success', 'Course has been updated successfully');
     }
 
@@ -106,10 +146,21 @@ class CoursesController extends Controller
     public function destroy(string $id)
     {
         $course = Course::find($id);
+
         if ($course) {
-            $course->delete();
+            // Hapus thumbnail dari storage jika ada
+            if ($course->thumbnail) {
+                $thumbnailPath = public_path('storage/' . $course->thumbnail); // Sesuaikan dengan lokasi penyimpanan thumbnail
+                if (file_exists($thumbnailPath)) {
+                    unlink($thumbnailPath); // Hapus file thumbnail
+                }
+            }
+
+            $course->delete(); // Hapus kursus dari database
+
             return redirect()->back()->with('success', 'Course deleted successfully!');
         }
+
         return redirect()->back()->with('error', 'Course not found.');
     }
 }
