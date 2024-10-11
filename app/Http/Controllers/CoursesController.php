@@ -19,7 +19,8 @@ class CoursesController extends Controller
 
     public function indexCoursesClient()
     {
-        $courses = Course::all();
+        // $courses = Course::all();
+        $courses = Course::paginate(3);
         return view('client.pages.courses', compact('courses'));
     }
 
