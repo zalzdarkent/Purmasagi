@@ -11,14 +11,14 @@
         </div>
 
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert-dismissible fade show alert alert-success" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
         @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert-danger alert-dismissible fade show alert" role="alert">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -32,7 +32,7 @@
                         <tr>
                             <th>Gambar Kegiatan</th>
                             <th>Deskripsi Kegiatan</th>
-                            <th>Waktu Kegiatan</th>
+                            <th>Tahun Kegiatan</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -54,7 +54,7 @@
                                     <td>
                                         <!-- Tombol Edit -->
                                         <a href="{{ route('kegiatan.edit', $kegiatan->id) }}"
-                                            class="btn btn-primary btn-sm me-2 btn-edit">
+                                            class="btn-edit btn btn-primary btn-sm me-2">
                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <!-- Tombol Hapus -->
@@ -63,7 +63,7 @@
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm"
+                                            <button type="button" class="btn-danger btn btn-sm"
                                                 onclick="confirmDelete('{{ $kegiatan->id }}')">
                                                 <i class="bx bx-trash me-1"></i> Delete
                                             </button>

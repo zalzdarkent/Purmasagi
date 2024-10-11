@@ -19,25 +19,22 @@ use App\Http\Controllers\Auth\AdminController;
 |
 */
 
-// Rute untuk tampilan umum
-// Route::get('/', [HomeController::class, 'index'])->name('home');
+// Client Home
+Route::resource('/', HomeController::class);
 
-Route::get('/courses', function () {
-    return view('client.pages.courses');
-})->name('courses');
+// Client Courses
+Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
+Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
 
-Route::get('/teachers', function () {
-    return view('client.pages.teachers');
-})->name('teachers');
-
-// Route::get('/course/{course_id}', function ($course_id) {
-//     return view('client.pages.detail');
-// })->name('detail');
 
 // temporary route
-Route::get('/', [CoursesController::class, 'indexHomeClient']);
-Route::get('/courses', [CoursesController::class, 'indexCoursesClient']);
-Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
+Route::get('/login', function () {
+    return view('client.pages.login');
+})->name('login');
+Route::get('/register', function () {
+    return view('client.pages.register');
+})->name('register');
+
 
 
 

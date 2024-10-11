@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -16,16 +17,10 @@ class CoursesController extends Controller
         return view('admin.course.index', compact('courses'));
     }
 
-    public function indexHomeClient()
-    {
-        $courses = Course::orderBy('created_at', 'desc')->limit(3)->get();
-        return view('client.pages.home')->with('courses', $courses);
-    }
-
     public function indexCoursesClient()
     {
         $courses = Course::all();
-        return view('client.pages.courses')->with('courses', $courses);
+        return view('client.pages.courses', compact('courses'));
     }
 
     /**
@@ -76,11 +71,14 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        // Ambil kursus berdasarkan ID, beserta isinya (contents)
-        $course = Course::with('contents')->findOrFail($id);
+        // $course = Course::with('contents')->findOrFail($id);
+        // return view('client.pages.detail', compact('course'));
 
-        // Kembalikan ke view detail.blade.php dengan data course
-        return view('client.pages.detail', compact('course'));
+        $course = Course::findOrFail($id);
+        $contents = Content::where('course_id', $course->id)->get();
+
+        return view('client.pages.detail', compact('course', 'contents'));
+
     }
 
     /**

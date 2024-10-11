@@ -22,7 +22,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="container">
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert-danger alert">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -54,15 +54,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="desc">Deskripsi Kegiatan<span
-                                    style="color: red">*</span></label>
+                            <label class="form-label" for="desc">Deskripsi Kegiatan<span style="color: red">
+                                    *</span></label>
                             <textarea name="deskripsi_kegiatan" id="desc" class="form-control" cols="30" rows="5"
                                 placeholder="Type your course description" required></textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="waktu">Waktu Kegiatan<span style="color: red">*</span></label>
-                            <input type="text" name="waktu" class="form-control" id="waktu" required />
+                            <label class="form-label" for="waktu">Tahun Kegiatan<span style="color: red">
+                                    *</span></label>
+                            <input type="text" name="waktu" class="form-control" id="waktu" required
+                                placeholder="2024" />
                             <div id="waktuError" class="text-danger" style="display: none;">Waktu harus 4 digit angka.</div>
                         </div>
 

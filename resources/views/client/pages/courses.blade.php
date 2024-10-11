@@ -34,25 +34,27 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
             @foreach ($courses as $course)
                 <div
-                    class="mx-auto mb-6 w-full max-w-md rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
-                    <a href="#">
-                        @if ($course->thumbnail)
-                            <img class="rounded-t-lg" src="{{ asset('storage/' . $course->thumbnail) }}"
-                                alt="{{ $course->judul }}" />
-                        @else
-                            <img class="rounded-t-lg" src="{{ asset('assets/img/coba/laravel.jpg') }}"
-                                alt="{{ $course->judul }}" />
-                        @endif
+                    class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
+                    <a href="/course/{{ $course->id }}">
+                        <img class="rounded-t-lg object-cover"
+                            src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
+                            alt="{{ $course->judul }}" />
                     </a>
-
-                    <div class="p-5">
-                        <a href="#">
-                            <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
-                                {{ $course->judul }}</h5>
-                        </a>
-                        <p class="mb-3 text-sm text-gray-600 lg:text-base">{{ $course->deskripsi }}</p>
+                    <div class="flex flex-grow flex-col p-5">
+                        <div class="flex-grow">
+                            <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
+                                <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
+                                    {{ $course->judul }}
+                                </h5>
+                            </a>
+                        </div>
+                        <div class="flex-grow">
+                            <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
+                                {{ $course->deskripsi }}
+                            </p>
+                        </div>
                         <a href="/course/{{ $course->id }}"
-                            class="inline-flex items-center rounded-lg bg-indigo-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                            class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                             Daftar
                             <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
