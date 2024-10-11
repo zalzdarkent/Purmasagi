@@ -65,10 +65,10 @@
                     <a href="/courses"
                         class="{{ request()->fullUrlIs(url('/courses')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Kelas</a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="/teachers"
                         class="{{ request()->fullUrlIs(url('/teachers')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Guru</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
 

@@ -6,7 +6,7 @@
     {{-- Hero --}}
     <div class="relative isolate overflow-hidden">
         <img src="{{ $course->image ? $course->image : '../assets/img/coba/laravel.jpg' }}" alt="{{ $course->title }}"
-            alt="" class="absolute inset-0 -z-10 h-full w-full object-cover">
+            class="absolute inset-0 -z-10 h-full w-full object-cover">
         <div class="opacity-85 absolute inset-0 -z-10 bg-black"></div>
 
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
@@ -17,13 +17,11 @@
         <div class="mx-auto max-w-2xl px-6 py-16">
             <div class="text-center">
                 <h1 class="text-balance text-4xl font-bold tracking-tight text-white">Daftar Kelas</h1>
-                <p class="mt-6 text-base leading-8 text-gray-300 lg:text-lg">Anim aute id magna aliqua ad ad non
+                <p class="mt-6 text-base leading-8 text-gray-300 lg:text-lg">Anim aute id magna aliqua ad ad non</p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 lg:mt-10">
                     <a href="#"
-                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Daftar
-                    </a>
+                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Daftar</a>
                 </div>
-
             </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -34,86 +32,71 @@
         </div>
     </div>
 
-    {{-- Courses --}}
+    {{-- Main --}}
     <div class="mx-auto my-6 max-w-2xl px-8 text-gray-700 sm:px-6">
         <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2>
 
-        <div class="container">
-            
-        </div>
+        {{-- Pertemuan 1 dan Modal --}}
         <div class="space-y-4">
             <div class="rounded-lg border border-gray-300">
                 <button
                     class="flex w-full items-center justify-between rounded-lg bg-white p-4 text-left focus:outline-none focus:ring focus:ring-indigo-500"
                     onclick="toggle(1)">
                     <span class="text-base font-medium lg:text-lg">Pertemuan 1</span>
-
                     <svg id="pertemuan-icon-1" class="h-6 w-6 transition-transform duration-200" viewBox="0 0 24 24"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
-                                fill="#0F0F0F"></path>
-                        </g>
+                        <path
+                            d="M5.70711 9.71069C5.31658 10.1012 5.31658 10.7344 5.70711 11.1249L10.5993 16.0123C11.3805 16.7927 12.6463 16.7924 13.4271 16.0117L18.3174 11.1213C18.708 10.7308 18.708 10.0976 18.3174 9.70708C17.9269 9.31655 17.2937 9.31655 16.9032 9.70708L12.7176 13.8927C12.3271 14.2833 11.6939 14.2832 11.3034 13.8927L7.12132 9.71069C6.7308 9.32016 6.09763 9.32016 5.70711 9.71069Z"
+                            fill="#0F0F0F"></path>
                     </svg>
                 </button>
                 <div id="pertemuan-1" class="hidden border-t border-gray-200 p-4">
-                    <p class="mb-4 text-base text-gray-500">You can enroll in a course by clicking on the "Enroll
-                        Now"
+                    <p class="mb-4 text-base text-gray-500">You can enroll in a course by clicking on the "Enroll Now"
                         button on the course page.</p>
                     <button data-modal-target="default-modal" data-modal-toggle="default-modal"
                         class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
-                        type="button">
+                        type="button" onclick="playVideo()">
                         <svg viewBox="0 0 24 24" class="mr-2 h-4 w-4" fill="none" xmlns="http://www.w3.org/2000/svg"
                             stroke="#ffffff">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
-                                    stroke="#ffffff" stroke-width="2" stroke-linejoin="round"></path>
-                            </g>
+                            <path
+                                d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
+                                stroke="#ffffff" stroke-width="2" stroke-linejoin="round"></path>
                         </svg>
                         Play
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Main modal -->
-    <div id="default-modal" tabindex="-1" aria-hidden="true"
-        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
-        <div class="relative max-h-full w-full max-w-2xl p-4">
-            <!-- Modal content -->
-            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                        Pertemuan 1
-                    </h3>
-                    <button type="button"
-                        class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-hide="default-modal">
-                        <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="space-y-4 p-4 md:p-5">
-                    <video class="h-auto w-full" controls>
-                        <source src="../assets/img/coba/rickroll.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+            {{-- Modal for video --}}
+            <div id="default-modal" tabindex="-1" aria-hidden="true"
+                class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+                <div class="relative max-h-full w-full max-w-2xl p-4">
+                    <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                        {{-- Modal header --}}
+                        <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white lg:text-2xl">Video Course</h3>
+                            <button type="button"
+                                class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                                data-modal-hide="default-modal" onclick="stopVideo()">
+                                <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="sr-only">Close</span>
+                            </button>
+                        </div>
+                        {{-- Modal body --}}
+                        <div class="space-y-6 p-6">
+                            <video id="courseVideo" class="w-full rounded-lg border bg-gray-200" controls>
+                                <source src="../assets/img/coba/rickroll.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
