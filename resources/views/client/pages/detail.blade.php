@@ -44,7 +44,7 @@
                         <button
                             class="flex w-full items-center justify-between rounded-lg bg-white p-4 text-left focus:outline-none focus:ring focus:ring-indigo-500"
                             onclick="toggle({{ $content->pertemuan }})">
-                            <span class="text-base font-medium lg:text-lg">Pertemuan {{ $content->pertemuan }}</span>
+                            <span class="text-base font-medium lg:text-lg"> {{ $content->pertemuan }}</span>
                             <svg id="pertemuan-icon-{{ $content->pertemuan }}"
                                 class="h-6 w-6 transition-transform duration-200" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">

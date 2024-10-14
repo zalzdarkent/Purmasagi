@@ -35,7 +35,7 @@
         <hr class="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
         <div class="sm:flex sm:items-center sm:justify-between">
             <span class="text-sm text-slate-300 sm:text-center">© 2024 <a href="/"
-                    class="hover:underline">LMS™</a>. All Rights Reserved.
+                    class="hover:underline">Purmasagi</a>. All Rights Reserved.
             </span>
         </div>
     </div>
