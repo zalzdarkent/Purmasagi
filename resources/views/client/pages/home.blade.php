@@ -16,14 +16,12 @@
             <!-- Header Section -->
             <div class="mx-auto max-h-screen max-w-2xl py-32">
                 <h1 class="text-balance text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                    Learning Management System
+                    Pembelajaran Mudah di Mana Saja, Kapan Saja
                 </h1>
                 <p class="mt-6 text-center text-base leading-8 text-gray-600 lg:text-lg">
-                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                    fugiat veniam occaecat fugiat aliqua.
-                </p>
+                    Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi. </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
-                    <a href="/register"
+                    <a href="/courses"
                         class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Mulai Sekarang!
                     </a>
@@ -68,7 +66,7 @@
                             </div>
                             <a href="/course/{{ $course->id }}"
                                 class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                                Daftar
+                                Pelajari
                                 <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -86,8 +84,6 @@
                 </a>
             </div>
         </div>
-
-        {{-- Articles (dummy) --}}
 
         {{-- Activity --}}
         <div class="mx-auto my-20 max-w-screen-xl">
@@ -117,25 +113,16 @@
             </div>
         </div>
 
-        {{-- CTA  --}}
-        <div class="mb-10 flex flex-col items-center justify-between md:flex-row">
-            <div class="w-full space-y-6 md:w-1/2 md:p-4">
-                <h1 class="text-4xl font-bold text-gray-900">Temukan Pengajar Terbaik!</h1>
-                <p class="text-gray-700 lg:text-lg">Cari pengajar yang sesuai dengan kebutuhanmu dan mulailah belajar dengan
-                    mudah dan nyaman.</p>
-                <div class="mt-10">
-                    <a href="/teachers"
-                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                        Cari
-                        Sekarang
-                    </a>
-                </div>
-            </div>
-            <div class="mt-8 w-full md:mt-0 md:w-1/2">
-                <img src="../assets/img/coba/lecture.jpg" alt="Teacher Picture"
-                    class="flex h-64 w-full items-center justify-center rounded-lg object-cover">
-            </div>
-        </div>
+        {{-- Scroll Up Button --}}
+        <button id="scrollUpBtn"
+            class="fixed bottom-5 right-5 hidden rounded-full bg-indigo-600 p-3 text-white shadow-lg hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            aria-label="Scroll to top">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m-8-8l8-8 8 8" />
+            </svg>
+        </button>
+
     </div>
 
 @endsection

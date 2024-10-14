@@ -18,10 +18,6 @@
             <div class="text-center">
                 <h1 class="text-balance text-4xl font-bold tracking-tight text-white">{{ $course->judul }}</h1>
                 <p class="mt-6 text-justify text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}</p>
-                <div class="mt-5 flex items-center justify-center gap-x-6 lg:mt-10">
-                    <a href="#"
-                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Daftar</a>
-                </div>
             </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"

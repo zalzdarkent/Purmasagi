@@ -24,4 +24,22 @@
         video.currentTime = 0;
         modal.classList.add('hidden');
     }
+
+    // Scroll Up Button
+    window.onscroll = function() {
+        const scrollBtn = document.getElementById('scrollUpBtn');
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            scrollBtn.classList.remove('hidden');
+        } else {
+            scrollBtn.classList.add('hidden');
+        }
+    };
+
+    // Scroll smooth
+    document.getElementById('scrollUpBtn').onclick = function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 </script>

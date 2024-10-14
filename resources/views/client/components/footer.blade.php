@@ -3,8 +3,8 @@
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
                 <a href="https://flowbite.com/" class="flex items-center">
-                    <img src="../assets/img/favicon/client-icon.svg" class="me-3 h-8" alt="LMS Logo" />
-                    <span class="self-center whitespace-nowrap text-2xl font-semibold text-white">LMS</span>
+                    <img src="../assets/img/favicon/client-icon.svg" class="me-3 h-8" alt="Purmasagi Logo" />
+                    <span class="self-center whitespace-nowrap text-2xl font-semibold text-white">Purmasagi</span>
                 </a>
             </div>
             <div class="grid grid-cols-2 gap-8 sm:gap-6">
@@ -12,10 +12,7 @@
                     <h2 class="mb-6 text-sm font-semibold uppercase text-slate-300">Program</h2>
                     <ul class="font-medium text-slate-300">
                         <li class="mb-4">
-                            <a href="https://flowbite.com/" class="hover:underline">Kelas</a>
-                        </li>
-                        <li>
-                            <a href="https://tailwindcss.com/" class="hover:underline">Guru</a>
+                            <a href="/courses" class="hover:underline">Kelas</a>
                         </li>
                     </ul>
                 </div>
