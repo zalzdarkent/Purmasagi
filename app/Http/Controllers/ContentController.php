@@ -39,7 +39,7 @@ class ContentController extends Controller
         // Validasi input
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'pertemuan' => 'required|string|max:255',
+            'pertemuan' => 'required|integer|digits:4',
             'deskripsi_konten' => 'required|string|max:255',
             'video' => 'required|file|mimes:mp4,avi,mov|max:20480',
         ]);
@@ -87,7 +87,7 @@ class ContentController extends Controller
         // Validasi input
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'pertemuan' => 'required|string|max:255',
+            'pertemuan' => 'required|integer|digits:4',
             'deskripsi_konten' => 'required|string|max:255',
             'video' => 'nullable|file|mimes:mp4,avi,mov|max:20480', // Video adalah optional
         ]);

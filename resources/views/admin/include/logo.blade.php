@@ -54,5 +54,5 @@
         </g>
       </svg>
     </span>
-    <span class="app-brand-text demo menu-text fw-bolder ms-2">LMS</span>
+    <span class="app-brand-text demo menu-text fw-bolder ms-2" style="text-transform:capitalize !important;">Purmasagi</span>
   </a>

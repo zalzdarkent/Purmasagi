@@ -52,7 +52,7 @@
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                         <strong>{{ $course->judul }}</strong>
                                     </td>
-                                    <td>{{ $course->deskripsi }}</td>
+                                    <td>{!! \App\Helpers\TextHelpers::splitText($course->deskripsi, 40) !!}</td>
                                     <td>
                                         <!-- Tombol Edit -->
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm me-2 btn-edit"
@@ -106,7 +106,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="thumbnail">Thumbnail <span style="color: red">*</span></label>
-                            <input type="file" name="thumbnail" class="form-control" id="thumbnail" required />
+                            <input type="file" name="thumbnail" class="form-control" id="thumbnail" required
+                                onchange="previewImage(event, 'add')" />
+                        </div>
+                        <div class="mb-3 text-center">
+                            <img id="add-thumbnail-preview" src="" alt="Image Preview"
+                                style="display: none; width:100%;" class="img-preview" />
                         </div>
 
                         <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
@@ -117,7 +122,8 @@
     </div>
 
     <!-- Modal for Editing Course -->
-    <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,10 +147,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="edit-thumbnail">Thumbnail (optional)</label>
-                            <input type="file" name="thumbnail" class="form-control" id="edit-thumbnail" />
+                            <input type="file" name="thumbnail" class="form-control" id="edit-thumbnail"
+                                onchange="previewImage(event, 'edit')" />
                         </div>
-                        <div class="mb-3">
-                            <img id="current-thumbnail" src="" alt="" style="width: 200px;" />
+                        <div class="mb-3 text-center">
+                            <img id="current-thumbnail" src="" alt="Image Preview"
+                                style="display: none; width:100%;" class="img-preview" />
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -154,7 +162,26 @@
     </div>
 
     <script>
-        // Script untuk mengisi modal edit
+        // Function to preview image
+        function previewImage(event, modalType) {
+            const preview = modalType === 'add' ? document.getElementById('add-thumbnail-preview') : document
+                .getElementById('current-thumbnail');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block'; // Show the image
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none'; // Hide if no file is selected
+            }
+        }
+
+        // Script for filling the edit modal
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
                 const courseId = this.getAttribute('data-id');
@@ -173,6 +200,8 @@
                 // Set current thumbnail image
                 document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}" +
                     courseThumbnail;
+                document.getElementById('current-thumbnail').style.display =
+                'block'; // Show current thumbnail
 
                 // Show modal
                 var editModal = new bootstrap.Modal(document.getElementById('editCourseModal'));

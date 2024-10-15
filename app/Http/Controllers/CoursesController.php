@@ -42,7 +42,7 @@ class CoursesController extends Controller
         $validasi = $request->validate([
             'judul' => 'required|max:255',
             'deskripsi' => 'required|max:255',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file gambar
+            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10048', // Validasi file gambar
         ]);
 
         // Proses untuk menyimpan file gambar
@@ -99,7 +99,7 @@ class CoursesController extends Controller
         $validasi = $request->validate([
             'judul' => 'required|sometimes|max:255',
             'deskripsi' => 'required|sometimes|max:255',
-            'thumbnail' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
         ]);
 
         // Find the course by ID

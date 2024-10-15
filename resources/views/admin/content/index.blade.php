@@ -30,7 +30,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Pertemuan</th>
+                            <th>Pertemuan ke-</th>
                             <th>Title</th>
                             <th>Video</th>
                             <th>Deskripsi Pertemuan</th>
@@ -47,7 +47,7 @@
                             @foreach ($contents as $content)
                                 <tr>
                                     <td>
-                                        <strong>{{ $content->pertemuan }}</strong>
+                                        <strong>Pertemuan {{ $content->pertemuan }}</strong>
                                     </td>
                                     <td>{{ $content->course->judul }}</td> <!-- Menampilkan judul kursus -->
                                     <td>
