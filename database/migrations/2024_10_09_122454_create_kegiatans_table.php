@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('admin_id'); 
             $table->string("gambar_kegiatan");
             $table->string("deskripsi_kegiatan");
             $table->year("waktu");
+            $table->foreign('admin_id')->references('id')->on('admin')->onDelete('cascade');
             $table->timestamps();
         });
     }

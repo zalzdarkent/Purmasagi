@@ -13,7 +13,13 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        $kegiatans = Kegiatan::all();
+        // Ambil admin yang sedang login
+        $admin = auth()->user();
+
+        // Ambil semua kegiatan yang terkait dengan admin ini
+        $kegiatans = $admin->kegiatan;
+
+        // Kirimkan data kegiatan ke view
         return view("admin.kegiatan.index", compact('kegiatans'));
     }
 
@@ -23,7 +29,7 @@ class KegiatanController extends Controller
         return view('client.pages.home')->with('kegiatans', $kegiatans);
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,6 +56,7 @@ class KegiatanController extends Controller
 
         // Membuat data kegiatan dengan menambahkan path gambar
         Kegiatan::create([
+            'admin_id' => auth()->id(),
             'gambar_kegiatan' => $gambarPath, // Simpan path gambar
             'deskripsi_kegiatan' => $request->deskripsi_kegiatan, // Simpan deskripsi
             'waktu' => $request->waktu // Simpan waktu

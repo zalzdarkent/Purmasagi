@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('admin_id');
             $table->string("judul");
             $table->string("thumbnail")->nullable();
             $table->string("deskripsi");
+            $table->foreign('admin_id')->references('id')->on('admin')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('contents', function (Blueprint $table) {

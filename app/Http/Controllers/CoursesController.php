@@ -13,7 +13,10 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
+        $adminId = auth()->id(); 
+
+        $courses = Course::where('admin_id', $adminId)->get();
+
         return view('admin.course.index', compact('courses'));
     }
 
@@ -54,11 +57,12 @@ class CoursesController extends Controller
             // Simpan file ke dalam folder 'public/thumbnails'
             $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
 
-            // Buat entri data course dengan thumbnail
+            // Buat entri data course dengan thumbnail dan admin_id
             Course::create([
+                'admin_id' => auth()->id(), // Menyimpan ID admin yang sedang login
                 'judul' => $validasi['judul'],
                 'deskripsi' => $validasi['deskripsi'],
-                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail
+                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail 
             ]);
 
             return redirect()->route('course.index')->with('success', 'Course has been saved');
@@ -79,7 +83,6 @@ class CoursesController extends Controller
         $contents = Content::where('course_id', $course->id)->get();
 
         return view('client.pages.detail', compact('course', 'contents'));
-
     }
 
     /**

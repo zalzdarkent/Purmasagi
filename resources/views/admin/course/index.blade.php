@@ -37,12 +37,15 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @if ($courses->isEmpty())
-                            <tr>
-                                <td colspan="3" class="text-center">No data available</td>
-                            </tr>
-                        @else
-                            @foreach ($courses as $course)
+                        @php
+                            $hasCourses = false; // Flag untuk mengecek apakah ada kursus yang cocok
+                        @endphp
+
+                        @foreach ($courses as $course)
+                            @if (Auth::user()->id == $course->admin_id)
+                                @php
+                                    $hasCourses = true; 
+                                @endphp
                                 <tr>
                                     <td>
                                         <!-- Menampilkan Thumbnail dengan ukuran 200x200 -->
@@ -73,7 +76,13 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endif
+                        @endforeach
+
+                        @if (!$hasCourses)
+                            <tr>
+                                <td colspan="4" class="text-center">No data available</td>
+                            </tr>
                         @endif
                     </tbody>
                 </table>
@@ -201,7 +210,7 @@
                 document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}" +
                     courseThumbnail;
                 document.getElementById('current-thumbnail').style.display =
-                'block'; // Show current thumbnail
+                    'block'; // Show current thumbnail
 
                 // Show modal
                 var editModal = new bootstrap.Modal(document.getElementById('editCourseModal'));

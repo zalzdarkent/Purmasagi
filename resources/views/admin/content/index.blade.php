@@ -46,6 +46,7 @@
                         @else
                             @foreach ($contents as $content)
                                 <tr>
+                                    {{-- <td>{{ $content->course->admin_id }}</td> --}}
                                     <td>
                                         <strong>Pertemuan {{ $content->pertemuan }}</strong>
                                     </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
@@ -14,11 +15,20 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $courses = Course::all(); // Ambil semua kursus
-        $contents = Content::with('course')->get(); // Ambil semua konten dengan relasi kursus
+        $userId = Auth::user()->id; // Mendapatkan ID pengguna yang sedang login
+
+        // Ambil semua kursus yang dimiliki oleh admin yang sedang login
+        $courses = Course::where('admin_id', $userId)->get();
+
+        // Ambil konten yang hanya terkait dengan kursus milik admin yang sedang login
+        $contents = Content::with('course')
+            ->whereHas('course', function ($query) use ($userId) {
+                $query->where('admin_id', $userId);
+            })->get();
 
         return view('admin.content.index', compact('courses', 'contents'));
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -2,15 +2,29 @@
 
 namespace App\Models;
 
+use App\Models\Course;
+use App\Models\Kegiatan;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Authenticatable
 {
     use HasFactory;
 
     protected $table = 'admin';
+
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'admin_id');
+    }
+
+    public function kegiatan()
+    {
+        return $this->hasMany(Kegiatan::class, 'admin_id');
+    }
+
 
     protected $fillable = [
         'name',
