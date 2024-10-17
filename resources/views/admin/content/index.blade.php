@@ -32,7 +32,7 @@
                         <tr>
                             <th>Pertemuan ke-</th>
                             <th>Title</th>
-                            <th>Video</th>
+                            <th>File Pendukung</th>
                             <th>Deskripsi Pertemuan</th>
                             <th>Deskripsi Konten</th>
                             <th>Options</th>
