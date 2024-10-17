@@ -22,11 +22,10 @@ return new class extends Migration
         });
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('course_id');
-            $table->string("pertemuan");
-            $table->string("deskripsi_konten");
-            $table->string("video");
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreignId('course_id')->constrained();
+            $table->integer('pertemuan');
+            $table->string('deskripsi_konten');
+            $table->text('file_paths');
             $table->timestamps();
         });
     }

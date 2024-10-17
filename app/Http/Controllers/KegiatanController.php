@@ -51,8 +51,12 @@ class KegiatanController extends Controller
             "waktu" => 'required|integer|digits:4'
         ]);
 
-        // Menyimpan gambar ke storage dan mendapatkan path
-        $gambarPath = $request->file('gambar_kegiatan')->store('kegiatan', 'public');
+        // Ambil file gambar
+        $file = $request->file('gambar_kegiatan');
+        $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
+
+        // Menyimpan gambar ke storage dengan nama asli
+        $gambarPath = $file->storeAs('kegiatan', $fileName, 'public'); // Menggunakan storeAs untuk menyimpan dengan nama asli
 
         // Membuat data kegiatan dengan menambahkan path gambar
         Kegiatan::create([
@@ -64,6 +68,7 @@ class KegiatanController extends Controller
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan has been saved');
     }
+
 
 
     /**
@@ -102,7 +107,8 @@ class KegiatanController extends Controller
 
         // Menyiapkan data untuk diupdate
         $dataToUpdate = [
-            'deskripsi_kegiatan' => $request->deskripsi_kegiatan
+            'deskripsi_kegiatan' => $request->deskripsi_kegiatan,
+            'waktu' => $request->waktu
         ];
 
         // Memeriksa apakah gambar baru diupload
@@ -112,9 +118,13 @@ class KegiatanController extends Controller
                 Storage::disk('public')->delete($kegiatan->gambar_kegiatan);
             }
 
-            // Menyimpan gambar baru ke storage
-            $gambarPath = $request->file('gambar_kegiatan')->store('kegiatan', 'public');
-            $dataToUpdate['gambar_kegiatan'] = $gambarPath; // Menambahkan path gambar baru ke data
+            // Menyimpan gambar baru ke storage dengan nama asli
+            $file = $request->file('gambar_kegiatan');
+            $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
+            $gambarPath = $file->storeAs('kegiatan', $fileName, 'public'); // Menyimpan dengan nama asli
+
+            // Menambahkan path gambar baru ke data
+            $dataToUpdate['gambar_kegiatan'] = $gambarPath;
         }
 
         // Melakukan update data kegiatan
@@ -122,6 +132,7 @@ class KegiatanController extends Controller
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan has been updated');
     }
+
 
 
     /**

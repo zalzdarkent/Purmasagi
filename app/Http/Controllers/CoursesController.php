@@ -13,7 +13,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $adminId = auth()->id(); 
+        $adminId = auth()->id();
 
         $courses = Course::where('admin_id', $adminId)->get();
 
@@ -52,7 +52,7 @@ class CoursesController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Ambil file gambar
             $file = $request->file('thumbnail');
-            $fileName = $file->hashName(); // Menggunakan hash untuk nama file yang unik
+            $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
 
             // Simpan file ke dalam folder 'public/thumbnails'
             $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
@@ -62,7 +62,7 @@ class CoursesController extends Controller
                 'admin_id' => auth()->id(), // Menyimpan ID admin yang sedang login
                 'judul' => $validasi['judul'],
                 'deskripsi' => $validasi['deskripsi'],
-                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail 
+                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail
             ]);
 
             return redirect()->route('course.index')->with('success', 'Course has been saved');
@@ -70,6 +70,7 @@ class CoursesController extends Controller
             return redirect()->route('course.index')->with('error', 'Thumbnail is required');
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -98,49 +99,50 @@ class CoursesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validate input
+        // Validasi input
         $validasi = $request->validate([
             'judul' => 'required|sometimes|max:255',
             'deskripsi' => 'required|sometimes|max:255',
             'thumbnail' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
         ]);
 
-        // Find the course by ID
+        // Cari course berdasarkan ID
         $course = Course::findOrFail($id);
 
-        // Store the old thumbnail path
+        // Simpan path thumbnail lama
         $oldThumbnailPath = $course->thumbnail;
 
-        // Update course data (without thumbnail first)
+        // Update data course (tanpa thumbnail terlebih dahulu)
         $course->update([
             'judul' => $validasi['judul'],
             'deskripsi' => $validasi['deskripsi']
         ]);
 
-        // Check if a new thumbnail was uploaded
+        // Periksa jika ada thumbnail baru yang diunggah
         if ($request->hasFile('thumbnail')) {
-            // Process the new thumbnail
+            // Ambil file thumbnail baru
             $file = $request->file('thumbnail');
-            $fileName = $file->hashName(); // Create a unique file name
+            $fileName = $file->getClientOriginalName(); // Mengambil nama file asli
 
-            // Save the new file to 'public/thumbnails'
-            $file->storeAs('public/thumbnails', $fileName); // Using Storage facade to save
+            // Simpan file baru ke folder 'public/thumbnails'
+            $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
 
-            // Update the thumbnail path in the course record
+            // Update path thumbnail pada data course
             $course->update(['thumbnail' => 'thumbnails/' . $fileName]);
 
-            // Delete the old thumbnail file if it exists
+            // Hapus file thumbnail lama jika ada
             if ($oldThumbnailPath) {
                 $oldFilePath = storage_path('app/public/' . $oldThumbnailPath);
                 if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath); // Delete the old thumbnail file
+                    unlink($oldFilePath); // Hapus file thumbnail lama
                 }
             }
         }
 
-        // Redirect back with success message
+        // Redirect kembali dengan pesan sukses
         return redirect()->route('course.index')->with('success', 'Course has been updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.

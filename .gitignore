@@ -16,3 +16,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/resource/views/admin/content/testing.html
+/resource/views/admin/content/testing.css

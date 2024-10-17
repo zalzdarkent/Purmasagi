@@ -56,5 +56,6 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard'); // Mengarahkan ke dashboard jika sudah login
     Route::resource('course', CoursesController::class); // Akses ke resource courses
     Route::resource('content', ContentController::class);
+    Route::post('/content/delete-file', [ContentController::class, 'deleteFile'])->name('content.delete-file');
     Route::resource('kegiatan', KegiatanController::class);
 });

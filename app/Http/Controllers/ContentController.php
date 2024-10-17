@@ -49,26 +49,33 @@ class ContentController extends Controller
         // Validasi input
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'pertemuan' => 'required|integer',
+            'pertemuan' => 'required|integer|min:1',
             'deskripsi_konten' => 'required|string|max:255',
-            'video' => 'required|file|mimes:mp4,avi,mov|max:20480',
+            'files.*' => 'required|file|mimes:jpeg,png,jpg,pdf,ppt,pptx,mp4|max:20480',
         ]);
 
-        // Menggunakan metode store untuk mengupload video
-        $videoPath = $request->file('video')->store('videos', 'public');
+        // Proses upload file
+        $filePaths = [];
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
+                $path = $file->storeAs('uploads', $originalName, 'public'); // Menyimpan file dengan nama asli
+                $filePaths[] = $path;
+            }
+        }
 
-        // Membuat instance model dan menyimpan data
+        // Simpan data ke database
         $data = new Content();
         $data->course_id = $request->course_id;
         $data->pertemuan = $request->pertemuan;
         $data->deskripsi_konten = $request->deskripsi_konten;
-        $data->video = $videoPath; // Simpan path yang benar
+        $data->file_paths = json_encode($filePaths); // Simpan array file path sebagai JSON
         $data->save();
-        // dd($request->all());
 
         // Redirect atau mengembalikan response
         return redirect()->route('content.index')->with('success', 'Data berhasil disimpan!');
     }
+
 
 
     /**
@@ -92,41 +99,48 @@ class ContentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         // Validasi input
         $request->validate([
             'course_id' => 'required|exists:courses,id',
-            'pertemuan' => 'required|integer|',
+            'pertemuan' => 'required|integer|min:1',
             'deskripsi_konten' => 'required|string|max:255',
-            'video' => 'nullable|file|mimes:mp4,avi,mov|max:20480', // Video adalah optional
+            'files.*' => 'nullable|file|mimes:jpeg,png,jpg,pdf,ppt,pptx,mp4|max:20480', // Support multiple file types
         ]);
 
-        // Ambil konten yang ada
-        $content = Content::findOrFail($id);
+        // Temukan data yang ingin diupdate
+        $data = Content::findOrFail($id);
 
-        // Perbarui atribut yang diterima
-        $content->course_id = $request->course_id;
-        $content->pertemuan = $request->pertemuan;
-        $content->deskripsi_konten = $request->deskripsi_konten;
+        // Update informasi yang ada
+        $data->course_id = $request->course_id;
+        $data->pertemuan = $request->pertemuan;
+        $data->deskripsi_konten = $request->deskripsi_konten;
 
-        // Cek jika ada video baru yang diunggah
-        if ($request->hasFile('video')) {
-            // Hapus video lama
-            if ($content->video) {
-                Storage::disk('public')->delete($content->video); // Hapus file lama
+        // Ambil file path lama dari database
+        $existingFiles = !empty($data->file_paths) ? json_decode($data->file_paths, true) : [];
+
+        // Proses upload file baru tanpa menghapus file yang sudah ada
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
+                $timestamp = time(); // Menambahkan timestamp agar nama unik
+                $uniqueFileName = $timestamp . '_' . $originalName; // Gabungkan timestamp dan nama asli
+                $path = $file->storeAs('uploads', $uniqueFileName, 'public'); // Menyimpan file dengan nama unik
+
+                // Tambahkan file path baru ke daftar file yang ada
+                $existingFiles[] = $path;
             }
-
-            // Simpan video baru
-            $videoPath = $request->file('video')->store('videos', 'public');
-            $content->video = $videoPath; // Simpan path video baru
         }
 
+        // Simpan file path baru dan lama ke database
+        $data->file_paths = json_encode($existingFiles);
+
         // Simpan perubahan ke database
-        $content->save();
+        $data->save();
 
         // Redirect atau mengembalikan response
-        return redirect()->route('content.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('content.index')->with('success', 'Data berhasil diupdate!');
     }
 
 
@@ -148,5 +162,38 @@ class ContentController extends Controller
 
         // Redirect atau mengembalikan response
         return redirect()->route('content.index')->with('success', 'Data berhasil dihapus!');
+    }
+
+    public function deleteFile(Request $request)
+    {
+        // Pastikan file_path dan content_id diterima dari request
+        $filePath = $request->input('file_path');
+        $contentId = $request->input('content_id');
+
+        // Cari content berdasarkan ID
+        $content = Content::find($contentId);
+
+        if (!$content) {
+            return response()->json(['success' => false, 'message' => 'Konten tidak ditemukan.'], 404);
+        }
+
+        // Decode file_paths dari database
+        $filePaths = json_decode($content->file_paths, true);
+
+        // Hapus file dari array
+        if (($key = array_search($filePath, $filePaths)) !== false) {
+            unset($filePaths[$key]);
+        }
+
+        // Update file_paths di database
+        $content->file_paths = json_encode(array_values($filePaths)); // Re-index array
+        $content->save();
+
+        // Hapus file secara fisik jika diperlukan
+        if (Storage::exists($filePath)) {
+            Storage::delete($filePath);
+        }
+
+        return response()->json(['success' => true]);
     }
 }
