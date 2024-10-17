@@ -157,6 +157,15 @@ class ContentController extends Controller
             Storage::disk('public')->delete($content->video); // Hapus file video dari penyimpanan
         }
 
+        // Hapus file yang ada di 'file_paths'
+        if ($content->file_paths) {
+            $filePaths = json_decode($content->file_paths, true);
+            foreach ($filePaths as $filePath) {
+                // Hapus file dari penyimpanan
+                Storage::disk('public')->delete($filePath);
+            }
+        }
+
         // Hapus konten dari database
         $content->delete();
 
@@ -164,10 +173,11 @@ class ContentController extends Controller
         return redirect()->route('content.index')->with('success', 'Data berhasil dihapus!');
     }
 
+
     public function deleteFile(Request $request)
     {
         // Pastikan file_path dan content_id diterima dari request
-        $filePath = $request->input('file_path');
+        $filePath = $request->input('file_path'); // Misalnya: 'uploads/nama_file.ext'
         $contentId = $request->input('content_id');
 
         // Cari content berdasarkan ID
@@ -190,8 +200,9 @@ class ContentController extends Controller
         $content->save();
 
         // Hapus file secara fisik jika diperlukan
-        if (Storage::exists($filePath)) {
-            Storage::delete($filePath);
+        // Pastikan menggunakan disk 'public' jika file disimpan di storage/app/public/uploads
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
         }
 
         return response()->json(['success' => true]);
