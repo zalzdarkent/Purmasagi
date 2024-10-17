@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\LogoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContentController;
@@ -58,4 +59,5 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::resource('content', ContentController::class);
     Route::post('/content/delete-file', [ContentController::class, 'deleteFile'])->name('content.delete-file');
     Route::resource('kegiatan', KegiatanController::class);
+    Route::resource('logo', LogoController::class);
 });
