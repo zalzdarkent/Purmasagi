@@ -8,7 +8,7 @@
     <body class="flex h-full min-h-screen flex-col bg-white">
         @include('client.components.navbar')
 
-        <main class="flex-grow">
+        <main class="flex-grow pt-16">
             @yield('container')
         </main>
 

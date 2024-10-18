@@ -3,7 +3,7 @@
 @section('title', 'Beranda')
 
 @section('container')
-    <div class="container mx-auto px-10 py-10 lg:px-20">
+    <div class="mx-auto px-10 py-10 lg:px-20">
         {{-- Hero Section --}}
         <div class="relative isolate">
             <!-- Gradient Background -->
