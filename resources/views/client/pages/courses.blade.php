@@ -32,6 +32,7 @@
         @if ($courses->count() > 0)
             @foreach ($courses as $course)
                 <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+                    {{-- Course Card --}}
                     <div
                         class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
                         <a href="/course/{{ $course->id }}">
@@ -41,6 +42,10 @@
                         </a>
                         <div class="flex flex-grow flex-col p-5">
                             <div class="flex-grow">
+                                <div class="mb-2 flex items-center space-x-3">
+                                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
+                                    <a href="#" class="text-sm text-gray-600 lg:text-base">Nama Guru</a>
+                                </div>
                                 <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
                                     <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
                                         {{ $course->judul }}
@@ -65,6 +70,7 @@
                     </div>
                 </div>
             @endforeach
+
             {{-- Pagination --}}
             <div class="my-12">
                 {{ $courses->links() }}

@@ -18,6 +18,12 @@
             <div class="text-center">
                 <h1 class="text-balance text-4xl font-bold tracking-tight text-white">{{ $course->judul }}</h1>
                 <p class="mt-6 text-center text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}
+                <div class="mt-6 flex items-center justify-center space-x-4">
+                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
+                    <span class="text-sm text-white">Diajarkan oleh <a href="#" class="underline"> Nama
+                            Guru</a></span>
+                </div>
+
                 </p>
             </div>
         </div>

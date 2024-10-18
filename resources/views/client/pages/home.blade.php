@@ -54,6 +54,10 @@
                             </a>
                             <div class="flex flex-grow flex-col p-5">
                                 <div class="flex-grow">
+                                    <div class="mb-2 flex items-center space-x-3">
+                                        <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
+                                        <a href="#" class="text-sm text-gray-600 lg:text-base">Nama Guru</a>
+                                    </div>
                                     <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
                                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
                                             {{ $course->judul }}
@@ -84,7 +88,7 @@
 
             <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
                 <a href="/courses"
-                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 mb-8 lg:mb-0">Lihat
+                    class="mb-8 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 lg:mb-0">Lihat
                     kelas lainnya
                 </a>
             </div>
