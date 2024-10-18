@@ -4,6 +4,36 @@
             <img src="../assets/img/favicon/client-icon.svg" class="h-8" alt="Purmasagi Logo" />
         </a>
         <div class="flex items-center space-x-3 rtl:space-x-reverse md:order-2 md:space-x-0">
+            {{-- User --}}
+            <button type="button"
+                class="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:me-0"
+                id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                data-dropdown-placement="bottom">
+                <span class="sr-only">Open user menu</span>
+                <img class="h-8 w-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+            </button>
+
+            {{-- Dropdown menu --}}
+            <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
+                id="user-dropdown">
+                <div class="px-4 py-3">
+                    <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
+                    <span class="block truncate text-sm text-gray-500 dark:text-gray-400">name@flowbite.com</span>
+                </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Profil</a>
+                    </li>
+                    <li>
+                        <a href="#" -
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Keluar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            {{-- Hamburger --}}
             <button data-collapse-toggle="navbar-user" type="button"
                 class="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
                 aria-controls="navbar-user" aria-expanded="false">
@@ -28,6 +58,14 @@
                 <li>
                     <a href="/courses"
                         class="{{ request()->fullUrlIs(url('/courses')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Kelas</a>
+                </li>
+                <li>
+                    <a href="/teachers"
+                        class="{{ request()->fullUrlIs(url('/teachers')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Guru</a>
+                </li>
+                <li>
+                    <a href="/activities"
+                        class="{{ request()->fullUrlIs(url('/activities')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Aktivitas</a>
                 </li>
             </ul>
         </div>

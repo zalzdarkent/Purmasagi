@@ -14,11 +14,9 @@
         </div>
         <div class="mx-auto max-w-2xl px-6 py-16">
             <div class="text-center">
-                <h1 class="text-balance text-4xl font-bold tracking-tight text-white">Daftar Kelas</h1>
-                <p class="mt-6 text-base leading-8 text-gray-300 lg:text-lg">Anim aute id magna aliqua ad ad non
-                    deserunt
-                    sunt. Qui irure
-                    qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
+                <h1 class="text-balance text-4xl font-bold tracking-tight text-white">Kelas Pembelajaran</h1>
+                <p class="mt-6 text-base leading-8 text-gray-300 lg:text-lg">Temukan berbagai kelas yang tersedia untuk
+                    membantu Anda meningkatkan pengetahuan.</p>
             </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -31,45 +29,50 @@
 
     {{-- Courses --}}
     <div class="mx-auto my-16 max-w-screen-xl px-10 lg:px-20">
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+        @if ($courses->count() > 0)
             @foreach ($courses as $course)
-                <div
-                    class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
-                    <a href="/course/{{ $course->id }}">
-                        <img class="rounded-t-lg object-cover"
-                            src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
-                            alt="{{ $course->judul }}" />
-                    </a>
-                    <div class="flex flex-grow flex-col p-5">
-                        <div class="flex-grow">
-                            <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
-                                <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
-                                    {{ $course->judul }}
-                                </h5>
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+                    <div
+                        class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
+                        <a href="/course/{{ $course->id }}">
+                            <img class="rounded-t-lg object-cover"
+                                src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
+                                alt="{{ $course->judul }}" />
+                        </a>
+                        <div class="flex flex-grow flex-col p-5">
+                            <div class="flex-grow">
+                                <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
+                                    <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
+                                        {{ $course->judul }}
+                                    </h5>
+                                </a>
+                            </div>
+                            <div class="flex-grow">
+                                <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
+                                    {{ $course->deskripsi }}
+                                </p>
+                            </div>
+                            <a href="/course/{{ $course->id }}"
+                                class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                Pelajari
+                                <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
                             </a>
                         </div>
-                        <div class="flex-grow">
-                            <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
-                                {{ $course->deskripsi }}
-                            </p>
-                        </div>
-                        <a href="/course/{{ $course->id }}"
-                            class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                            Pelajari
-                            <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </a>
                     </div>
                 </div>
             @endforeach
-        </div>
-        {{-- Pagination --}}
-        <div class="my-12">
-            {{ $courses->links() }}
-        </div>
+            {{-- Pagination --}}
+            <div class="my-12">
+                {{ $courses->links() }}
+            </div>
+        @else
+            <h2 class="text-center text-gray-500">Mohon maaf, belum ada kelas yang tersedia saat ini</h2>
+        @endif
+
     </div>
 
     {{-- Pagination --}}

@@ -14,6 +14,12 @@
                         <li class="mb-4">
                             <a href="/courses" class="hover:underline">Kelas</a>
                         </li>
+                        <li class="mb-4">
+                            <a href="/courses" class="hover:underline">Guru</a>
+                        </li>
+                        <li class="mb-4">
+                            <a href="/courses" class="hover:underline">Aktivitas</a>
+                        </li>
                     </ul>
                 </div>
                 <div>

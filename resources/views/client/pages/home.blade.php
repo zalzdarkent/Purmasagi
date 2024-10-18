@@ -21,7 +21,7 @@
                 <p class="mt-6 text-center text-base leading-8 text-gray-600 lg:text-lg">
                     Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi. </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
-                    <a href="/courses"
+                    <a href="/login"
                         class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Mulai Sekarang!
                     </a>
@@ -42,74 +42,104 @@
         {{-- Courses Card --}}
         <div class="mx-auto my-10 max-w-screen-xl">
             <h1 class="mb-12 text-center text-3xl font-bold text-gray-900">Kelas Terbaru</h1>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+            @if ($latestCourses->count() > 0)
                 @foreach ($latestCourses as $course)
-                    <div
-                        class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
-                        <a href="/course/{{ $course->id }}">
-                            <img class="rounded-t-lg object-cover"
-                                src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
-                                alt="{{ $course->judul }}" />
-                        </a>
-                        <div class="flex flex-grow flex-col p-5">
-                            <div class="flex-grow">
-                                <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
-                                    <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
-                                        {{ $course->judul }}
-                                    </h5>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+                        <div
+                            class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
+                            <a href="/course/{{ $course->id }}">
+                                <img class="rounded-t-lg object-cover"
+                                    src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
+                                    alt="{{ $course->judul }}" />
+                            </a>
+                            <div class="flex flex-grow flex-col p-5">
+                                <div class="flex-grow">
+                                    <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
+                                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
+                                            {{ $course->judul }}
+                                        </h5>
+                                    </a>
+                                </div>
+                                <div class="flex-grow">
+                                    <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
+                                        {{ $course->deskripsi }}
+                                    </p>
+                                </div>
+                                <a href="/course/{{ $course->id }}"
+                                    class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                    Pelajari
+                                    <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
                                 </a>
                             </div>
-                            <div class="flex-grow">
-                                <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
-                                    {{ $course->deskripsi }}
-                                </p>
-                            </div>
-                            <a href="/course/{{ $course->id }}"
-                                class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                                Pelajari
-                                <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
                         </div>
                     </div>
                 @endforeach
-            </div>
+            @else
+                <h2 class="text-center text-gray-500">Belum ada kelas yang tersedia saat ini</h2>
+            @endif
+
             <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
                 <a href="/courses"
-                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Lihat
+                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 mb-8 lg:mb-0">Lihat
                     kelas lainnya
                 </a>
             </div>
         </div>
 
-        {{-- Activity --}}
+        {{-- Activities --}}
         <div class="mx-auto my-20 max-w-screen-xl">
             <h1 class="mb-12 text-center text-3xl font-bold text-gray-900">Aktivitas</h1>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
-                @foreach ($latestActivity as $activity)
-                    <div
-                        class="group relative mx-auto mb-6 w-full max-w-md rounded-lg border border-gray-200 bg-white shadow md:mb-0">
-                        <img class="rounded-lg"
-                            src="{{ $activity->gambar_kegiatan ? asset('storage/' . $activity->gambar_kegiatan) : asset('assets/img/contents/image-not-found.png') }}"
-                            alt="{{ $activity->deskripsi_kegiatan }}" />
+            @if ($latestActivities->count() > 0)
+                @foreach ($latestActivities as $activities)
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
                         <div
-                            class="absolute inset-0 bottom-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                            <h2 class="m-4 text-xl font-semibold text-white">
-                                {{ $activity->deskripsi_kegiatan }}
-                            </h2>
-                            <h2 class="m-4 text-white">{{ $activity->waktu }}</h2>
+                            class="group relative mx-auto mb-6 w-full max-w-md rounded-lg border border-gray-200 bg-white shadow md:mb-0">
+                            <img class="rounded-lg"
+                                src="{{ $activities->gambar_kegiatan ? asset('storage/' . $activities->gambar_kegiatan) : asset('assets/img/contents/image-not-found.png') }}"
+                                alt="{{ $activities->deskripsi_kegiatan }}" />
+                            <div
+                                class="absolute inset-0 bottom-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:opacity-100">
+                                <h2 class="m-4 text-xl font-semibold text-white">
+                                    {{ $activities->deskripsi_kegiatan }}
+                                </h2>
+                                <h2 class="m-4 text-white">{{ $activities->waktu }}</h2>
+                            </div>
                         </div>
                     </div>
                 @endforeach
-            </div>
+            @else
+                <h2 class="mb-8 text-center text-gray-500 lg:mb-0">Belum ada aktivitas</h2>
+            @endif
+
             <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
-                <a href="/activity"
+                <a href="/activities"
                     class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">Lihat
                     aktivitas lainnya
                 </a>
+            </div>
+        </div>
+
+        {{-- CTA  --}}
+        <div class="mb-10 flex flex-col items-center justify-between md:flex-row">
+            <div class="w-full space-y-6 md:w-1/2 md:p-4">- <h1 class="text-4xl font-bold text-gray-900">Temukan Pengajar
+                    Terbaik!</h1>
+                <p class="text-gray-700 lg:text-lg">Cari guru yang sesuai dengan kebutuhanmu dan mulailah belajar dengan
+                    mudah dan nyaman.</p>
+                <div class="mt-10">
+                    <a href="/teachers"
+                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                        Cari
+                        Sekarang
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 w-full md:mt-0 md:w-1/2">
+                <img src="../assets/img/coba/lecture.jpg" alt="Teacher Picture" -
+                    class="flex h-64 w-full items-center justify-center rounded-lg object-cover">
             </div>
         </div>
 

@@ -14,10 +14,11 @@
                 style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
             </div>
         </div>
-        <div class="mx-auto max-w-2xl px-6 py-16">
+        <div class="mx-auto max-w-xl px-6 py-16">
             <div class="text-center">
                 <h1 class="text-balance text-4xl font-bold tracking-tight text-white">{{ $course->judul }}</h1>
-                <p class="mt-6 text-justify text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}</p>
+                <p class="mt-6 text-center text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}
+                </p>
             </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -30,7 +31,7 @@
 
     {{-- Main --}}
     <div class="mx-auto my-6 max-w-2xl px-8 text-gray-700 sm:px-6">
-        <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2>
+        {{-- <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2> --}}
 
         {{-- Pertemuan 1 dan Modal --}}
         @if ($contents->count() > 0)

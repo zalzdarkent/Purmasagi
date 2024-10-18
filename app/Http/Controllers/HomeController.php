@@ -14,8 +14,8 @@ class HomeController extends Controller
         // $kegiatan = Kegiatan::all(); 
 
         $latestCourses = Course::orderBy('created_at', 'desc')->limit(3)->get();
-        $latestActivity = Kegiatan::orderBy('created_at', 'desc')->limit(3)->get();
+        $latestActivities = Kegiatan::orderBy('created_at', 'desc')->limit(3)->get();
 
-        return view('client.pages.home', compact('latestCourses', 'latestActivity'));
+        return view('client.pages.home', compact('latestCourses', 'latestActivities'));
     }
 }
