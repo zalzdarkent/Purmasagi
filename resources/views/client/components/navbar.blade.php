@@ -53,6 +53,26 @@
                         d="M1 1h15M1 7h15M1 13h15" />
                 </svg>
             </button>
+
+            {{-- Tombol Login dan Daftar / Nama dan Avatar --}}
+            @if (Auth::guard('siswa')->check())
+                {{-- Jika siswa sudah login --}}
+                <div class="flex items-center space-x-2">
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-white">
+                        {{ strtoupper(substr(Auth::guard('siswa')->user()->nama, 0, 1)) }} {{-- Avatar --}}
+                    </span>
+                    <span class="text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
+                    <form action="{{ route('siswa.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-gray-900 hover:underline">Logout</button>
+                    </form>
+                </div>
+            @else
+                {{-- Jika siswa belum login --}}
+                <a href="{{ route('siswa.login.form') }}" class="text-gray-900 hover:underline">Masuk</a>
+                <span class="text-gray-900">|</span>
+                <a href="{{ route('siswa.register.form') }}" class="text-gray-900 hover:underline">Daftar</a>
+            @endif
         </div>
 
         {{-- Navigation --}}
