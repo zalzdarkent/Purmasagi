@@ -83,8 +83,17 @@ class ContentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $contents = Content::where('course_id', $course->id)->get();
+
+        // Decode file paths for each content
+        foreach ($contents as $content) {
+            $content->file_paths = json_decode($content->file_paths);
+        }
+
+        return view('client.course.show', compact('course', 'contents'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

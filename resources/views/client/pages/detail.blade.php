@@ -58,21 +58,35 @@
                         </button>
                         <div id="pertemuan-{{ $content->pertemuan }}" class="hidden border-t border-gray-200 p-4">
                             <p class="mb-4 text-base text-gray-500">{{ $content->deskripsi_konten }}</p>
-                            <button data-modal-target="default-modal" data-modal-toggle="default-modal"
-                                class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
-                                type="button" onclick="playVideo()">
-                                <svg viewBox="0 0 24 24" class="mr-2 h-4 w-4" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-                                    <path
-                                        d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z"
-                                        stroke="#ffffff" stroke-width="2" stroke-linejoin="round"></path>
-                                </svg>
-                                Play
-                            </button>
+                            <div class="flex space-x-4">
+                                @foreach (json_decode($content->file_paths) as $file_path)
+                                    @if (strpos($file_path, '.mp4') !== false)
+                                        <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                                            type="button"
+                                            onclick="showMedia('{{ asset('storage/' . $file_path) }}', 'video')">
+
+                                            Video
+                                        </button>
+                                    @elseif (strpos($file_path, '.jpg') !== false || strpos($file_path, '.png') !== false)
+                                        <button data-modal-target="default-modal" data-modal-toggle="default-modal"
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                                            type="button"
+                                            onclick="showMedia('{{ asset('storage/' . $file_path) }}', 'image')">
+                                            Gambar
+                                        </button>
+                                    @else
+                                        <a href="{{ asset('storage/' . $file_path) }}" target="_blank"
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                            Dokumen
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
-                    {{-- Modal for video --}}
+                    {{-- Modal --}}
                     <div id="default-modal" tabindex="-1" aria-hidden="true"
                         class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
                         <div class="relative max-h-full w-full max-w-2xl p-4">
@@ -96,11 +110,8 @@
                                     </button>
                                 </div>
                                 {{-- Modal body --}}
-                                <div class="space-y-6 p-6">
-                                    <video id="courseVideo" class="w-full rounded-lg border bg-gray-200" controls>
-                                        <source src="{{ asset('storage/' . $content->video) }}" type="video/mp4">
-                                        Mohon maaf, video tidak dapat ditampilkan. Silakan coba lagi nanti.
-                                    </video>
+                                <div class="space-y-6 p-6" id="media-content">
+                                    {{-- Content (DOM) --}}
                                 </div>
                             </div>
                         </div>
