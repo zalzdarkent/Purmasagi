@@ -16,23 +16,49 @@
 
                 <div class="mt-10">
                     <div>
-                        {{-- !!!! --}}
-                        <form action="#" method="POST" class="space-y-6">
+                        @if ($errors->any())
+                            <div class="mb-4">
+                                @foreach ($errors->all() as $error)
+                                    <div class="text-sm text-red-500">{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <form action="{{ route('register') }}" method="POST" class="space-y-6">
+                            @csrf
+
                             <div>
                                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                                     address</label>
                                 <div class="mt-2">
                                     <input id="email" name="email" type="email" autocomplete="email" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    @error('email')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div>
-                                <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nama Lengkap
+                                <label for="nama" class="block text-sm font-medium leading-6 text-gray-900">Nama Lengkap
                                 </label>
                                 <div class="mt-2">
-                                    <input id="name" name="name" type="text" autocomplete="email" required
+                                    <input id="nama" name="nama" type="text" autocomplete="email" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    @error('nama')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="kelas" class="block text-sm font-medium leading-6 text-gray-900">Kelas
+                                </label>
+                                <div class="mt-2">
+                                    <input id="kelas" name="kelas" type="text" autocomplete="email" required
+                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    @error('kelas')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -43,15 +69,19 @@
                                     <input id="password" name="password" type="password" autocomplete="current-password"
                                         required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    @error('password')
+                                        <span class="text-sm text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div>
-                                <label for="confirm" class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi
+                                <label for="password_confirmation"
+                                    class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi
                                     Password</label>
                                 <div class="mt-2">
-                                    <input id="confirm" name="confirm" type="password" autocomplete="current-password"
-                                        required
+                                    <input id="password_confirmation" name="password_confirmation" type="password"
+                                        autocomplete="current-password" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 </div>
                             </div>

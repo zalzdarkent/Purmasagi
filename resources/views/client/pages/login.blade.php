@@ -16,7 +16,15 @@
 
                 <div class="mt-10">
                     <div>
-                        <form action="#" method="POST" class="space-y-2">
+                        @if ($errors->any())
+                            <div class="mb-4">
+                                @foreach ($errors->all() as $error)
+                                    <div class="text-sm text-red-500">{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <form action="{{ route('login') }}" method="POST" class="space-y-2">
+                            @csrf
                             <div>
                                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                                     address</label>
@@ -34,6 +42,13 @@
                                         required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                 </div>
+                            </div>
+
+                            <div class="flex items-center">
+                                <input id="remember" name="remember" type="checkbox"
+                                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <label for="remember" class="ml-3 block text-sm leading-6 text-gray-700">Ingat saya
+                                </label>
                             </div>
 
                             <div>

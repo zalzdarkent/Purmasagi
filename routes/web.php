@@ -8,6 +8,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\SiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,20 +21,28 @@ use App\Http\Controllers\Auth\AdminController;
 |
 */
 
-// Client Home
+// Client Route
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Client Courses
 Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
 Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
 
+Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/register', [SiswaController::class, 'register'])->name('register');
+
+Route::get('/login', [SiswaController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [SiswaController::class, 'login'])->name('login');
+
+Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
+
+
 // temporary route
-Route::get('/login', function () {
-    return view('client.pages.login');
-})->name('siswa.login.form');
-Route::get('/register', function () {
-    return view('client.pages.register');
-})->name('siswa.register.form');
+// Route::get('/login', function () {
+//     return view('client.pages.login');
+// })->name('siswa.login.form');
+// Route::get('/register', function () {
+//     return view('client.pages.register');
+// })->name('siswa.register.form');
 
 // Route untuk halaman login admin
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
