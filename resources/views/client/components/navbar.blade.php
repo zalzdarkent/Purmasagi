@@ -12,16 +12,6 @@
                 <span class="sr-only">Open user menu</span>
                 <img class="h-8 w-8 rounded-full" src="" alt="user photo">
             </button> --}}
-            <div class="space-x-3 pt-2 md:pt-0">
-                <a href="/login"
-                    class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 shadow-sm outline outline-1 outline-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                    Masuk
-                </a>
-                <a href="/register"
-                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                    Daftar
-                </a>
-            </div>
 
             {{-- Dropdown menu --}}
             <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
@@ -36,7 +26,7 @@
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Profil</a>
                     </li>
                     <li>
-                        <a href="#" -
+                        <a href="#"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Keluar
                         </a>
                     </li>
@@ -54,9 +44,7 @@
                 </svg>
             </button>
 
-            {{-- Tombol Login dan Daftar / Nama dan Avatar --}}
             @if (Auth::guard('siswa')->check())
-                {{-- Jika siswa sudah login --}}
                 <div class="flex items-center space-x-2">
                     <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-white">
                         {{ strtoupper(substr(Auth::guard('siswa')->user()->nama, 0, 1)) }} {{-- Avatar --}}
@@ -68,11 +56,18 @@
                     </form>
                 </div>
             @else
-                {{-- Jika siswa belum login --}}
-                <a href="{{ route('siswa.login.form') }}" class="text-gray-900 hover:underline">Masuk</a>
-                <span class="text-gray-900">|</span>
-                <a href="{{ route('siswa.register.form') }}" class="text-gray-900 hover:underline">Daftar</a>
+                <div class="space-x-3 pt-2 md:pt-0">
+                    <a href="/login"
+                        class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 shadow-sm outline outline-1 outline-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                        Masuk
+                    </a>
+                    <a href="/register"
+                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                        Daftar
+                    </a>
+                </div>
             @endif
+
         </div>
 
         {{-- Navigation --}}

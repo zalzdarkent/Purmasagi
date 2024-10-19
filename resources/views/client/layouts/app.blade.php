@@ -14,9 +14,10 @@
 
         @include('client.components.footer')
         @include('client.components.script')
+
         <!--Start of Tawk.to Script-->
 
-<!--End of Tawk.to Script-->
+        <!--End of Tawk.to Script-->
     </body>
 
 </html>
