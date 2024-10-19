@@ -42,18 +42,23 @@
         video.currentTime = 0;
     }
 
-    // Scroll Up Button
-    window.onscroll = function() {
-        const scrollBtn = document.getElementById('scrollUpBtn');
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            scrollBtn.classList.remove('hidden');
-        } else {
-            scrollBtn.classList.add('hidden');
-        }
-    };
+    // Scroll Up Button (Home)
+    if (window.location.pathname === '/') {
+        window.onscroll = function() {
+            const scrollBtn = document.getElementById('scrollUpBtn');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollBtn.classList.remove('hidden');
+            } else {
+                scrollBtn.classList.add('hidden');
+            }
+        };
+    } else {
+        window.onscroll = null;
+    }
+
 
     // Scroll smooth
-    document.getElementById('scrollUpBtn').onclick = function() {
+    function scrollToTop() {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
