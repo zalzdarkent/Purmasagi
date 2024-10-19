@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -40,11 +42,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'admin' => [
+        'siswa' => [ // Guard untuk siswa
             'driver' => 'session',
-            'provider' => 'admins', // provider admin
+            'provider' => 'siswas',
+        ],
+        'admin' => [ // Guard untuk admin
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -68,9 +75,13 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'siswas' => [  // Provider untuk siswa
+            'driver' => 'eloquent',
+            'model' => App\Models\Siswa::class,
+        ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class, // Model untuk admin
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [

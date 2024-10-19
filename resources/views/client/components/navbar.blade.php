@@ -14,20 +14,36 @@
                         d="M1 1h15M1 7h15M1 13h15" />
                 </svg>
             </button>
+
+            {{-- Tombol Login dan Daftar / Nama dan Avatar --}}
+            @if (Auth::guard('siswa')->check())
+                {{-- Jika siswa sudah login --}}
+                <div class="flex items-center space-x-2">
+                    <span class="inline-flex items-center justify-center w-8 h-8 text-white bg-indigo-600 rounded-full">
+                        {{ strtoupper(substr(Auth::guard('siswa')->user()->nama, 0, 1)) }} {{-- Avatar --}}
+                    </span>
+                    <span class="text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
+                    <form action="{{ route('siswa.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="text-gray-900 hover:underline">Logout</button>
+                    </form>
+                </div>
+            @else
+                {{-- Jika siswa belum login --}}
+                <a href="{{ route('siswa.login.form') }}" class="text-gray-900 hover:underline">Masuk</a>
+                <span class="text-gray-900">|</span>
+                <a href="{{ route('siswa.register.form') }}" class="text-gray-900 hover:underline">Daftar</a>
+            @endif
         </div>
 
         {{-- Navigation --}}
         <div class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto" id="navbar-user">
-            <ul
-                class="mt-4 flex flex-col gap-y-4 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium rtl:space-x-reverse dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
+            <ul class="mt-4 flex flex-col gap-y-4 rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium rtl:space-x-reverse dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
                 <li>
-                    <a href="/"
-                        class="{{ request()->fullUrlIs(url('/')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline"
-                        aria-current="page">Beranda</a>
+                    <a href="/" class="{{ request()->fullUrlIs(url('/')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline" aria-current="page">Beranda</a>
                 </li>
                 <li>
-                    <a href="/courses"
-                        class="{{ request()->fullUrlIs(url('/courses')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Kelas</a>
+                    <a href="/courses" class="{{ request()->fullUrlIs(url('/courses')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Kelas</a>
                 </li>
             </ul>
         </div>

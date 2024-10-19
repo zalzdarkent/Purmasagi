@@ -21,31 +21,19 @@ use App\Http\Controllers\Auth\AdminController;
 */
 
 // Client Home
-Route::resource('/', HomeController::class);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Client Courses
 Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
 Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
 
-
 // temporary route
 Route::get('/login', function () {
     return view('client.pages.login');
-})->name('login');
+})->name('siswa.login.form');
 Route::get('/register', function () {
     return view('client.pages.register');
-})->name('register');
-
-
-
-
-
-
-
-// Rute untuk login umum
-// Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-// Route::post('login', [LoginController::class, 'login']);
-// Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+})->name('siswa.register.form');
 
 // Route untuk halaman login admin
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
