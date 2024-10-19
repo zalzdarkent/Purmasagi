@@ -11,9 +11,9 @@
                     aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
                     <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-white">
-                        {{ strtoupper(substr(Auth::guard('siswa')->user()->nama, 0, 1)) }}
-                    </span>
-                    <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
+                        {{ strtoupper(collect(explode(' ', Auth::guard('siswa')->user()->nama))->take(2)->map(function($word) { return substr($word, 0, 1); })->join('')) }}
+                    </span>                    
+                    {{-- <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span> --}}
                 </button>
 
                 {{-- Dropdown menu --}}
@@ -22,8 +22,8 @@
                     <div class="px-4 py-3">
                         <span class="block truncate text-sm text-gray-500 dark:text-gray-400">Kelas
                             {{ Auth::guard('siswa')->user()->kelas }}</span>
-                        <span
-                            class="block truncate text-sm text-gray-500 dark:text-gray-400">{{ Auth::guard('siswa')->user()->email }}</span>
+                        {{-- <span
+                            class="block truncate text-sm text-gray-500 dark:text-gray-400">{{ Auth::guard('siswa')->user()->email }}</span> --}}
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>

@@ -22,10 +22,17 @@
                     Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi.
                 </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
-                    <a href="/login"
-                        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                        Mulai Sekarang!
-                    </a>
+                    @if (Auth::guard('siswa')->check())
+                        <a href="{{route("courses.client")}}"
+                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                            Mulai Sekarang!
+                        </a>
+                    @else
+                        <a href="/login"
+                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                            Mulai Sekarang!
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -41,58 +48,62 @@
         </div>
 
         {{-- Courses Card --}}
-        <div class="mx-auto my-10 max-w-screen-xl">
+        <div class="mx-auto my-16 max-w-screen-xl px-10 lg:px-20">
             <h1 class="mb-12 text-center text-3xl font-bold text-gray-900">Kelas Terbaru</h1>
-            @if ($latestCourses->count() > 0)
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
-                    @foreach ($latestCourses as $course)
-                        <div
-                            class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
-                            <a href="/course/{{ $course->id }}">
-                                <img class="rounded-t-lg object-cover"
-                                    src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
-                                    alt="{{ $course->judul }}" />
-                            </a>
-                            <div class="flex flex-grow flex-col p-5">
-                                <div class="flex-grow">
-                                    <div class="mb-2 flex items-center space-x-3">
-                                        <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
-                                        <a href="#" class="text-sm text-gray-600 lg:text-base">Nama Guru</a>
-                                    </div>
-                                    <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
-                                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
-                                            {{ $course->judul }}</h5>
-                                    </a>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+                @foreach ($latestCourses as $course)
+                    <div
+                        class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
+                        <a href="/course/{{ $course->id }}">
+                            <img class="rounded-t-lg object-cover"
+                                src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
+                                alt="{{ $course->judul }}" />
+                        </a>
+                        <div class="flex flex-grow flex-col p-5">
+                            <div class="flex-grow">
+                                <div class="mb-2 flex items-center space-x-3">
+                                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
+                                    <a href="#" class="text-sm text-gray-600 lg:text-base">{{$course->admin->name}}</a>
                                 </div>
-                                <div class="flex-grow">
-                                    <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
-                                        {{ $course->deskripsi }}
-                                    </p>
-                                </div>
-                                @auth
-                                    <a href="/course/{{ $course->id }}"
-                                        class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                                        Pelajari
-                                        <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                        </svg>
-                                    </a>
-                                @else
-                                    <a href="/register"
-                                        class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                                        Daftar
-                                    </a>
-                                @endauth
+                                <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
+                                    <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
+                                        {{ $course->judul }}
+                                    </h5>
+                                </a>
                             </div>
+                            <div class="flex-grow">
+                                <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
+                                    {{ $course->deskripsi }}
+                                </p>
+                            </div>
+                            @if (Auth::guard('siswa')->check())
+                                <!-- Tombol jika sudah login -->
+                                <a href="/course/{{ $course->id }}"
+                                    class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                    Pelajari
+                                    <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
+                            @else
+                                <!-- Tombol jika belum login -->
+                                <a href="/register"
+                                    class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                    Daftar
+                                    <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <h2 class="text-center text-gray-500">Belum ada kelas yang tersedia saat ini</h2>
-            @endif
-
+                    </div>
+                @endforeach
+            </div>
+            {{-- Pagination --}}
             <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
                 <a href="/courses"
                     class="mb-8 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 lg:mb-0">Lihat

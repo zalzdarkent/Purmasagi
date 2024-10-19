@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Carbon\Carbon;
+use App\Models\Siswa;
 use App\Models\Course;
 use App\Models\Content;
 use App\Models\Kegiatan;
@@ -20,6 +22,12 @@ class DashboardController extends Controller
 
         // Menghitung total kegiatan
         $eventCount = Kegiatan::count();
+        // Menghitung total guru (hanya untuk admin)
+        $teacherCount = Admin::where('role', 'guru')->count();
+
+        // Menghitung total siswa (guard siswa)
+        $studentCount = Siswa::count();
+
         // Array berisi kata-kata penyemangat
         $motivationalQuotes = [
             'Keep inspiring your students with passion and creativity!',
@@ -42,6 +50,6 @@ class DashboardController extends Controller
         $randomQuote = $motivationalQuotes[$quoteIndex];
 
         // Kirim ke view
-        return view('admin.layouts.dashboard', compact('courseCount', 'contentCount', 'eventCount', 'randomQuote'));
+        return view('admin.layouts.dashboard', compact('courseCount', 'contentCount', 'eventCount', 'teacherCount', 'studentCount', 'randomQuote'));
     }
 }

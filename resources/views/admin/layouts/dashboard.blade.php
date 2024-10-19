@@ -8,7 +8,6 @@
             border-radius: 8px;
             overflow: hidden;
             background-color: #f8f9fa;
-            /* Light background */
         }
 
         .hover-card:hover {
@@ -18,27 +17,30 @@
 
         .icon-style {
             font-size: 60px;
-            /* Larger icon size */
             margin-bottom: 10px;
             color: #ffffff;
             padding: 20px;
-            /* Increase padding */
             border-radius: 50%;
         }
 
         .icon-style.bx-book {
             background-color: #007bff;
-            /* Blue for courses */
         }
 
         .icon-style.bx-file {
             background-color: #28a745;
-            /* Green for content */
         }
 
         .icon-style.bx-calendar-event {
             background-color: #ffc107;
-            /* Yellow for events */
+        }
+
+        .icon-style.bx-user {
+            background-color: #6f42c1; /* Purple for teachers */
+        }
+
+        .icon-style.bx-group {
+            background-color: #17a2b8; /* Teal for students */
         }
 
         .card-title {
@@ -47,10 +49,10 @@
 
         .card-text {
             font-size: 24px;
-            /* Larger text for counts */
             font-weight: bold;
         }
     </style>
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
             <div class="col-lg-12 mb-4 order-0">
@@ -95,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            
             @if (Auth::user()->role == 'admin')
                 <div class="col-lg-4 mb-4">
                     <div class="card hover-card text-center">
@@ -105,7 +108,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card hover-card text-center">
+                        <div class="card-body">
+                            <i class="bx bx-user icon-style"></i>
+                            <h5 class="card-title">Total Teachers</h5>
+                            <p class="card-text">{{ $teacherCount }}</p>
+                        </div>
+                    </div>
+                </div>
             @endif
+
+            <div class="col-lg-4 mb-4">
+                <div class="card hover-card text-center">
+                    <div class="card-body">
+                        <i class="bx bx-group icon-style"></i>
+                        <h5 class="card-title">Total Students</h5>
+                        <p class="card-text">{{ $studentCount }}</p>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
