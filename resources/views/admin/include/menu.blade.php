@@ -70,7 +70,7 @@
         </li>
         <li class="menu-item {{ Route::is('guru.*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-palette"></i>
+                <i class="menu-icon tf-icons bx bx-chalkboard"></i>
                 <div data-i18n="Account Settings">Manajemen User</div>
             </a>
             <ul class="menu-sub">

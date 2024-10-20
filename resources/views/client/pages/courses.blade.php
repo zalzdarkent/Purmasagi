@@ -42,9 +42,29 @@
                         </a>
                         <div class="flex flex-grow flex-col p-5">
                             <div class="flex-grow">
+                                @php
+                                    $initials = strtoupper(
+                                        collect(explode(' ', $course->admin->name))
+                                            ->take(2)
+                                            ->map(function ($word) {
+                                                return substr($word, 0, 1);
+                                            })
+                                            ->join(''),
+                                    );
+                                    $avatarColor = \App\Helpers\TextHelpers::getColorFromName($course->admin->name);
+                                @endphp
                                 <div class="mb-2 flex items-center space-x-3">
                                     {{-- !!!! --}}
-                                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
+                                    @if ($course->admin->foto_profil)
+                                        <img class="h-8 w-8 rounded-full"
+                                            src="{{ asset('storage/' . $course->admin->foto_profil) }}"
+                                            alt="{{ $course->admin->name }}">
+                                    @else
+                                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                                            style="background-color: {{ $avatarColor }}; color: white;">
+                                            {{ $initials }}
+                                        </span>
+                                    @endif
                                     <a href="#"
                                         class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</a>
                                 </div>
@@ -57,15 +77,29 @@
                             <p class="mb-3 line-clamp-2 h-10 text-justify text-sm text-gray-600 md:h-12 lg:text-base">
                                 {{ $course->deskripsi }}
                             </p>
-                            <a href="/course/{{ $course->id }}"
-                                class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                                Pelajari
-                                <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                </svg>
-                            </a>
+                            @if (Auth::guard('siswa')->check())
+                                <!-- Tombol jika sudah login -->
+                                <a href="/course/{{ $course->id }}"
+                                    class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                    Pelajari
+                                    <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
+                            @else
+                                <!-- Tombol jika belum login -->
+                                <a href="/register"
+                                    class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                    Daftar
+                                    <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @endforeach

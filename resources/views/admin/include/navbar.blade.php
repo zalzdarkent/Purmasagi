@@ -27,7 +27,7 @@
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
                     <img src="{{ Auth::user()->foto_profil ? asset('storage/' . Auth::user()->foto_profil) : asset('assets/img/avatars/1.png') }}"
-                        alt class="w-px-40 h-auto rounded-circle"
+                        alt="" class="w-px-40 h-auto rounded-circle"
                         style="width: 100px; height: 100px; object-fit: cover;" />
                 </div>
             </a>
