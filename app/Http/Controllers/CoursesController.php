@@ -23,7 +23,7 @@ class CoursesController extends Controller
     public function indexCoursesClient()
     {
         // $courses = Course::all();
-        $courses = Course::paginate(3);
+        $courses = Course::paginate(6);
         return view('client.pages.courses', compact('courses'));
     }
 
