@@ -27,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
 Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
 
+Route::get('/activities', [KegiatanController::class, 'indexActivitiesClient'])->name('activities');
+
 Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [SiswaController::class, 'register'])->name('register');
 
@@ -37,9 +39,9 @@ Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
 
 
 // temporary route
-// Route::get('/login', function () {
-//     return view('client.pages.login');
-// })->name('siswa.login.form');
+Route::get('/teachers', function () {
+    return view('client.pages.teachers');
+})->name('teachers');
 // Route::get('/register', function () {
 //     return view('client.pages.register');
 // })->name('siswa.register.form');
