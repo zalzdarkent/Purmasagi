@@ -18,9 +18,29 @@
             <div class="text-center">
                 <h1 class="text-balance text-4xl font-bold tracking-tight text-white">{{ $course->judul }}</h1>
                 <p class="mt-6 text-center text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}
+                    @php
+                        $initials = strtoupper(
+                            collect(explode(' ', $course->admin->name))
+                                ->take(2)
+                                ->map(function ($word) {
+                                    return substr($word, 0, 1);
+                                })
+                                ->join(''),
+                        );
+                        $avatarColor = \App\Helpers\TextHelpers::getColorFromName($course->admin->name);
+                    @endphp
                 <div class="mt-6 flex items-center justify-center space-x-4">
-                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
-                    <span class="text-sm text-white">Diajarkan oleh <a href="#" class="underline">{{$course->admin->name}}</a></span>
+                    @if ($course->admin->foto_profil)
+                        <img class="h-8 w-8 rounded-full" src="{{ asset('storage/' . $course->admin->foto_profil) }}"
+                            alt="{{ $course->admin->name }}">
+                    @else
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                            style="background-color: {{ $avatarColor }}; color: white;">
+                            {{ $initials }}
+                        </span>
+                    @endif
+                    <span class="text-sm text-white">Diajarkan oleh <a href="#"
+                            class="underline">{{ $course->admin->name }}</a></span>
                 </div>
 
                 </p>

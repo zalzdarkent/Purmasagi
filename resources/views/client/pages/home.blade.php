@@ -73,9 +73,9 @@
                                     $avatarColor = \App\Helpers\TextHelpers::getColorFromName($course->admin->name);
                                 @endphp
                                 <div class="mb-2 flex items-center space-x-3">
-                                    @if ($course->admin->avatar)
+                                    @if ($course->admin->foto_profil)
                                         <img class="h-8 w-8 rounded-full"
-                                            src="{{ asset('storage/' . $course->admin->avatar) }}"
+                                            src="{{ asset('storage/' . $course->admin->foto_profil) }}"
                                             alt="{{ $course->admin->name }}">
                                     @else
                                         <span class="inline-flex h-8 w-8 items-center justify-center rounded-full"

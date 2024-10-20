@@ -57,4 +57,6 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('/content/delete-file', [ContentController::class, 'deleteFile'])->name('content.delete-file');
     Route::resource('kegiatan', KegiatanController::class);
     Route::resource('logo', LogoController::class);
+    Route::post('profile/update', [AdminController::class, 'updateProfile'])->name('update.profile');
+    Route::get('profile/edit', [AdminController::class, 'editProfile'])->name('edit.profile');
 });

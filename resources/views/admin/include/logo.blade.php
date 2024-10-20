@@ -1,4 +1,4 @@
-<a href="index.html" class="app-brand-link">
+<a href="/admin" class="app-brand-link">
     <span class="app-brand-logo demo">
       <svg
         width="25"
