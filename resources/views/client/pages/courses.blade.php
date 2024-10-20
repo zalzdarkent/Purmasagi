@@ -36,13 +36,14 @@
                     <div
                         class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
                         <a href="/course/{{ $course->id }}">
-                            <img class="rounded-t-lg object-cover"
+                            <img class="h-48 w-full rounded-t-lg object-cover"
                                 src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
                                 alt="{{ $course->judul }}" />
                         </a>
                         <div class="flex flex-grow flex-col p-5">
                             <div class="flex-grow">
                                 <div class="mb-2 flex items-center space-x-3">
+                                    {{-- !!!! --}}
                                     <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
                                     <a href="#"
                                         class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</a>
@@ -53,11 +54,9 @@
                                     </h5>
                                 </a>
                             </div>
-                            <div class="flex-grow">
-                                <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
-                                    {{ $course->deskripsi }}
-                                </p>
-                            </div>
+                            <p class="mb-3 line-clamp-2 h-10 text-justify text-sm text-gray-600 md:h-12 lg:text-base">
+                                {{ $course->deskripsi }}
+                            </p>
                             <a href="/course/{{ $course->id }}"
                                 class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                                 Pelajari

@@ -3,9 +3,9 @@
 @section('title', 'Beranda')
 
 @section('container')
-    <div class="mx-auto px-10 py-10 lg:px-20">
+    <div class="mx-auto px-2 py-10 lg:px-20">
         {{-- Hero Section --}}
-        <div class="relative isolate">
+        <div class="relative isolate px-8 lg:px-0">
             <!-- Gradient Background -->
             <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                 aria-hidden="true">
@@ -39,23 +39,23 @@
 
         {{-- Card --}}
         <div class="mb-36 flex flex-wrap items-center justify-center gap-y-6 space-x-0 md:space-x-8">
-            <x-card count="100+" title="Pelajar"
-                description="Lebih dari 100 pelajar telah bergabung dengan kelas kami untuk meningkatkan keterampilan mereka." />
-            <x-card count="10" title="Kelas Video"
+            <x-card count="{{ $studentCountFormatted }}" title="Pelajar"
+                description="{{ $studentCount }} pelajar telah bergabung dengan kelas kami untuk meningkatkan keterampilan mereka." />
+            <x-card count="{{ $courseCountFormatted }}" title="Kelas Video"
                 description="Akses kelas video yang memungkinkan Anda belajar tanpa batasan geografis dan waktu." />
-            <x-card count="5" title="Guru"
+            <x-card count="{{ $teacherCountFormatted }}" title="Guru"
                 description="Belajar dari guru berpengalaman yang siap membimbing Anda dalam perjalanan pendidikan Anda." />
         </div>
 
         {{-- Courses Card --}}
         <div class="mx-auto my-16 max-w-screen-xl px-10 lg:px-20">
             <h1 class="mb-12 text-center text-3xl font-bold text-gray-900">Kelas Terbaru</h1>
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-12 xl:grid-cols-3">
                 @foreach ($latestCourses as $course)
                     <div
                         class="mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
                         <a href="/course/{{ $course->id }}">
-                            <img class="rounded-t-lg object-cover"
+                            <img class="h-48 w-full rounded-t-lg object-cover"
                                 src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
                                 alt="{{ $course->judul }}" />
                         </a>
@@ -92,11 +92,9 @@
                                     </h5>
                                 </a>
                             </div>
-                            <div class="flex-grow">
-                                <p class="mb-3 line-clamp-3 text-justify text-sm text-gray-600 lg:text-base">
-                                    {{ $course->deskripsi }}
-                                </p>
-                            </div>
+                            <p class="mb-3 line-clamp-2 h-10 text-justify text-sm text-gray-600 lg:h-12 lg:text-base">
+                                {{ $course->deskripsi }}
+                            </p>
                             @if (Auth::guard('siswa')->check())
                                 <!-- Tombol jika sudah login -->
                                 <a href="/course/{{ $course->id }}"
@@ -163,7 +161,7 @@
         </div>
 
         {{-- CTA --}}
-        <div class="mb-10 flex flex-col items-center justify-between md:flex-row">
+        <div class="mb-10 flex flex-col items-center justify-between px-8 md:flex-row lg:px-0">
             <div class="w-full space-y-6 md:w-1/2 md:p-4">
                 <h1 class="text-4xl font-bold text-gray-900">Temukan Pengajar Terbaik!</h1>
                 <p class="text-gray-700 lg:text-lg">Cari guru yang sesuai dengan kebutuhanmu dan mulailah belajar dengan

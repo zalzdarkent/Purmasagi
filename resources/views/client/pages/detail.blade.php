@@ -20,7 +20,8 @@
                 <p class="mt-6 text-center text-base leading-8 text-gray-300 lg:text-lg">{{ $course->deskripsi }}
                 <div class="mt-6 flex items-center justify-center space-x-4">
                     <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
-                    <span class="text-sm text-white">Diajarkan oleh <a href="#" class="underline">{{$course->admin->name}}</a></span>
+                    <span class="text-sm text-white">Diajarkan oleh <a href="#"
+                            class="underline">{{ $course->admin->name }}</a></span>
                 </div>
 
                 </p>
@@ -57,11 +58,11 @@
                         </button>
                         <div id="pertemuan-{{ $content->pertemuan }}" class="hidden border-t border-gray-200 p-4">
                             <p class="mb-4 text-base text-gray-500">{{ $content->deskripsi_konten }}</p>
-                            <div class="flex space-x-4">
+                            <div class="flex flex-wrap gap-2 md:gap-4">
                                 @foreach (json_decode($content->file_paths) as $file_path)
                                     @if (strpos($file_path, '.mp4') !== false)
                                         <button data-modal-target="default-modal" data-modal-toggle="default-modal"
-                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 md:text-sm"
                                             type="button"
                                             onclick="showMedia('{{ asset('storage/' . $file_path) }}', 'video')">
 
@@ -69,14 +70,14 @@
                                         </button>
                                     @elseif (strpos($file_path, '.jpg') !== false || strpos($file_path, '.png') !== false)
                                         <button data-modal-target="default-modal" data-modal-toggle="default-modal"
-                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 md:text-sm"
                                             type="button"
                                             onclick="showMedia('{{ asset('storage/' . $file_path) }}', 'image')">
                                             Gambar
                                         </button>
                                     @else
                                         <a href="{{ asset('storage/' . $file_path) }}" target="_blank"
-                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                            class="mt-2 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 md:text-sm">
                                             Dokumen
                                         </a>
                                     @endif

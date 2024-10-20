@@ -20,21 +20,22 @@
                     <source src="${filePath}" type="video/mp4">
                     Mohon maaf, video tidak dapat ditampilkan. Silakan coba lagi nanti.
                 </video>
-                <a href="${filePath}" download class="mt-4 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 w-fit">
+                <a href="${filePath}" download class="mt-4 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-xs md:text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 w-fit">
                     Unduh Video
                 </a>
             `;
+
         } else if (type === 'image') {
             mediaContent.innerHTML = `
                 <img src="${filePath}" class="max-w-full h-auto rounded-lg shadow-lg" alt="Image" />
-                <a href="${filePath}" download class="mt-4 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 w-fit">
+                <a href="${filePath}" download class="mt-4 flex rounded-lg bg-indigo-600 px-5 py-2.5 text-center text-xs md:text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 w-fit">
                     Unduh Gambar
                 </a>
             `;
         }
     }
 
-    // Stop video
+    // Stop video on background
     function stopVideo() {
         const video = document.getElementById('courseVideo');
 
