@@ -59,4 +59,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::resource('logo', LogoController::class);
     Route::post('profile/update', [AdminController::class, 'updateProfile'])->name('update.profile');
     Route::get('profile/edit', [AdminController::class, 'editProfile'])->name('edit.profile');
+    Route::get('daftar-guru', [AdminController::class, 'index'])->name('guru.index');
+    Route::get('tambah-guru', [AdminController::class, 'create'])->name('guru.create');
+    Route::post('store-guru', [AdminController::class, 'store'])->name('guru.store');
 });

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('logo', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('admin_id'); 
             $table->string('nama_logo');
             $table->string('gambar_logo');
+            $table->foreign('admin_id')->references('id')->on('admin')->onDelete('cascade');
             $table->timestamps();
         });
     }

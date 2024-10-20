@@ -65,5 +65,26 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Guru</span>
+        </li>
+        <li class="menu-item {{ Route::is('guru.*') ? 'open active' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-palette"></i>
+                <div data-i18n="Account Settings">Manajemen User</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('guru.create') ? 'active' : '' }}">
+                    <a href="{{ route('guru.create') }}" class="menu-link">
+                        <div data-i18n="Account">Tambah Guru</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('guru.index') ? 'active' : '' }}">
+                    <a href="{{ route('guru.index') }}" class="menu-link">
+                        <div data-i18n="Notifications">Daftar Guru</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     @endif
 </ul>

@@ -13,6 +13,12 @@ class Logo extends Model
 
     protected $fillable = [
         'nama_logo',
-        'gambar_logo'
+        'gambar_logo',
+        'admin_id'
     ];
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }

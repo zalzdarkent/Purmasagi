@@ -12,7 +12,8 @@ class LogoController extends Controller
      */
     public function index()
     {
-        $logos = Logo::all();
+        $admin = auth()->user();
+        $logos = $admin->logo;
         return view("admin.logo.index", compact('logos'));
     }
 
@@ -32,7 +33,7 @@ class LogoController extends Controller
         // Validasi input dari request
         $validasi = $request->validate([
             'nama_logo' => "required|string|max:255",
-            'gambar_logo' => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048"
+            'gambar_logo' => "required|image|mimes:jpeg,png,jpg,gif,svg|max:5048"
         ]);
 
         // Menyimpan gambar logo jika ada
@@ -44,7 +45,11 @@ class LogoController extends Controller
         }
 
         // Membuat logo baru dengan data yang valid
-        Logo::create($validasi);
+        Logo::create([
+            'admin_id' => auth()->id(),
+            'nama_logo' => $validasi['nama_logo'], // Menggunakan data validasi
+            'gambar_logo' => $validasi['gambar_logo'],
+        ]);
 
         // Redirect ke index dengan pesan sukses
         return redirect()->route('logo.index')->with('success', "Logo berhasil ditambahkan!");

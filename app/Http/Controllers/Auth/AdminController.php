@@ -121,4 +121,16 @@ class AdminController extends Controller
 
         return view('admin.profile.edit', compact('admin'));
     }
+
+    public function index() {
+        return view('admin.guru.index');
+    }
+
+    public function create() {
+        return view('admin.guru.index');
+    }
+
+    public function store(Request $request) {
+        
+    }
 }

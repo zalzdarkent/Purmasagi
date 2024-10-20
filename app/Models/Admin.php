@@ -24,6 +24,10 @@ class Admin extends Authenticatable
     {
         return $this->hasMany(Kegiatan::class, 'admin_id');
     }
+    public function logo()
+    {
+        return $this->hasMany(Logo::class, 'admin_id');
+    }
 
 
     protected $fillable = [

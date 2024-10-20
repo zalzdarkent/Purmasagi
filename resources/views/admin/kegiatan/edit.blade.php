@@ -95,7 +95,6 @@
                     if (!validImageTypes.includes(file.type) || file.size > 10485760) {
                         gambarError.style.display = 'block';
                         gambarPreview.style.display = 'none'; // Sembunyikan gambar jika tidak valid
-                        saveButton.disabled = true;
                     } else {
                         gambarError.style.display = 'none';
 
@@ -106,19 +105,20 @@
                             gambarPreview.style.display = 'block'; // Tampilkan preview gambar
                         };
                         reader.readAsDataURL(file);
-
-                        checkFormValidity(); // Periksa validitas form setelah memuat gambar
                     }
                 }
+                checkFormValidity(); // Periksa validitas form setelah memuat gambar
             });
 
             // Fungsi untuk memeriksa validitas seluruh form (gambar dan waktu)
             function checkFormValidity() {
                 const file = gambarInput.files[0];
                 const waktuValue = waktuInput.value;
+                const isWaktuValid = /^\d{4}$/.test(waktuValue);
 
-                if (file && validImageTypes.includes(file.type) && file.size <= 10485760 && /^\d{4}$/.test(
-                        waktuValue)) {
+                // Jika tidak ada file yang baru diupload (berarti gambar tetap) atau file valid, serta waktu valid, enable tombol
+                if ((!file || (file && validImageTypes.includes(file.type) && file.size <= 10485760)) &&
+                    isWaktuValid) {
                     saveButton.disabled = false; // Enable tombol save jika semua valid
                 } else {
                     saveButton.disabled = true; // Disable tombol save jika ada yang tidak valid
