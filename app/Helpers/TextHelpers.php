@@ -25,4 +25,15 @@ class TextHelpers {
 
         return $result;
     }
+
+    // Fungsi untuk menghasilkan warna berdasarkan nama
+    public static function getColorFromName($name) {
+        // Menghasilkan nilai hash dari nama
+        $hash = crc32($name);
+        // Menghasilkan hue dari 0-360
+        $hue = $hash % 360; // Menggunakan modulus untuk mendapatkan hue
+
+        // Menggunakan HSL untuk menghasilkan warna
+        return "hsl($hue, 70%, 50%)"; // Saturation 70%, Lightness 50%
+    }
 }

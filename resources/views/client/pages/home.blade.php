@@ -23,7 +23,7 @@
                 </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
                     @if (Auth::guard('siswa')->check())
-                        <a href="{{route("courses.client")}}"
+                        <a href="{{ route('courses.client') }}"
                             class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                             Mulai Sekarang!
                         </a>
@@ -61,9 +61,30 @@
                         </a>
                         <div class="flex flex-grow flex-col p-5">
                             <div class="flex-grow">
+                                @php
+                                    $initials = strtoupper(
+                                        collect(explode(' ', $course->admin->name))
+                                            ->take(2)
+                                            ->map(function ($word) {
+                                                return substr($word, 0, 1);
+                                            })
+                                            ->join(''),
+                                    );
+                                    $avatarColor = \App\Helpers\TextHelpers::getColorFromName($course->admin->name);
+                                @endphp
                                 <div class="mb-2 flex items-center space-x-3">
-                                    <img class="h-8 w-8 rounded-full bg-gray-800" src="" alt="">
-                                    <a href="#" class="text-sm text-gray-600 lg:text-base">{{$course->admin->name}}</a>
+                                    @if ($course->admin->avatar)
+                                        <img class="h-8 w-8 rounded-full"
+                                            src="{{ asset('storage/' . $course->admin->avatar) }}"
+                                            alt="{{ $course->admin->name }}">
+                                    @else
+                                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                                            style="background-color: {{ $avatarColor }}; color: white;">
+                                            {{ $initials }}
+                                        </span>
+                                    @endif
+                                    <a href="#"
+                                        class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</a>
                                 </div>
                                 <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
                                     <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">

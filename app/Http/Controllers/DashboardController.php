@@ -52,4 +52,9 @@ class DashboardController extends Controller
         // Kirim ke view
         return view('admin.layouts.dashboard', compact('courseCount', 'contentCount', 'eventCount', 'teacherCount', 'studentCount', 'randomQuote'));
     }
+
+    // public function profile() {
+    //     $users = Admin::all();
+    //     return view('admin.include.navbar', compact('users'));
+    // }
 }

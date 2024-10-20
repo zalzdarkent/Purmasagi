@@ -7,12 +7,26 @@
             {{-- User info --}}
             @if (Auth::guard('siswa')->check())
                 {{-- User icon --}}
+                @php
+                    // Menghasilkan inisial nama pengguna
+                    $initials = strtoupper(
+                        collect(explode(' ', Auth::guard('siswa')->user()->nama))
+                            ->take(2)
+                            ->map(function ($word) {
+                                return substr($word, 0, 1);
+                            })
+                            ->join(''),
+                    );
+                    // Menghasilkan warna berdasarkan nama pengguna
+                    $avatarColor = \App\Helpers\TextHelpers::getColorFromName(Auth::guard('siswa')->user()->nama);
+                @endphp
                 <button type="button" class="flex items-center space-x-2 rounded p-1 hover:bg-gray-100"
                     aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 text-white">
-                        {{ strtoupper(collect(explode(' ', Auth::guard('siswa')->user()->nama))->take(2)->map(function($word) { return substr($word, 0, 1); })->join('')) }}
-                    </span>                    
+                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                        style="background-color: {{ $avatarColor }}; color: white;">
+                        {{ $initials }}
+                    </span>
                     {{-- <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span> --}}
                 </button>
 
@@ -20,6 +34,7 @@
                 <div class="z-50 my-4 hidden list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
                     id="user-dropdown">
                     <div class="px-4 py-3">
+                        <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
                         <span class="block truncate text-sm text-gray-500 dark:text-gray-400">Kelas
                             {{ Auth::guard('siswa')->user()->kelas }}</span>
                         {{-- <span
