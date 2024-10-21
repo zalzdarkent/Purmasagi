@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $eventCount = Kegiatan::count();
         // Menghitung total guru (hanya untuk admin)
         $teacherCount = Admin::where('role', 'guru')->count();
+        $adminCount = Admin::where('role', 'admin')->count();
 
         // Menghitung total siswa (guard siswa)
         $studentCount = Siswa::count();
@@ -50,7 +51,7 @@ class DashboardController extends Controller
         $randomQuote = $motivationalQuotes[$quoteIndex];
 
         // Kirim ke view
-        return view('admin.layouts.dashboard', compact('courseCount', 'contentCount', 'eventCount', 'teacherCount', 'studentCount', 'randomQuote'));
+        return view('admin.layouts.dashboard', compact('courseCount', 'contentCount', 'eventCount', 'teacherCount', 'studentCount', 'randomQuote', 'adminCount'));
     }
 
     // public function profile() {

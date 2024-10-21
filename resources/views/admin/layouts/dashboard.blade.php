@@ -38,6 +38,9 @@
         .icon-style.bx-user {
             background-color: #6f42c1; /* Purple for teachers */
         }
+        .icon-style.bx-user-pin {
+            background-color: maroon; /* Purple for teachers */
+        }
 
         .icon-style.bx-group {
             background-color: #17a2b8; /* Teal for students */
@@ -114,6 +117,15 @@
                             <i class="bx bx-user icon-style"></i>
                             <h5 class="card-title">Total Teachers</h5>
                             <p class="card-text">{{ $teacherCount }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card hover-card text-center">
+                        <div class="card-body">
+                            <i class="bx bx-user-pin icon-style"></i>
+                            <h5 class="card-title">Total Admin</h5>
+                            <p class="card-text">{{ $adminCount }}</p>
                         </div>
                     </div>
                 </div>
