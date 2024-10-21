@@ -75,7 +75,12 @@ class SiswaController extends Controller
     }
 
     public function index() {
-        $siswa = Siswa::all();
-        return view('admin.siswa.index');
+        $siswas = Siswa::all();
+        return view('admin.siswa.index', compact('siswas'));
+    }
+
+    public function destroy(string $id) {
+        $siswa = Siswa::find($id);
+        $siswa->delete();
     }
 }

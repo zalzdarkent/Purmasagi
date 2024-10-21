@@ -66,4 +66,5 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::post('store-guru', [AdminController::class, 'store'])->name('guru.store');
     Route::delete('hapus-guru', [AdminController::class, 'destroy'])->name('guru.destroy');
     Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
+    Route::delete('hapus-siswa', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });

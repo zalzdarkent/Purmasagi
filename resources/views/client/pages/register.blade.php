@@ -100,8 +100,8 @@
         function validatePassword() {
             const password = document.getElementById('password').value;
             const passwordError = document.getElementById('passwordError');
-            if (password.length < 8) {
-                passwordError.textContent = 'Password harus memiliki minimal 8 karakter.';
+            if (password.length < 6) {
+                passwordError.textContent = 'Password harus memiliki minimal 6 karakter.';
             } else {
                 passwordError.textContent = '';
             }

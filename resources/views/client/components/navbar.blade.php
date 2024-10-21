@@ -32,14 +32,12 @@
                 </button>
 
                 {{-- Dropdown menu --}}
-                <div class="max-w-48 z-50 my-4 hidden w-32 list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
+                <div class="max-w-48 z-50 my-4 hidden min-w-max list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
                     id="user-dropdown">
                     <div class="px-4 py-3">
-                        <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
-                        <span class="block truncate text-sm text-gray-500 dark:text-gray-400">Kelas
+                        <span class="block text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
+                        <span class="block truncate text-sm text-gray-500 dark:text-gray-400">
                             {{ Auth::guard('siswa')->user()->kelas }}</span>
-                        {{-- <span
-                            class="block truncate text-sm text-gray-500 dark:text-gray-400">{{ Auth::guard('siswa')->user()->email }}</span> --}}
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
