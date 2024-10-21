@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Edit Profil')
+
 @section('container')
 <style>
     /* Gaya untuk avatar */
