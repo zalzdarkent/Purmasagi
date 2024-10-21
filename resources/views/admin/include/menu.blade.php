@@ -86,5 +86,21 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Siswa</span>
+        </li>
+        <li class="menu-item {{ Route::is('siswa.*') ? 'open active' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                <div data-i18n="Account Settings">Manajemen User</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('siswa.index') ? 'active' : '' }}">
+                    <a href="{{ route('siswa.index') }}" class="menu-link">
+                        <div data-i18n="Notifications">Daftar Siswa</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     @endif
 </ul>

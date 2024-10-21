@@ -73,4 +73,9 @@ class SiswaController extends Controller
         Auth::guard('siswa')->logout();
         return redirect('/')->with('success', 'Anda telah logout.');
     }
+
+    public function index() {
+        $siswa = Siswa::all();
+        return view('admin.siswa.index');
+    }
 }
