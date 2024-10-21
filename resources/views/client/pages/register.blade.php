@@ -32,33 +32,27 @@
                                 <div class="mt-2">
                                     <input id="email" name="email" type="email" autocomplete="email" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    @error('email')
-                                        <span class="text-sm text-red-500">{{ $message }}</span>
-                                    @enderror
+                                    <span id="emailError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
                             <div>
-                                <label for="nama" class="block text-sm font-medium leading-6 text-gray-900">Nama Lengkap
-                                </label>
+                                <label for="nama" class="block text-sm font-medium leading-6 text-gray-900">Nama
+                                    Lengkap</label>
                                 <div class="mt-2">
                                     <input id="nama" name="nama" type="text" autocomplete="email" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    @error('nama')
-                                        <span class="text-sm text-red-500">{{ $message }}</span>
-                                    @enderror
+                                    <span id="namaError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
                             <div>
-                                <label for="kelas" class="block text-sm font-medium leading-6 text-gray-900">Kelas
-                                </label>
+                                <label for="kelas"
+                                    class="block text-sm font-medium leading-6 text-gray-900">Kelas</label>
                                 <div class="mt-2">
                                     <input id="kelas" name="kelas" type="text" autocomplete="email" required
                                         class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    @error('kelas')
-                                        <span class="text-sm text-red-500">{{ $message }}</span>
-                                    @enderror
+                                    <span id="kelasError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
@@ -68,21 +62,21 @@
                                 <div class="mt-2">
                                     <input id="password" name="password" type="password" autocomplete="current-password"
                                         required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                    @error('password')
-                                        <span class="text-sm text-red-500">{{ $message }}</span>
-                                    @enderror
+                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        onchange="validatePassword()">
+                                    <span id="passwordError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
                             <div>
                                 <label for="password_confirmation"
-                                    class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi
-                                    Password</label>
+                                    class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi Password</label>
                                 <div class="mt-2">
                                     <input id="password_confirmation" name="password_confirmation" type="password"
                                         autocomplete="current-password" required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        onchange="validatePasswordConfirmation()">
+                                    <span id="passwordConfirmationError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
@@ -97,8 +91,31 @@
         </div>
         <div class="relative hidden w-0 flex-1 lg:block">
             <img class="absolute inset-0 h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+                src="https://images.unsplash.com/photo-1663247455660-4f05e0926aa6?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="">
         </div>
     </div>
+
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            if (password.length < 8) {
+                passwordError.textContent = 'Password harus memiliki minimal 8 karakter.';
+            } else {
+                passwordError.textContent = '';
+            }
+        }
+
+        function validatePasswordConfirmation() {
+            const password = document.getElementById('password').value;
+            const passwordConfirmation = document.getElementById('password_confirmation').value;
+            const passwordConfirmationError = document.getElementById('passwordConfirmationError');
+            if (password !== passwordConfirmation) {
+                passwordConfirmationError.textContent = 'Konfirmasi password tidak sesuai.';
+            } else {
+                passwordConfirmationError.textContent = '';
+            }
+        }
+    </script>
 @endsection

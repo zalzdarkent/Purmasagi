@@ -138,13 +138,15 @@
                     @foreach ($latestActivities as $activities)
                         <div
                             class="group relative mx-auto mb-6 w-full max-w-md rounded-lg border border-gray-200 bg-white shadow md:mb-0">
-                            <img class="rounded-lg"
+                            <img class="h-60 w-full rounded-lg object-cover"
                                 src="{{ $activities->gambar_kegiatan ? asset('storage/' . $activities->gambar_kegiatan) : asset('assets/img/contents/image-not-found.png') }}"
                                 alt="{{ $activities->deskripsi_kegiatan }}" />
                             <div
-                                class="absolute inset-0 bottom-0 bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                                <h2 class="m-4 text-xl font-semibold text-white">{{ $activities->deskripsi_kegiatan }}</h2>
-                                <h2 class="m-4 text-white">{{ $activities->waktu }}</h2>
+                                class="absolute inset-0 bottom-0 flex h-full flex-col justify-end bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 hover:rounded-lg group-hover:opacity-100">
+                                <div class="m-4">
+                                    <h2 class="text-xl font-semibold text-white">{{ $activities->deskripsi_kegiatan }}</h2>
+                                    <h3 class="text-white">{{ $activities->waktu }}</h3>
+                                </div>
                             </div>
                         </div>
                     @endforeach

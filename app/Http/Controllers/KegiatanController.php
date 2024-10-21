@@ -23,13 +23,11 @@ class KegiatanController extends Controller
         return view("admin.kegiatan.index", compact('kegiatans'));
     }
 
-    public function indexClient()
+    public function indexActivitiesClient()
     {
-        $kegiatans = Kegiatan::all();
-        return view('client.pages.home')->with('kegiatans', $kegiatans);
+        $activities = Kegiatan::paginate(9);
+        return view('client.pages.activities')->with('activities', $activities);
     }
-
-
 
     /**
      * Show the form for creating a new resource.
