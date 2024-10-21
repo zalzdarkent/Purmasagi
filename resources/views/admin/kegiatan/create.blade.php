@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Tambah Kegiatan')
+
 @section('container')
     {{-- <p>Tambah Kegiatan</p> --}}
     <style>

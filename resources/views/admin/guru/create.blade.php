@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Tambah Guru')
+
 @section('container')
     <style>
         .preview-container {

@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Daftar Kegiatan')
+
 @section('container')
     {{-- <p>Kegiatan</p> --}}
     <div class="container-xxl flex-grow-1 container-p-y">

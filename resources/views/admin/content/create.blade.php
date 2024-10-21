@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Tambah Konten')
+
 @section('container')
     <style>
         .upload-file-container {

@@ -2,6 +2,7 @@
     <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="../assets/img/favicon/client-icon.svg" class="h-8" alt="Purmasagi Logo" />
+            {{-- <span class="text-xl font-semibold text-gray-900 dark:text-white">Purmasagi</span> --}}
         </a>
         <div class="flex space-x-3 rtl:space-x-reverse md:order-2 md:space-x-0">
             {{-- User info --}}

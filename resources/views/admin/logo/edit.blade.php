@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Edit Logo')
+
 @section('container')
     <style>
         /* Container untuk gambar preview */

@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Daftar Logo')
+
 @section('container')
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Button to Open the Modal -->

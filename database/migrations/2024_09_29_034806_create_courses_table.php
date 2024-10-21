@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('pertemuan');
             $table->string('deskripsi_konten');
             $table->text('file_paths');
+            $table->unique(['course_id', 'pertemuan']);
             $table->timestamps();
         });
     }

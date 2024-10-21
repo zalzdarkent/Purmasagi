@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Daftar Guru')
+
 @section('container')
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Button to Add Admin -->

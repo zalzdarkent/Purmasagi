@@ -54,6 +54,19 @@ class ContentController extends Controller
             'files.*' => 'required|file|mimes:jpeg,png,jpg,pdf,ppt,pptx,mp4|max:20480',
         ]);
 
+        // Ambil nama course
+        $course = Course::find($request->course_id);
+        $courseName = $course ? $course->judul : 'Course tidak ditemukan';
+
+        // Cek apakah pertemuan sudah ada untuk course_id yang sama
+        $existingContent = Content::where('course_id', $request->course_id)
+            ->where('pertemuan', $request->pertemuan)
+            ->first();
+
+        if ($existingContent) {
+            return redirect()->back()->withErrors(['pertemuan' => "Pertemuan {$request->pertemuan} sudah ada untuk course {$courseName}."]);
+        }
+
         // Proses upload file
         $filePaths = [];
         if ($request->hasFile('files')) {
@@ -75,7 +88,6 @@ class ContentController extends Controller
         // Redirect atau mengembalikan response
         return redirect()->route('content.index')->with('success', 'Data berhasil disimpan!');
     }
-
 
 
     /**
