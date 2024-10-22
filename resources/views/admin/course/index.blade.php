@@ -29,7 +29,7 @@
         <div class="card">
             <h5 class="card-header">Course List</h5>
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Thumbnail</th>
@@ -38,7 +38,7 @@
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0">
+                    <tbody>
                         @php
                             $hasCourses = false; // Flag untuk mengecek apakah ada kursus yang cocok
                         @endphp
@@ -46,15 +46,15 @@
                         @foreach ($courses as $course)
                             @if (Auth::user()->id == $course->admin_id)
                                 @php
-                                    $hasCourses = true; 
+                                    $hasCourses = true;
                                 @endphp
                                 <tr>
                                     <td>
-                                        <!-- Menampilkan Thumbnail dengan ukuran 200x200 -->
+                                        <!-- Menampilkan Thumbnail dengan ukuran 100x100 -->
                                         <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->judul }}"
                                             style="width: 100px">
                                     </td>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                    <td>
                                         <strong>{{ $course->judul }}</strong>
                                     </td>
                                     <td>{!! \App\Helpers\TextHelpers::splitText($course->deskripsi, 40) !!}</td>
@@ -89,6 +89,11 @@
                     </tbody>
                 </table>
             </div>
+            {{ $courses->links() }}
+            <!-- Pagination -->
+            {{-- <div class="d-flex justify-content-center mt-4">
+                {{ $courses->links() }}
+            </div> --}}
         </div>
     </div>
 

@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Dashboard')
+
 @section('container')
     <style>
         .hover-card {

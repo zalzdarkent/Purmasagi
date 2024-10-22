@@ -127,6 +127,11 @@ class AdminController extends Controller
         $gurus = Admin::all();
         return view('admin.guru.index', compact('gurus'));
     }
+    public function indexForClient()
+    {
+        $gurus = Admin::where('role', 'guru')->get();
+        return view('PINDAHIN_KE_CLIENT', compact('gurus'));
+    }
 
     public function create()
     {

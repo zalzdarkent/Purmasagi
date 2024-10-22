@@ -23,7 +23,7 @@
                                 @endforeach
                             </div>
                         @endif
-                        <form action="{{ route('register') }}" method="POST" class="space-y-6">
+                        <form action="#" method="POST" class="space-y-6">
                             @csrf
 
                             <div>
