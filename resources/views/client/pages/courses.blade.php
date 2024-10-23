@@ -58,7 +58,16 @@
                             <p class="mb-3 line-clamp-2 h-10 text-justify text-sm text-gray-600 md:h-12 lg:text-base">
                                 {{ $course->deskripsi }}
                             </p>
-                            @if (Auth::guard('siswa')->check())
+                            <a href="/course/{{ $course->id }}"
+                                class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
+                                Pelajari
+                                <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
+                            {{-- @if (Auth::guard('siswa')->check())
                                 <!-- Tombol jika sudah login -->
                                 <a href="/course/{{ $course->id }}"
                                     class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
@@ -80,7 +89,7 @@
                                             stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                     </svg>
                                 </a>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 @endforeach

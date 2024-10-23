@@ -64,18 +64,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('daftar-guru', [AdminController::class, 'index'])->name('guru.index');
     Route::get('tambah-guru', [AdminController::class, 'create'])->name('guru.create');
     Route::post('store-guru', [AdminController::class, 'store'])->name('guru.store');
-    Route::delete('hapus-guru', [AdminController::class, 'destroy'])->name('guru.destroy');
     Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
-    Route::delete('hapus-siswa', [SiswaController::class, 'destroy'])->name('siswa.destroy');
-});
-
-// Not Found
-Route::fallback(function () {
-    if (request()->is('admin/*')) {
-        // Arahkan ke halaman 404 untuk admin
-        return response()->view('admin.not-found.404', [], 404);
-    }
-    
-    // Arahkan ke halaman 404 untuk client (default)
-    return response()->view('client.pages.404', [], 404);
+    Route::delete('hapus-guru/{id}', [AdminController::class, 'destroy'])->name('guru.destroy');
+    Route::delete('hapus-siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });

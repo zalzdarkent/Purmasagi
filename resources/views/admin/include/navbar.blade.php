@@ -18,12 +18,20 @@
     <ul class="navbar-nav flex-row align-items-center ms-auto">
         <!-- Place this tag where you want the button to render. -->
         <!-- User -->
+        <style>
+            .avatar img {
+                width: 40px;  /* pastikan width dan height sama */
+                height: 40px;
+                border-radius: 50%; /* membuat bulat sempurna */
+                object-fit: cover; /* memastikan gambar terpotong dengan proporsi yang baik */
+                aspect-ratio: 1 / 1; /* membuat gambar tetap persegi */
+            }
+        </style>        
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
                     <img src="{{ Auth::user()->foto_profil ? asset('storage/' . Auth::user()->foto_profil) : asset('assets/img/avatars/1.png') }}"
-                        alt="" class="w-px-40 h-auto rounded-circle"
-                        style="width: 100px; height: 100px; object-fit: cover;" />
+                        alt="" class="w-px-40 h-auto rounded-circle" />
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">

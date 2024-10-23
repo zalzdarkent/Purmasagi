@@ -24,7 +24,7 @@ class ContentController extends Controller
         $contents = Content::with('course')
             ->whereHas('course', function ($query) use ($userId) {
                 $query->where('admin_id', $userId);
-            })->get();
+            })->paginate(10);
 
         return view('admin.content.index', compact('courses', 'contents'));
     }
@@ -156,6 +156,7 @@ class ContentController extends Controller
 
         // Simpan file path baru dan lama ke database
         $data->file_paths = json_encode($existingFiles);
+        // dd($data);
 
         // Simpan perubahan ke database
         $data->save();

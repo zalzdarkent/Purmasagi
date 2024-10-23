@@ -13,17 +13,17 @@
     <li class="menu-item {{ Route::is('course.*') || Route::is('content.*') ? 'open active' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
-            <div data-i18n="Account Settings">Courses</div>
+            <div data-i18n="Account Settings">Kursus</div>
         </a>
         <ul class="menu-sub">
             <li class="menu-item {{ Route::is('course.create') ? 'active' : '' }}">
                 <a href="{{ route('course.create') }}" class="menu-link">
-                    <div data-i18n="Account">Course</div>
+                    <div data-i18n="Account">Kursus</div>
                 </a>
             </li>
             <li class="menu-item {{ Route::is('content.index') ? 'active' : '' }}">
                 <a href="{{ route('content.index') }}" class="menu-link">
-                    <div data-i18n="Notifications">Content</div>
+                    <div data-i18n="Notifications">Konten</div>
                 </a>
             </li>
         </ul>

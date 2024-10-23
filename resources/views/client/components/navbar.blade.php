@@ -57,11 +57,11 @@
                 </div>
             @else
                 <div class="space-x-3 pt-2 md:pt-0">
-                    <a href="/login"
+                    <a href="/"
                         class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 shadow-sm outline outline-1 outline-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Masuk
                     </a>
-                    <a href="/register"
+                    <a href="/"
                         class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Daftar
                     </a>

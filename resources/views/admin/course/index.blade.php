@@ -27,9 +27,15 @@
 
         <!-- Basic Bootstrap Table -->
         <div class="card">
-            <h5 class="card-header">Course List</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Kursus</h5>
+                <div class="col-auto">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;"
+                        placeholder="Search courses...">
+                </div>
+            </div>
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Thumbnail</th>
@@ -38,7 +44,7 @@
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0">
+                    <tbody>
                         @php
                             $hasCourses = false; // Flag untuk mengecek apakah ada kursus yang cocok
                         @endphp
@@ -46,24 +52,23 @@
                         @foreach ($courses as $course)
                             @if (Auth::user()->id == $course->admin_id)
                                 @php
-                                    $hasCourses = true; 
+                                    $hasCourses = true;
                                 @endphp
                                 <tr>
                                     <td>
-                                        <!-- Menampilkan Thumbnail dengan ukuran 200x200 -->
+                                        <!-- Menampilkan Thumbnail dengan ukuran 100x100 -->
                                         <img src="{{ asset('storage/' . $course->thumbnail) }}" alt="{{ $course->judul }}"
                                             style="width: 100px">
                                     </td>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ $course->judul }}</strong>
-                                    </td>
+                                    <td><strong>{{ $course->judul }}</strong></td>
                                     <td>{!! \App\Helpers\TextHelpers::splitText($course->deskripsi, 40) !!}</td>
                                     <td>
                                         <!-- Tombol Edit -->
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm me-2 btn-edit"
                                             data-id="{{ $course->id }}" data-judul="{{ $course->judul }}"
-                                            data-deskripsi="{{ $course->deskripsi }}">
-                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                            data-deskripsi="{{ $course->deskripsi }}" data-thumbnail="{{ $course->thumbnail }}">
+                                            <i class="bx
+                                            bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <!-- Tombol Hapus -->
                                         <form id="delete-form-{{ $course->id }}"
@@ -89,7 +94,66 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination -->
+            @if ($courses instanceof \Illuminate\Pagination\LengthAwarePaginator && $courses->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $courses->links() }}
+                </div>
+            @endif
         </div>
+        <script>
+            // Tunggu sampai DOM sepenuhnya dimuat
+            document.addEventListener('DOMContentLoaded', function() {
+                // Ambil elemen input search dan tbody
+                const searchInput = document.getElementById('searchInput');
+                const tableBody = document.querySelector('tbody');
+                const tableRows = tableBody.getElementsByTagName('tr');
+
+                // Buat div untuk pesan "tidak ditemukan"
+                const notFoundMessage = document.createElement('div');
+                notFoundMessage.className = 'alert alert-info text-center mt-3';
+                notFoundMessage.style.display = 'none';
+                notFoundMessage.textContent = 'No matching courses found';
+                document.querySelector('.table-responsive').after(notFoundMessage);
+
+                // Fungsi untuk melakukan pencarian
+                function performSearch() {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    let matchFound = false;
+
+                    // Loop melalui setiap baris tabel
+                    Array.from(tableRows).forEach(row => {
+                        // Skip baris "No data available"
+                        if (row.cells.length === 1 && row.cells[0].textContent.trim() === 'No data available') {
+                            return;
+                        }
+
+                        // Ambil teks dari kolom judul dan deskripsi
+                        const title = row.cells[1].textContent.toLowerCase();
+                        const description = row.cells[2].textContent.toLowerCase();
+
+                        // Cek apakah searchTerm ada dalam title atau description
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            row.style.display = ''; // Tampilkan baris
+                            matchFound = true;
+                        } else {
+                            row.style.display = 'none'; // Sembunyikan baris
+                        }
+                    });
+
+                    // Tampilkan/sembunyikan pesan "tidak ditemukan"
+                    if (searchTerm && !matchFound) {
+                        notFoundMessage.style.display = 'block';
+                    } else {
+                        notFoundMessage.style.display = 'none';
+                    }
+                }
+
+                // Event listener untuk input search
+                searchInput.addEventListener('input', performSearch);
+            });
+        </script>
     </div>
 
     <!-- Modal for Adding Course -->
@@ -198,23 +262,28 @@
                 const courseId = this.getAttribute('data-id');
                 const courseTitle = this.getAttribute('data-judul');
                 const courseDescription = this.getAttribute('data-deskripsi');
-                const courseThumbnail = this.getAttribute('data-thumbnail'); // Get the thumbnail path
+                const courseThumbnail = this.getAttribute('data-thumbnail'); // Dapatkan path thumbnail
 
                 // Replace URL in edit form action
                 const form = document.getElementById('editCourseForm');
                 form.action = form.action.replace(':id', courseId);
 
-                // Fill modal fields with course data
+                // Isi field modal dengan data course
                 document.getElementById('edit-judul').value = courseTitle;
                 document.getElementById('edit-desc').value = courseDescription;
 
-                // Set current thumbnail image
-                document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}" +
-                    courseThumbnail;
-                document.getElementById('current-thumbnail').style.display =
-                    'block'; // Show current thumbnail
+                // Set gambar thumbnail saat ini jika ada
+                if (courseThumbnail) {
+                    document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}/" +
+                        courseThumbnail;
+                    document.getElementById('current-thumbnail').style.display =
+                    'block'; // Tampilkan thumbnail
+                } else {
+                    document.getElementById('current-thumbnail').style.display =
+                    'none'; // Sembunyikan jika tidak ada
+                }
 
-                // Show modal
+                // Tampilkan modal
                 var editModal = new bootstrap.Modal(document.getElementById('editCourseModal'));
                 editModal.show();
             });

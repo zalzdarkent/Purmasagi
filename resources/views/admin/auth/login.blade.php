@@ -103,11 +103,11 @@
                                     </svg>
                                 </span>
                                 <span class="app-brand-text demo text-body fw-bolder"
-                                    style="text-transform:uppercase !important;">LMS</span>
+                                    style="text-transform:capitalize !important;">{{ env('APP_NAME') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">Welcome to LMS! 👋</h4>
+                        <h4 class="mb-2">Welcome to {{ env('APP_NAME') }}! 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('admin.login.submit') }}"

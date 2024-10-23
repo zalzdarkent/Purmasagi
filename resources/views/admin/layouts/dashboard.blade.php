@@ -87,7 +87,7 @@
                 <div class="card hover-card text-center">
                     <div class="card-body">
                         <i class="bx bx-book icon-style"></i>
-                        <h5 class="card-title">Total Courses</h5>
+                        <h5 class="card-title">Total Kursus</h5>
                         <p class="card-text">{{ $courseCount }}</p>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 <div class="card hover-card text-center">
                     <div class="card-body">
                         <i class="bx bx-file icon-style"></i>
-                        <h5 class="card-title">Total Content</h5>
+                        <h5 class="card-title">Total Konten</h5>
                         <p class="card-text">{{ $contentCount }}</p>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <div class="card hover-card text-center">
                         <div class="card-body">
                             <i class="bx bx-calendar-event icon-style"></i>
-                            <h5 class="card-title">Total Events</h5>
+                            <h5 class="card-title">Total Kegiatan</h5>
                             <p class="card-text">{{ $eventCount }}</p>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                     <div class="card hover-card text-center">
                         <div class="card-body">
                             <i class="bx bx-user icon-style"></i>
-                            <h5 class="card-title">Total Teachers</h5>
+                            <h5 class="card-title">Total Guru</h5>
                             <p class="card-text">{{ $teacherCount }}</p>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                 <div class="card hover-card text-center">
                     <div class="card-body">
                         <i class="bx bx-group icon-style"></i>
-                        <h5 class="card-title">Total Students</h5>
+                        <h5 class="card-title">Total Siswa</h5>
                         <p class="card-text">{{ $studentCount }}</p>
                     </div>
                 </div>
