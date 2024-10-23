@@ -68,3 +68,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
     Route::delete('hapus-siswa', [SiswaController::class, 'destroy'])->name('siswa.destroy');
 });
+
+// Not Found
+Route::fallback(function () {
+    if (request()->is('admin/*')) {
+        // Arahkan ke halaman 404 untuk admin
+        return response()->view('admin.not-found.404', [], 404);
+    }
+    
+    // Arahkan ke halaman 404 untuk client (default)
+    return response()->view('client.pages.404', [], 404);
+});

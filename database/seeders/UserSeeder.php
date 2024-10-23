@@ -33,6 +33,20 @@ class UserSeeder extends Seeder
                 "role" => "guru",
                 'password' => Hash::make('123'),
             ],
+            [
+                'name' => "ummar",
+                'email' => "ummar   @gmail.com",
+                "role" => "guru",
+                'password' => Hash::make('123'),
+            ],
+        ]);
+        DB::table('siswa')->insert([
+            [
+                'nama' => 'test',
+                'kelas' => 'test',
+                'email'=> 'test@gmail.com',
+                'password' => Hash::make('123'),
+            ],
         ]);         
     }
 }
