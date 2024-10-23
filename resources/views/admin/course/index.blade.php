@@ -27,9 +27,11 @@
 
         <!-- Basic Bootstrap Table -->
         <div class="card">
-            <h5 class="card-header">Course List</h5>
-            <div class="d-flex mx-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search courses...">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Kursus</h5>
+                <div class="col-auto">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Search courses...">
+                </div>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-striped">

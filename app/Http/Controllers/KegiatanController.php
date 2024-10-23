@@ -17,7 +17,7 @@ class KegiatanController extends Controller
         // $admin = auth()->user();
 
         // Ambil semua kegiatan yang terkait dengan admin ini
-        $kegiatans = Kegiatan::paginate(10);
+        $kegiatans = Kegiatan::all();
 
         // Kirimkan data kegiatan ke view
         return view("admin.kegiatan.index", compact('kegiatans'));

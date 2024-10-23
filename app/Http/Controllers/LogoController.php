@@ -13,7 +13,7 @@ class LogoController extends Controller
     public function index()
     {
         // $admin = auth()->user();
-        $logos = Logo::paginate(10);
+        $logos = Logo::all();
         return view("admin.logo.index", compact('logos'));
     }
 

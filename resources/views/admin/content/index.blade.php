@@ -27,9 +27,11 @@
 
         <!-- Basic Bootstrap Table -->
         <div class="card">
-            <h5 class="card-header">Content List</h5>
-            <div class="d-flex mx-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search courses...">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Daftar Konten</h5>
+                <div class="col-auto">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Search courses...">
+                </div>
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
@@ -122,11 +124,11 @@
                     </tbody>
                 </table>
             </div>
-            @if ($contents instanceof \Illuminate\Pagination\LengthAwarePaginator && $contents->hasPages())
+            {{-- @if ($contents instanceof \Illuminate\Pagination\LengthAwarePaginator && $contents->hasPages())
                 <div class="d-flex justify-content-center mt-4">
                     {{ $contents->links() }}
                 </div>
-            @endif
+            @endif --}}
             <script>
                 // Tunggu sampai DOM sepenuhnya dimuat
                 document.addEventListener('DOMContentLoaded', function() {
