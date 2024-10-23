@@ -18,7 +18,7 @@ class ContentController extends Controller
         $userId = Auth::user()->id; // Mendapatkan ID pengguna yang sedang login
 
         // Ambil semua kursus yang dimiliki oleh admin yang sedang login
-        $courses = Course::where('admin_id', $userId)->paginate(10);
+        $courses = Course::where('admin_id', $userId)->get();
 
         // Ambil konten yang hanya terkait dengan kursus milik admin yang sedang login
         $contents = Content::with('course')
@@ -156,6 +156,7 @@ class ContentController extends Controller
 
         // Simpan file path baru dan lama ke database
         $data->file_paths = json_encode($existingFiles);
+        // dd($data);
 
         // Simpan perubahan ke database
         $data->save();
