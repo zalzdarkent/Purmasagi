@@ -1,15 +1,14 @@
 <nav class="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
     <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="../assets/img/favicon/client-icon.svg" class="h-8" alt="Purmasagi Logo" />
-            {{-- <span class="text-xl font-semibold text-gray-900 dark:text-white">Purmasagi</span> --}}
+            <img src="../assets/img/favicon/client-icon.svg" class="h-8 object-cover" alt="Purmasagi Logo" />
+            <span class="text-xl font-semibold text-gray-900 dark:text-white">Purmasagi</span>
+
         </a>
         <div class="flex space-x-3 rtl:space-x-reverse md:order-2 md:space-x-0">
-            {{-- User info --}}
             @if (Auth::guard('siswa')->check())
-                {{-- User icon --}}
+                {{-- User info --}}
                 @php
-                    // Menghasilkan inisial nama pengguna
                     $initials = strtoupper(
                         collect(explode(' ', Auth::guard('siswa')->user()->nama))
                             ->take(2)
@@ -18,7 +17,6 @@
                             })
                             ->join(''),
                     );
-                    // Menghasilkan warna berdasarkan nama pengguna
                     $avatarColor = \App\Helpers\TextHelpers::getColorFromName(Auth::guard('siswa')->user()->nama);
                 @endphp
                 <button type="button" class="flex items-center space-x-2 rounded p-1 hover:bg-gray-100"
@@ -28,21 +26,20 @@
                         style="background-color: {{ $avatarColor }}; color: white;">
                         {{ $initials }}
                     </span>
-                    {{-- <span class="max-w-xs truncate text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span> --}}
                 </button>
 
-                {{-- Dropdown menu --}}
-                <div class="max-w-48 z-50 my-4 hidden min-w-max list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
+                {{-- Dropdown --}}
+                <div class="max-w-48 z-50 my-4 hidden w-28 min-w-max list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700"
                     id="user-dropdown">
                     <div class="px-4 py-3">
                         <span class="block text-gray-900">{{ Auth::guard('siswa')->user()->nama }}</span>
-                        <span class="block truncate text-sm text-gray-500 dark:text-gray-400">
+                        <span class="block truncate text-sm text-gray-500 dark:text-gray-400">Kelas
                             {{ Auth::guard('siswa')->user()->kelas }}</span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="/profile"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Profil</a>
+                            {{-- <a href="/profile"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Profil</a> --}}
                         </li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">
@@ -56,12 +53,13 @@
                     </ul>
                 </div>
             @else
-                <div class="space-x-3 pt-2 md:pt-0">
-                    <a href="/"
+                {{-- Desktop --}}
+                <div class="hidden space-x-3 md:flex">
+                    <a href="/login"
                         class="rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-indigo-600 shadow-sm outline outline-1 outline-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Masuk
                     </a>
-                    <a href="/"
+                    <a href="/register"
                         class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Daftar
                     </a>
@@ -102,6 +100,20 @@
                     <a href="/activities"
                         class="{{ request()->fullUrlIs(url('/activities')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">Aktivitas</a>
                 </li>
+
+                @if (!Auth::guard('siswa')->check())
+                    <hr>
+                    <li class="flex flex-col space-y-4 md:hidden">
+                        <a href="/login"
+                            class="{{ request()->fullUrlIs(url('/login')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">
+                            Masuk
+                        </a>
+                        <a href="/register"
+                            class="{{ request()->fullUrlIs(url('/register')) ? 'text-indigo-600' : 'text-gray-900' }} block hover:underline">
+                            Daftar
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

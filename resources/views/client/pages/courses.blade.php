@@ -97,7 +97,7 @@
 
             {{-- Pagination --}}
             <div class="my-12">
-                {{ $courses->links() }}
+                {{ $courses->links('pagination::tailwind') }}
             </div>
         @else
             <h2 class="text-center text-gray-500">Mohon maaf, belum ada kelas yang tersedia saat ini</h2>
