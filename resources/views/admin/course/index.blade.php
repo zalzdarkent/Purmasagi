@@ -30,7 +30,8 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Daftar Kursus</h5>
                 <div class="col-auto">
-                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Search courses...">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;"
+                        placeholder="Search courses...">
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
@@ -65,8 +66,9 @@
                                         <!-- Tombol Edit -->
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm me-2 btn-edit"
                                             data-id="{{ $course->id }}" data-judul="{{ $course->judul }}"
-                                            data-deskripsi="{{ $course->deskripsi }}">
-                                            <i class="bx bx-edit-alt me-1"></i> Edit
+                                            data-deskripsi="{{ $course->deskripsi }}" data-thumbnail="{{ $course->thumbnail }}">
+                                            <i class="bx
+                                            bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <!-- Tombol Hapus -->
                                         <form id="delete-form-{{ $course->id }}"
@@ -260,23 +262,28 @@
                 const courseId = this.getAttribute('data-id');
                 const courseTitle = this.getAttribute('data-judul');
                 const courseDescription = this.getAttribute('data-deskripsi');
-                const courseThumbnail = this.getAttribute('data-thumbnail'); // Get the thumbnail path
+                const courseThumbnail = this.getAttribute('data-thumbnail'); // Dapatkan path thumbnail
 
                 // Replace URL in edit form action
                 const form = document.getElementById('editCourseForm');
                 form.action = form.action.replace(':id', courseId);
 
-                // Fill modal fields with course data
+                // Isi field modal dengan data course
                 document.getElementById('edit-judul').value = courseTitle;
                 document.getElementById('edit-desc').value = courseDescription;
 
-                // Set current thumbnail image
-                document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}" +
-                    courseThumbnail;
-                document.getElementById('current-thumbnail').style.display =
-                    'block'; // Show current thumbnail
+                // Set gambar thumbnail saat ini jika ada
+                if (courseThumbnail) {
+                    document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}/" +
+                        courseThumbnail;
+                    document.getElementById('current-thumbnail').style.display =
+                    'block'; // Tampilkan thumbnail
+                } else {
+                    document.getElementById('current-thumbnail').style.display =
+                    'none'; // Sembunyikan jika tidak ada
+                }
 
-                // Show modal
+                // Tampilkan modal
                 var editModal = new bootstrap.Modal(document.getElementById('editCourseModal'));
                 editModal.show();
             });
