@@ -77,6 +77,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($kegiatans instanceof \Illuminate\Pagination\LengthAwarePaginator && $kegiatans->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $kegiatans->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

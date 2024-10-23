@@ -124,7 +124,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $gurus = Admin::all();
+        $gurus = Admin::paginate(2);
         return view('admin.guru.index', compact('gurus'));
     }
     public function indexForClient()

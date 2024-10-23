@@ -15,7 +15,7 @@ class CoursesController extends Controller
     {
         $adminId = auth()->id();
 
-        $courses = Course::where('admin_id', $adminId)->paginate(10);
+        $courses = Course::where('admin_id', $adminId)->paginate(3);
 
         return view('admin.course.index', compact('courses'));
     }

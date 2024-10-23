@@ -18,13 +18,13 @@ class ContentController extends Controller
         $userId = Auth::user()->id; // Mendapatkan ID pengguna yang sedang login
 
         // Ambil semua kursus yang dimiliki oleh admin yang sedang login
-        $courses = Course::where('admin_id', $userId)->get();
+        $courses = Course::where('admin_id', $userId)->paginate(10);
 
         // Ambil konten yang hanya terkait dengan kursus milik admin yang sedang login
         $contents = Content::with('course')
             ->whereHas('course', function ($query) use ($userId) {
                 $query->where('admin_id', $userId);
-            })->get();
+            })->paginate(10);
 
         return view('admin.content.index', compact('courses', 'contents'));
     }

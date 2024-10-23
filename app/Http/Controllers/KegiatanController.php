@@ -14,10 +14,10 @@ class KegiatanController extends Controller
     public function index()
     {
         // Ambil admin yang sedang login
-        $admin = auth()->user();
+        // $admin = auth()->user();
 
         // Ambil semua kegiatan yang terkait dengan admin ini
-        $kegiatans = $admin->kegiatan;
+        $kegiatans = Kegiatan::paginate(10);
 
         // Kirimkan data kegiatan ke view
         return view("admin.kegiatan.index", compact('kegiatans'));

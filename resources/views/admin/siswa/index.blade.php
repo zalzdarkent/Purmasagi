@@ -67,6 +67,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($siswas instanceof \Illuminate\Pagination\LengthAwarePaginator && $siswas->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $siswas->links() }}
+                </div>
+            @endif
         </div>
     </div>
 

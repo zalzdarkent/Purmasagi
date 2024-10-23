@@ -74,6 +74,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($logos instanceof \Illuminate\Pagination\LengthAwarePaginator && $logos->hasPages())
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $logos->links() }}
+                </div>
+            @endif
         </div>
     </div>
 
