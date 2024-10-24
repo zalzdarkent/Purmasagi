@@ -84,4 +84,39 @@ class SiswaController extends Controller
         $siswa->delete();
         return redirect()->route('siswa.index')->with('success', 'Data berhasil dihapus!');
     }
+
+    // Profile
+    public function showProfile(){
+        $siswa = Auth::guard('siswa')->user();
+        return view('client.pages.profile', compact('siswa'));
+    }
+
+    public function updateProfile(Request $request){
+        // Validasi input
+        $request->validate([
+            'nama' => 'nullable|string|max:255',
+            'kelas' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:siswa,email,' . Auth::guard('siswa')->id(),
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        try {
+            $siswa = Auth::guard('siswa')->user();
+            
+            $siswa->nama = $request->nama;
+            $siswa->kelas = $request->kelas;
+            $siswa->email = $request->email;
+
+            if ($request->filled('password')) {
+                $siswa->password = Hash::make($request->password);
+            }
+
+            $siswa->save();
+
+            return redirect()->route('profile')->with('success', 'Profil berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['update' => 'Terjadi kesalahan, silakan coba lagi.']);
+        }
+    }
+
 }

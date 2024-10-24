@@ -38,14 +38,15 @@ Route::post('/login', [SiswaController::class, 'login'])->name('login');
 
 Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
 
+Route::middleware('auth:siswa')->group(function () {
+    Route::get('/profile', [SiswaController::class, 'showProfile'])->name('profile');
+    Route::post('/profile', [SiswaController::class, 'updateProfile'])->name('profile.update');
+});
 
 // temporary route
 // Route::get('/teachers', function () {
 //     return view('client.pages.teachers');
 // })->name('teachers');
-// Route::get('/register', function () {
-//     return view('client.pages.register');
-// })->name('siswa.register.form');
 
 // Route untuk halaman login admin
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
