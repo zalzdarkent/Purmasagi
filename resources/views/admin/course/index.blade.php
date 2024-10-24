@@ -31,7 +31,7 @@
                 <h5 class="mb-0">Daftar Kursus</h5>
                 <div class="col-auto">
                     <input type="text" id="searchInput" class="form-control" style="width: 250px;"
-                        placeholder="Search courses...">
+                        placeholder="Cari Kursus...">
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
