@@ -20,10 +20,20 @@ class CoursesController extends Controller
         return view('admin.course.index', compact('courses'));
     }
 
-    public function indexCoursesClient()
+    public function indexCoursesClient(Request $request)
     {
         // $courses = Course::all();
-        $courses = Course::paginate(6);
+        // $courses = Course::paginate(6);
+
+        $search = $request->input('search');
+
+        $courses = Course::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('judul', 'like', '%' . $search . '%')
+                            ->orWhere('deskripsi', 'like', '%' . $search . '%');
+        })
+        ->paginate(6); 
+
         return view('client.pages.courses', compact('courses'));
     }
 
