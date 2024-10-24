@@ -58,7 +58,7 @@ class SiswaController extends Controller
         // Coba autentikasi menggunakan guard siswa
         if (Auth::guard('siswa')->attempt($credentials, $request->filled('remember'))) {
             // Jika sukses, redirect ke halaman beranda
-            return redirect()->intended('/')->with('success', 'Login berhasil!'); // Ganti '/' dengan route yang sesuai jika diperlukan
+            return redirect()->to('/')->with('success', 'Login berhasil!'); // Ganti '/' dengan route yang sesuai jika diperlukan
         }
 
         // Jika gagal, kembali ke halaman login dengan error
