@@ -29,7 +29,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Daftar Guru</h5>
                 <div class="col-auto">
-                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Search courses...">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Cari Guru...">
                 </div>
             </div>
             <div class="table-responsive text-nowrap">

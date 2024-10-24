@@ -16,6 +16,12 @@ class LogoController extends Controller
         $logos = Logo::all();
         return view("admin.logo.index", compact('logos'));
     }
+    public function indexForClient()
+    {
+        // $admin = auth()->user();
+        $logos = Logo::all();
+        return view("client.components.navbar", compact('logos'));
+    }
 
     /**
      * Show the form for creating a new resource.

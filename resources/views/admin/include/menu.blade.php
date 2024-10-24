@@ -47,7 +47,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item {{ Route::is('logo.*') ? 'open active' : '' }}">
+        {{-- <li class="menu-item {{ Route::is('logo.*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-palette"></i>
                 <div data-i18n="Account Settings">Logo</div>
@@ -64,7 +64,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Guru</span>
         </li>
