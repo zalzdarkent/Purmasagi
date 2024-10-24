@@ -17,38 +17,42 @@
                 <div class="mt-10">
                     <div>
                         @if ($errors->any())
-                            <div class="mb-4">
-                                @foreach ($errors->all() as $error)
-                                    <div class="text-sm text-red-500">{{ $error }}</div>
-                                @endforeach
+                            <div class="mb-4 rounded-lg bg-red-50 px-4 py-2 text-red-800 sm:text-sm">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
-                        <form action="#" method="POST" class="space-y-6">
+                        <form action="{{ route('register') }}" method="POST" class="space-y-6">
                             @csrf
 
                             <div>
-                                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
-                                    address</label>
+                                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Alamat Email
+                                    <span class="text-red-500"> * </span></label>
                                 <div class="mt-2">
                                     <input id="email" name="email" type="email" autocomplete="email" required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        placeholder="Masukkan alamat email">
                                     <span id="emailError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
                             <div>
                                 <label for="nama" class="block text-sm font-medium leading-6 text-gray-900">Nama
-                                    Lengkap</label>
+                                    Lengkap<span class="text-red-500"> * </span></label>
                                 <div class="mt-2">
                                     <input id="nama" name="nama" type="text" autocomplete="email" required
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        placeholder="Masukkan nama lengkap">
                                     <span id="namaError" class="text-sm text-red-500"></span>
                                 </div>
                             </div>
 
                             <div>
-                                <label for="kelas"
-                                    class="block text-sm font-medium leading-6 text-gray-900">Kelas</label>
+                                <label for="kelas" class="block text-sm font-medium leading-6 text-gray-900">Kelas<span
+                                        class="text-red-500"> * </span></label>
                                 <div class="mt-2">
                                     <select id="kelas" name="kelas" required
                                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -63,11 +67,12 @@
 
                             <div>
                                 <label for="password"
-                                    class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                                    class="block text-sm font-medium leading-6 text-gray-900">Password<span
+                                        class="text-red-500"> * </span></label>
                                 <div class="relative mt-2">
                                     <input id="password" name="password" type="password" autocomplete="current-password"
                                         placeholder="••••••••"
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         onchange="validatePassword()">
                                     <button type="button" id="togglePassword"
                                         class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -98,11 +103,12 @@
 
                             <div>
                                 <label for="password_confirmation"
-                                    class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi Password</label>
+                                    class="block text-sm font-medium leading-6 text-gray-900">Konfirmasi Password<span
+                                        class="text-red-500"> * </span></label>
                                 <div class="relative mt-2">
                                     <input id="password_confirmation" name="password_confirmation" type="password"
                                         autocomplete="current-password" placeholder="••••••••"
-                                        class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:text-gray-900 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         onchange="validatePasswordConfirmation()">
                                     <button type="button" id="toggleConfirmPassword"
                                         class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -135,7 +141,7 @@
 
                             <div>
                                 <button type="submit"
-                                    class="mt-4 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Daftar</button>
+                                    class="mt-12 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Daftar</button>
                             </div>
                         </form>
                     </div>
