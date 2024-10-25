@@ -8,6 +8,7 @@
         icon.classList.toggle('rotate-180');
     }
 
+    // Show Modal in Content Page
     function showMedia(filePath, type) {
         const modal = document.getElementById('default-modal');
         const mediaContent = document.getElementById('media-content');
@@ -43,6 +44,14 @@
         video.currentTime = 0;
     }
 
+    // Scroll smooth
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     // Scroll Up Button (Home)
     if (window.location.pathname === '/') {
         window.onscroll = function() {
@@ -57,14 +66,117 @@
         window.onscroll = null;
     }
 
+    // Search course
+    if (window.location.pathname === '/courses') {
 
-    // Scroll smooth
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const courses = document.querySelectorAll('.course-card');
+
+            courses.forEach(course => {
+                const title = course.querySelector('h5').innerText.toLowerCase();
+                const description = course.querySelector('p').innerText.toLowerCase();
+
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    course.style.display = '';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
         });
-    };
+    }
+
+    // Show & Hide Password (Register and Profile Page)
+    if (window.location.pathname === '/profile' || window.location.pathname === '/register') {
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eye = document.getElementById('eye');
+        const eyeSlash = document.getElementById('eyeSlash');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eye.classList.toggle('hidden');
+            eyeSlash.classList.toggle('hidden');
+        });
+
+        const passwordConfirmationInput = document.getElementById('password_confirmation');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const eyeConfirm = document.getElementById('eyeConfirm');
+        const eyeSlashConfirm = document.getElementById('eyeSlashConfirm');
+
+        toggleConfirmPassword.addEventListener('click', function() {
+            const type = passwordConfirmationInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirmationInput.setAttribute('type', type);
+            eyeConfirm.classList.toggle('hidden');
+            eyeSlashConfirm.classList.toggle('hidden');
+        });
+
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordError = document.getElementById('passwordError');
+            if (password.length < 6) {
+                passwordError.textContent = 'Password harus memiliki minimal 8 karakter.';
+            } else {
+                passwordError.textContent = '';
+            }
+        }
+
+        function validatePasswordConfirmation() {
+            const password = document.getElementById('password').value;
+            const passwordConfirmation = document.getElementById('password_confirmation').value;
+            const passwordConfirmationError = document.getElementById('passwordConfirmationError');
+            if (password !== passwordConfirmation) {
+                passwordConfirmationError.textContent = 'Konfirmasi password tidak sesuai.';
+            } else {
+                passwordConfirmationError.textContent = '';
+            }
+        }
+
+        if (window.location.pathname === '/register') {
+            const modalToggle = document.querySelector('[data-modal-toggle="tnc-modal"]');
+            const modal = document.getElementById('tnc-modal');
+
+            modalToggle.addEventListener('click', () => {
+                const isHidden = modal.getAttribute('aria-hidden') === 'true';
+                modal.setAttribute('aria-hidden', !isHidden);
+                modal.classList.toggle('hidden', isHidden);
+                modal.classList.toggle('flex', isHidden);
+            });
+
+            // Close modal on button click
+            modal.querySelectorAll('[data-modal-hide]').forEach(button => {
+                button.addEventListener('click', () => {
+                    modal.setAttribute('aria-hidden', 'true');
+                    modal.classList.add('hidden');
+                });
+            });
+        }
+    }
+
+    // Show & Hide Password (Login Page)
+    if (window.location.pathname === '/login') {
+
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eye = document.getElementById('eye');
+        const eyeSlash = document.getElementById('eyeSlash');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eye.classList.toggle('hidden');
+            eyeSlash.classList.toggle('hidden');
+        });
+    }
+
+
+
+
+
+
+
+
 
     // var Tawk_API = Tawk_API || {},
     //     Tawk_LoadStart = new Date();

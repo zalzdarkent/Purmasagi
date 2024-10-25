@@ -25,7 +25,7 @@
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-indigo-500 dark:focus:ring-indigo-500"
                     placeholder="Cari kelas..." value="{{ request()->query('search') }}" />
                 <button type="submit"
-                    class="absolute bottom-2.5 end-2.5 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">Cari</button>
+                    class="absolute bottom-2.5 end-2.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:focus:ring-indigo-300">Cari</button>
             </div>
         </form>
 
@@ -94,22 +94,4 @@
             <h2 class="text-center text-gray-500">Mohon maaf, belum ada kelas yang tersedia saat ini</h2>
         @endif
     </div>
-
-    <script>
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const courses = document.querySelectorAll('.course-card');
-
-            courses.forEach(course => {
-                const title = course.querySelector('h5').innerText.toLowerCase();
-                const description = course.querySelector('p').innerText.toLowerCase();
-
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    course.style.display = '';
-                } else {
-                    course.style.display = 'none';
-                }
-            });
-        });
-    </script>
 @endsection

@@ -95,18 +95,4 @@
                 alt="">
         </div>
     </div>
-
-    <script>
-        const passwordInput = document.getElementById('password');
-        const togglePassword = document.getElementById('togglePassword');
-        const eye = document.getElementById('eye');
-        const eyeSlash = document.getElementById('eyeSlash');
-
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            eye.classList.toggle('hidden');
-            eyeSlash.classList.toggle('hidden');
-        });
-    </script>
 @endsection

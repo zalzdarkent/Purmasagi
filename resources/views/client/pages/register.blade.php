@@ -3,6 +3,7 @@
 @section('title', 'Daftar')
 
 @section('container')
+    {{-- Form --}}
     <div class="flex h-full">
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
@@ -139,9 +140,19 @@
                                 </div>
                             </div>
 
+                            <div class="flex items-center">
+                                <input type="checkbox" id="tnc" required
+                                    class="mr-4 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                                <label for="tnc" class="text-sm text-gray-900">
+                                    Saya setuju dengan
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-500"
+                                        data-modal-toggle="tnc-modal">Syarat dan Ketentuan</a> yang berlaku
+                                </label>
+                            </div>
+
                             <div>
                                 <button type="submit"
-                                    class="mt-12 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Daftar</button>
+                                    class="mt-8 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Daftar</button>
                             </div>
                         </form>
                     </div>
@@ -155,50 +166,98 @@
         </div>
     </div>
 
-    <script>
-        const passwordInput = document.getElementById('password');
-        const togglePassword = document.getElementById('togglePassword');
-        const eye = document.getElementById('eye');
-        const eyeSlash = document.getElementById('eyeSlash');
+    {{-- TnC Modal --}}
+    <!-- Modal toggle -->
+    <button data-modal-target="tnc-modal" data-modal-toggle="tnc-modal"
+        class="block rounded-lg bg-indigo-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+        type="button" aria-haspopup="dialog" aria-expanded="false">
+        Toggle modal
+    </button>
 
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            eye.classList.toggle('hidden');
-            eyeSlash.classList.toggle('hidden');
-        });
-
-        const passwordConfirmationInput = document.getElementById('password_confirmation');
-        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-        const eyeConfirm = document.getElementById('eyeConfirm');
-        const eyeSlashConfirm = document.getElementById('eyeSlashConfirm');
-
-        toggleConfirmPassword.addEventListener('click', function() {
-            const type = passwordConfirmationInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordConfirmationInput.setAttribute('type', type);
-            eyeConfirm.classList.toggle('hidden');
-            eyeSlashConfirm.classList.toggle('hidden');
-        });
-
-        function validatePassword() {
-            const password = document.getElementById('password').value;
-            const passwordError = document.getElementById('passwordError');
-            if (password.length < 6) {
-                passwordError.textContent = 'Password harus memiliki minimal 8 karakter.';
-            } else {
-                passwordError.textContent = '';
-            }
-        }
-
-        function validatePasswordConfirmation() {
-            const password = document.getElementById('password').value;
-            const passwordConfirmation = document.getElementById('password_confirmation').value;
-            const passwordConfirmationError = document.getElementById('passwordConfirmationError');
-            if (password !== passwordConfirmation) {
-                passwordConfirmationError.textContent = 'Konfirmasi password tidak sesuai.';
-            } else {
-                passwordConfirmationError.textContent = '';
-            }
-        }
-    </script>
+    <!-- Main modal -->
+    <div id="tnc-modal" tabindex="-1" role="dialog" aria-modal="true" aria-hidden="true"
+        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+        <div class="relative max-h-full w-full max-w-2xl p-4">
+            <!-- Modal content -->
+            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white" id="modal-title">
+                        Syarat dan Ketentuan Penggunaan
+                    </h3>
+                    <button type="button"
+                        class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        aria-label="Close modal" data-modal-hide="tnc-modal">
+                        <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="space-y-4 p-4 text-justify md:p-5">
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        Terakhir Diperbarui: 25 Oktober 2024
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        Selamat datang di Purmasagi! Dengan menggunakan platform kami, Anda setuju untuk mematuhi dan
+                        terikat oleh syarat dan ketentuan berikut. Jika Anda tidak setuju dengan syarat dan ketentuan ini,
+                        mohon untuk tidak menggunakan layanan kami.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">1. Definisi</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        1.1 "Kami" mengacu pada Purmasagi.<br>
+                        1.2 "Anda" mengacu pada pengguna yang mendaftar dan menggunakan platform kami.<br>
+                        1.3 "Layanan" mengacu pada semua fitur terkait kelas yang disediakan melalui platform kami.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">2. Pendaftaran dan Akun Pengguna</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        2.1 Untuk menggunakan Layanan, Anda harus mendaftar untuk sebuah akun. Anda bertanggung jawab untuk
+                        menjaga kerahasiaan informasi akun Anda dan untuk semua aktivitas yang terjadi di akun Anda.<br>
+                        2.2 Anda setuju untuk memberikan informasi yang akurat, lengkap, dan terbaru saat mendaftar.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">3. Penggunaan Layanan</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        3.1 Anda setuju untuk menggunakan Layanan hanya untuk tujuan yang sah dan sesuai dengan hukum yang
+                        berlaku.<br>
+                        3.2 Anda tidak boleh menggunakan Layanan untuk melakukan tindakan yang merugikan, menipu, atau
+                        melanggar hak orang lain.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">4. Konten</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        4.1 Semua konten yang tersedia di platform kami, termasuk video, teks, gambar, dan grafik, adalah
+                        milik Purmasagi atau pemilik konten lainnya dan dilindungi oleh hak cipta dan hukum kekayaan
+                        intelektual lainnya.<br>
+                        4.2 Anda tidak diperbolehkan untuk mendistribusikan, menyalin, atau memodifikasi konten tanpa izin
+                        tertulis dari kami.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">5. Tanggung Jawab</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        5.1 Kami berusaha untuk menyediakan Layanan yang berkualitas, namun kami tidak menjamin bahwa
+                        Layanan akan selalu tersedia, aman, atau bebas dari kesalahan.<br>
+                        5.2 Kami tidak bertanggung jawab atas kerugian atau kerusakan yang timbul dari penggunaan atau
+                        ketidakmampuan untuk menggunakan Layanan.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">6. Penghentian</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        6.1 Kami berhak untuk menghentikan atau membatasi akses Anda ke Layanan kapan saja, tanpa
+                        pemberitahuan, jika kami yakin bahwa Anda telah melanggar syarat dan ketentuan ini.
+                    </p>
+                    <h4 class="font-semibold text-gray-900 dark:text-white">7. Perubahan</h4>
+                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                        7.1 Kami berhak untuk mengubah syarat dan ketentuan ini kapan saja. Perubahan akan berlaku segera
+                        setelah diposting di platform kami.<br>
+                        7.2 Dengan melanjutkan penggunaan Layanan setelah perubahan, Anda dianggap setuju dengan syarat dan
+                        ketentuan yang telah diubah.
+                    </p>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center rounded-b border-t border-gray-200 p-4 dark:border-gray-600 md:p-5">
+                    <button data-modal-hide="tnc-modal" type="button"
+                        class="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
