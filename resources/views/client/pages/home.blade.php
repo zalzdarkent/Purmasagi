@@ -22,7 +22,7 @@
                     Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi.
                 </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
-                    <a href="#"
+                    <a href="/courses"
                         class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                         Mulai Sekarang!
                     </a>
@@ -188,7 +188,7 @@
                 </div>
             </div>
             <div class="mt-8 w-full md:mt-0 md:w-1/2">
-                <img src="../assets/img/coba/lecture.jpg" alt="Teacher Picture"
+                <img src="{{ asset('assets/img/client/guru.webp') }}" alt="Teacher Picture"
                     class="flex h-64 w-full items-center justify-center rounded-lg object-cover">
             </div>
         </div>

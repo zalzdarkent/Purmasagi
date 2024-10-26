@@ -33,7 +33,7 @@ Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teach
 Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [SiswaController::class, 'register'])->name('register');
 
-Route::get('/login', [SiswaController::class, 'showLoginForm'])->name('login.form');
+Route::get('/login/siswa', [SiswaController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [SiswaController::class, 'login'])->name('login');
 
 Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
@@ -43,10 +43,16 @@ Route::middleware('auth:siswa')->group(function () {
     Route::post('/profile', [SiswaController::class, 'updateProfile'])->name('profile.update');
 });
 
+Route::get('/login', function () {
+    return view('client.pages.select-role');
+})->name('login-select');
+
+Route::get('/register', function () {
+    return view('client.pages.select-role');
+})->name('register-select');
+
 // temporary route
-// Route::get('/teachers', function () {
-//     return view('client.pages.teachers');
-// })->name('teachers');
+
 
 // Route untuk halaman login admin
 Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
