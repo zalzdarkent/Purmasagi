@@ -26,12 +26,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
 
-Route::middleware('auth:siswa')->group(function () {
-    Route::get('/course/{slug}', [CoursesController::class, 'show'])->name('courses.show');
-});
-
-
-
 Route::get('/activities', [KegiatanController::class, 'indexActivitiesClient'])->name('activities');
 Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teachers');
 
@@ -44,6 +38,8 @@ Route::post('/login/siswa', [SiswaController::class, 'login'])->name('login.sisw
 Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
 
 Route::middleware('auth:siswa')->group(function () {
+    Route::get('/course/{slug}', [CoursesController::class, 'show'])->name('courses.show');
+
     Route::get('/profile', [SiswaController::class, 'showProfile'])->name('profile');
     Route::post('/profile', [SiswaController::class, 'updateProfile'])->name('profile.update');
 });

@@ -63,8 +63,7 @@
                                             {{ $initials }}
                                         </span>
                                     @endif
-                                    <a href="#"
-                                        class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</a>
+                                    <div class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</div>
                                 </div>
                                 <a href="/course/{{ $course->slug }}" class="hover:underline hover:underline-offset-4">
                                     <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">

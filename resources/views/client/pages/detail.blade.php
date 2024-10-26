@@ -39,8 +39,8 @@
                             {{ $initials }}
                         </span>
                     @endif
-                    <span class="text-sm text-white">Diajarkan oleh <a href="#"
-                            class="underline">{{ $course->admin->name }}</a></span>
+                    <span class="text-sm text-white">Diajarkan oleh <span
+                            class="underline">{{ $course->admin->name }}</span></span>
                 </div>
 
                 </p>
