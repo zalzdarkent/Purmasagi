@@ -33,8 +33,8 @@ Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teach
 Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [SiswaController::class, 'register'])->name('register');
 
-Route::get('/login/siswa', [SiswaController::class, 'showLoginForm'])->name('login.form');
-Route::post('/login', [SiswaController::class, 'login'])->name('login');
+Route::get('/login/siswa', [SiswaController::class, 'showLoginForm'])->name('login.siswa.form');
+Route::post('/login/siswa', [SiswaController::class, 'login'])->name('login.siswa');
 
 Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
 
@@ -45,7 +45,7 @@ Route::middleware('auth:siswa')->group(function () {
 
 Route::get('/login', function () {
     return view('client.pages.select-role');
-})->name('login-select');
+})->name('login');
 
 // temporary route
 

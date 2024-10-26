@@ -8,6 +8,12 @@
             <h5 class="text-center tracking-tight text-gray-900">Jadilah bagian dari</h5>
             <h2 class="text-center text-4xl font-bold leading-[2] tracking-tight text-indigo-600">Purmasagi</h2>
 
+            @if (session('error'))
+                <div class="mb-4 rounded-lg bg-red-50 px-4 py-2 text-red-800 sm:text-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="*: mt-6 grid grid-cols-1 gap-4 px-8 md:grid-cols-2 md:gap-y-12 lg:grid-cols-3 lg:px-0">
                 <a href="/login/siswa"
                     class="course-card mx-auto mb-6 flex h-fit w-full flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
