@@ -8,7 +8,7 @@
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Daftar</h2>
+                    <h2 class="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">Daftar sebagai Siswa</h2>
                     <p class="mt-2 text-sm leading-6 text-gray-500">
                         Sudah punya akun?
                         <a href="/login" class="font-semibold text-indigo-600 hover:text-indigo-500">Masuk di sini!</a>

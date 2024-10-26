@@ -19,7 +19,7 @@
                     Pembelajaran Mudah di Mana Saja, Kapan Saja
                 </h1>
                 <p class="mt-6 text-center text-base leading-8 text-gray-600 lg:text-lg">
-                    Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi.
+                    Jelajahi kelas online, atur kemajuan Anda, dan wujudkan potensi maksimal dengan Purmasagi!
                 </p>
                 <div class="mt-5 flex items-center justify-center gap-x-6 md:mt-10">
                     <a href="/courses"
@@ -45,9 +45,9 @@
         <div class="mb-36 flex flex-wrap items-center justify-center gap-y-6 space-x-0 md:space-x-8">
             <x-card count="{{ $studentCountFormatted }}" title="Pelajar"
                 description="{{ $studentCount }} pelajar telah bergabung dengan kelas kami untuk meningkatkan keterampilan mereka." />
-            <x-card count="{{ $courseCountFormatted }}" title="Kelas Video"
+            <x-card count="{{ $courseCount }}" title="Kelas Video"
                 description="Akses kelas video yang memungkinkan Anda belajar tanpa batasan geografis dan waktu." />
-            <x-card count="{{ $teacherCountFormatted }}" title="Guru"
+            <x-card count="{{ $teacherCount }}" title="Guru"
                 description="Belajar dari guru berpengalaman yang siap membimbing Anda dalam perjalanan pendidikan Anda." />
         </div>
 

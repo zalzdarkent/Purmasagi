@@ -47,10 +47,6 @@ Route::get('/login', function () {
     return view('client.pages.select-role');
 })->name('login-select');
 
-Route::get('/register', function () {
-    return view('client.pages.select-role');
-})->name('register-select');
-
 // temporary route
 
 

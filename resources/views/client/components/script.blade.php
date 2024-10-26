@@ -155,7 +155,7 @@
     }
 
     // Show & Hide Password (Login Page)
-    if (window.location.pathname === '/login') {
+    if (window.location.pathname === '/login/siswa') {
 
         const passwordInput = document.getElementById('password');
         const togglePassword = document.getElementById('togglePassword');
