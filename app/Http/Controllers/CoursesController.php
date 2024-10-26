@@ -108,7 +108,7 @@ class CoursesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $slug)
     {
         // Validasi input
         $validasi = $request->validate([
@@ -117,8 +117,8 @@ class CoursesController extends Controller
             'thumbnail' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
         ]);
 
-        // Cari course berdasarkan ID
-        $course = Course::findOrFail($id);
+        // Cari course berdasarkan slug
+        $course = Course::where('slug', $slug)->firstOrFail();
 
         // Simpan path thumbnail lama
         $oldThumbnailPath = $course->thumbnail;
@@ -154,18 +154,17 @@ class CoursesController extends Controller
         return redirect()->route('course.index')->with('success', 'Course has been updated successfully');
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $slug)
     {
-        $course = Course::find($id);
+        $course = Course::where('slug', $slug)->first();
 
         if ($course) {
             // Hapus thumbnail dari storage jika ada
             if ($course->thumbnail) {
-                $thumbnailPath = public_path('storage/' . $course->thumbnail); // Sesuaikan dengan lokasi penyimpanan thumbnail
+                $thumbnailPath = public_path('storage/' . $course->thumbnail);
                 if (file_exists($thumbnailPath)) {
                     unlink($thumbnailPath); // Hapus file thumbnail
                 }
