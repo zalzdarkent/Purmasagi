@@ -11,7 +11,7 @@ class SiswaController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('client.pages.register'); 
+        return view('client.pages.register');
     }
 
     public function register(Request $request)
@@ -21,7 +21,7 @@ class SiswaController extends Controller
             'nama' => 'required|string|max:255',
             'kelas' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:siswa',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         try {
@@ -31,7 +31,7 @@ class SiswaController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            
+
             Auth::guard('siswa')->login($siswa);
             return redirect()->to('/')->with('success', 'Registrasi berhasil, selamat datang!');
         } catch (\Exception $e) {
@@ -41,7 +41,7 @@ class SiswaController extends Controller
 
     public function showLoginForm()
     {
-        return view('client.pages.login'); 
+        return view('client.pages.login');
     }
 
     // Metode untuk login siswa
@@ -74,35 +74,44 @@ class SiswaController extends Controller
         return redirect('/')->with('success', 'Anda telah logout.');
     }
 
-    public function index() {
+    public function index()
+    {
         $siswas = Siswa::all();
         return view('admin.siswa.index', compact('siswas'));
     }
 
-    public function destroy(string $id) {
+    public function destroy(string $id)
+    {
         $siswa = Siswa::find($id);
         $siswa->delete();
         return redirect()->route('siswa.index')->with('success', 'Data berhasil dihapus!');
     }
 
     // Profile
-    public function showProfile(){
+    public function showProfile()
+    {
         $siswa = Auth::guard('siswa')->user();
         return view('client.pages.profile', compact('siswa'));
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         // Validasi input
         $request->validate([
             'nama' => 'nullable|string|max:255',
             'kelas' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:siswa,email,' . Auth::guard('siswa')->id(),
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|min:6|confirmed',
         ]);
 
+        $siswa = Auth::guard('siswa')->user();
+
+        // Cek apakah user ditemukan
+        if (!$siswa) {
+            return redirect()->route('login')->withErrors(['update' => 'User tidak ditemukan.']);
+        }
+
         try {
-            $siswa = Auth::guard('siswa')->user();
-            
             $siswa->nama = $request->nama;
             $siswa->kelas = $request->kelas;
             $siswa->email = $request->email;
@@ -118,5 +127,4 @@ class SiswaController extends Controller
             return back()->withErrors(['update' => 'Terjadi kesalahan, silakan coba lagi.']);
         }
     }
-
 }

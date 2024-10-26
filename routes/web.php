@@ -25,7 +25,11 @@ use App\Http\Controllers\SiswaController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
-Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
+// Route::get('/course/{id}', [CoursesController::class, 'show'])->name('courses.show');
+Route::middleware('auth:siswa')->group(function () {
+    Route::get('/course/{id}', [CoursesController::class, 'show']);
+});
+
 
 Route::get('/activities', [KegiatanController::class, 'indexActivitiesClient'])->name('activities');
 Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teachers');
