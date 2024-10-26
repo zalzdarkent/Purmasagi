@@ -14,7 +14,7 @@
 
                 <aside id="layout-menu" class="layout-menu bg-menu-theme menu menu-vertical">
                     <div class="app-brand demo">
-                        <img src="../assets/img/favicon/logo.svg" class="img-fluid" style="height: 2rem;"
+                        <img src="{{asset("assets/img/favicon/logo.svg")}}" class="img-fluid" style="height: 2rem;"
                             alt="Purmasagi Logo" />
                         <span class="app-brand-text demo text-body fw-bolder ms-2"
                             style="text-transform:capitalize !important;">{{ env('APP_NAME') }}</span>

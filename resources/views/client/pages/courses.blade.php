@@ -34,7 +34,7 @@
                 @foreach ($courses as $course)
                     <div
                         class="course-card mx-auto mb-6 flex w-full max-w-md flex-col justify-between rounded-lg border border-gray-200 bg-white shadow transition duration-500 ease-in-out hover:-translate-y-4 hover:shadow-lg md:mb-0">
-                        <a href="/course/{{ $course->id }}">
+                        <a href="/course/{{ $course->slug }}">
                             <img class="h-48 w-full rounded-t-lg object-cover"
                                 src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : asset('assets/img/contents/image-not-found.png') }}"
                                 alt="{{ $course->judul }}" />
@@ -66,14 +66,14 @@
                                     <a href="#"
                                         class="text-sm text-gray-600 lg:text-base">{{ $course->admin->name }}</a>
                                 </div>
-                                <a href="/course/{{ $course->id }}" class="hover:underline hover:underline-offset-4">
+                                <a href="/course/{{ $course->slug }}" class="hover:underline hover:underline-offset-4">
                                     <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 lg:text-2xl">
                                         {{ $course->judul }}</h5>
                                 </a>
                             </div>
                             <p class="mb-3 line-clamp-2 h-10 text-justify text-sm text-gray-600 md:h-12 lg:text-base">
                                 {{ $course->deskripsi }}</p>
-                            <a href="/course/{{ $course->id }}"
+                            <a href="/course/{{ $course->slug }}"
                                 class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                                 Pelajari
                                 <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"

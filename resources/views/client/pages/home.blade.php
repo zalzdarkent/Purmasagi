@@ -110,7 +110,7 @@
                             </a> --}}
                             @if (Auth::guard('siswa')->check())
                                 <!-- Tombol jika sudah login -->
-                                <a href="/course/{{ $course->id }}"
+                                <a href="/course/{{ $course->slug }}"
                                     class="mt-4 inline-flex w-fit items-center rounded-lg bg-indigo-600 px-3 py-2 text-center text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-300">
                                     Pelajari
                                     <svg class="ms-2 h-3.5 w-3.5 rtl:rotate-180" aria-hidden="true"

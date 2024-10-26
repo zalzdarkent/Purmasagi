@@ -30,9 +30,9 @@ class CoursesController extends Controller
         $courses = Course::query()
             ->when($search, function ($query, $search) {
                 return $query->where('judul', 'like', '%' . $search . '%')
-                            ->orWhere('deskripsi', 'like', '%' . $search . '%');
-        })
-        ->paginate(6); 
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            })
+            ->paginate(6);
 
         return view('client.pages.courses', compact('courses'));
     }
@@ -85,16 +85,17 @@ class CoursesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($slug)
     {
-        // $course = Course::with('contents')->findOrFail($id);
-        // return view('client.pages.detail', compact('course'));
+        // Cari course berdasarkan slug
+        $course = Course::where('slug', $slug)->firstOrFail();
 
-        $course = Course::findOrFail($id);
+        // Ambil konten terkait dengan course yang ditemukan
         $contents = Content::where('course_id', $course->id)->get();
 
         return view('client.pages.detail', compact('course', 'contents'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

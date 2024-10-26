@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_id');
             $table->string("judul");
+            $table->string("slug")->unique();
             $table->string("thumbnail")->nullable();
             $table->string("deskripsi");
             $table->foreign('admin_id')->references('id')->on('admin')->onDelete('cascade');

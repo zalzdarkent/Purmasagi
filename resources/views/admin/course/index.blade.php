@@ -65,19 +65,19 @@
                                     <td>
                                         <!-- Tombol Edit -->
                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm me-2 btn-edit"
-                                            data-id="{{ $course->id }}" data-judul="{{ $course->judul }}"
-                                            data-deskripsi="{{ $course->deskripsi }}" data-thumbnail="{{ $course->thumbnail }}">
-                                            <i class="bx
-                                            bx-edit-alt me-1"></i> Edit
+                                            data-slug="{{ $course->slug }}" data-judul="{{ $course->judul }}"
+                                            data-deskripsi="{{ $course->deskripsi }}"
+                                            data-thumbnail="{{ $course->thumbnail }}">
+                                            <i class="bx bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <!-- Tombol Hapus -->
-                                        <form id="delete-form-{{ $course->id }}"
-                                            action="{{ route('course.destroy', $course->id) }}" method="POST"
+                                        <form id="delete-form-{{ $course->slug }}"
+                                            action="{{ route('course.destroy', $course->slug) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-danger btn-sm"
-                                                onclick="confirmDelete('{{ $course->id }}')">
+                                                onclick="confirmDelete('{{ $course->slug }}')">
                                                 <i class="bx bx-trash me-1"></i> Delete
                                             </button>
                                         </form>
@@ -259,7 +259,7 @@
         // Script for filling the edit modal
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
-                const courseId = this.getAttribute('data-id');
+                const courseId = this.getAttribute('data-slug');
                 const courseTitle = this.getAttribute('data-judul');
                 const courseDescription = this.getAttribute('data-deskripsi');
                 const courseThumbnail = this.getAttribute('data-thumbnail'); // Dapatkan path thumbnail
@@ -277,10 +277,10 @@
                     document.getElementById('current-thumbnail').src = "{{ asset('storage/') }}/" +
                         courseThumbnail;
                     document.getElementById('current-thumbnail').style.display =
-                    'block'; // Tampilkan thumbnail
+                        'block'; // Tampilkan thumbnail
                 } else {
                     document.getElementById('current-thumbnail').style.display =
-                    'none'; // Sembunyikan jika tidak ada
+                        'none'; // Sembunyikan jika tidak ada
                 }
 
                 // Tampilkan modal
