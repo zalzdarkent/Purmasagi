@@ -3,7 +3,7 @@
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
                 <a href="https://flowbite.com/" class="flex items-center">
-                    <img src="../assets/img/favicon/client-icon.svg" class="me-3 h-8" alt="Purmasagi Logo" />
+                    <img src="../assets/img/favicon/logo.svg" class="me-3 h-8" alt="Purmasagi Logo" />
                     <span class="self-center whitespace-nowrap text-2xl font-semibold text-white">Purmasagi</span>
                 </a>
             </div>

@@ -1,7 +1,7 @@
 <nav class="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
     <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="../assets/img/favicon/client-icon.svg" class="h-8 object-cover" alt="Purmasagi Logo" />
+            <img src="../assets/img/favicon/logo.svg" class="h-8 object-cover" alt="Purmasagi Logo" />
             <span class="text-xl font-semibold text-gray-900 dark:text-white">Purmasagi</span>
 
         </a>

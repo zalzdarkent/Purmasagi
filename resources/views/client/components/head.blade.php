@@ -8,4 +8,4 @@
 
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
-    <link rel="icon" href="../assets/img/favicon/client-icon.svg" type="image/x-icon">
+    <link rel="icon" href="../assets/img/favicon/logo.svg" type="image/x-icon">
