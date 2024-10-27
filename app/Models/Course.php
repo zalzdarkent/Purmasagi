@@ -27,7 +27,15 @@ class Course extends Model
     {
         static::saving(function ($course) {
             if (empty($course->slug)) {
-                $course->slug = Str::slug($course->judul, '-');
+                $baseSlug = Str::slug($course->judul, '-');
+                $slug = $baseSlug;
+                $i = 1;
+
+                while (Course::where('slug', $slug)->exists()) {
+                    $slug = $baseSlug . '-' . $i++;
+                }
+
+                $course->slug = $slug;
             }
         });
     }
