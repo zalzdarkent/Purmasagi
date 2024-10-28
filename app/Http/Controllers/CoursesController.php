@@ -133,10 +133,10 @@ class CoursesController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Ambil file thumbnail baru
             $file = $request->file('thumbnail');
-            $fileName = $file->getClientOriginalName(); // Mengambil nama file asli
+            $fileName = $file->getClientOriginalName(); 
 
             // Simpan file baru ke folder 'public/thumbnails'
-            $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
+            $file->storeAs('public/thumbnails', $fileName); 
 
             // Update path thumbnail pada data course
             $course->update(['thumbnail' => 'thumbnails/' . $fileName]);
@@ -145,7 +145,7 @@ class CoursesController extends Controller
             if ($oldThumbnailPath) {
                 $oldFilePath = storage_path('app/public/' . $oldThumbnailPath);
                 if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath); // Hapus file thumbnail lama
+                    unlink($oldFilePath); 
                 }
             }
         }
