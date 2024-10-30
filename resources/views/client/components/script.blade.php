@@ -68,8 +68,7 @@
 
     // Search course
     if (window.location.pathname === '/courses') {
-
-        document.getElementById('searchInput').addEventListener('input', function() {
+        document.getElementById('search').addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const courses = document.querySelectorAll('.course-card');
 
@@ -132,26 +131,6 @@
                 passwordConfirmationError.textContent = '';
             }
         }
-
-        if (window.location.pathname === '/register') {
-            const modalToggle = document.querySelector('[data-modal-toggle="tnc-modal"]');
-            const modal = document.getElementById('tnc-modal');
-
-            modalToggle.addEventListener('click', () => {
-                const isHidden = modal.getAttribute('aria-hidden') === 'true';
-                modal.setAttribute('aria-hidden', !isHidden);
-                modal.classList.toggle('hidden', isHidden);
-                modal.classList.toggle('flex', isHidden);
-            });
-
-            // Close modal on button click
-            modal.querySelectorAll('[data-modal-hide]').forEach(button => {
-                button.addEventListener('click', () => {
-                    modal.setAttribute('aria-hidden', 'true');
-                    modal.classList.add('hidden');
-                });
-            });
-        }
     }
 
     // Show & Hide Password (Login Page)
@@ -167,6 +146,27 @@
             passwordInput.setAttribute('type', type);
             eye.classList.toggle('hidden');
             eyeSlash.classList.toggle('hidden');
+        });
+    }
+
+    // TNC Modal (Register Page)
+    if (window.location.pathname === '/register') {
+        const modalToggle = document.querySelector('[data-modal-toggle="tnc-modal"]');
+        const modal = document.getElementById('tnc-modal');
+
+        modalToggle.addEventListener('click', () => {
+            const isHidden = modal.getAttribute('aria-hidden') === 'true';
+            modal.setAttribute('aria-hidden', !isHidden);
+            modal.classList.toggle('hidden', isHidden);
+            modal.classList.toggle('flex', isHidden);
+        });
+
+        // Close modal on button click
+        modal.querySelectorAll('[data-modal-hide]').forEach(button => {
+            button.addEventListener('click', () => {
+                modal.setAttribute('aria-hidden', 'true');
+                modal.classList.add('hidden');
+            });
         });
     }
 
