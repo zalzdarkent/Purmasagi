@@ -31,17 +31,17 @@ class DashboardController extends Controller
 
         // Array berisi kata-kata penyemangat
         $motivationalQuotes = [
-            'Keep inspiring your students with passion and creativity!',
-            'Every small step you take makes a big impact on your students!',
-            'Teaching is the profession that creates all other professions!',
-            'You are shaping the future, one student at a time!',
-            'Your hard work and dedication are making a difference!',
-            'Believe in the power of your influence, you are making a huge impact!',
-            'Thank you for being an amazing mentor and guide to your students!',
-            'Your passion for teaching lights up the minds of your students!',
-            'Keep pushing forward, you’re doing amazing work!',
-            'You have the power to change lives every day!'
-        ];
+            'Teruslah menginspirasi murid-murid Anda dengan semangat dan kreativitas!',
+            'Setiap langkah kecil yang Anda ambil memberikan dampak besar bagi murid-murid Anda!',
+            'Mengajar adalah profesi yang melahirkan semua profesi lainnya!',
+            'Anda sedang membentuk masa depan, satu murid pada satu waktu!',
+            'Kerja keras dan dedikasi Anda benar-benar membuat perbedaan!',
+            'Percayalah pada kekuatan pengaruh Anda, Anda membuat dampak besar!',
+            'Terima kasih telah menjadi mentor dan pembimbing luar biasa bagi murid-murid Anda!',
+            'Semangat mengajar Anda menerangi pikiran murid-murid Anda!',
+            'Teruslah maju, Anda melakukan pekerjaan yang luar biasa!',
+            'Anda memiliki kekuatan untuk mengubah hidup setiap hari!'
+        ];        
 
         // Ambil waktu saat ini dan bagi menjadi interval 6 jam
         $hour = Carbon::now()->hour;

@@ -70,7 +70,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-pertemuan">Pertemuan ke-<span
                                     style="color: red">*</span></label>
-                            <input type="number" name="pertemuan" class="form-control" id="basic-default-pertemuan"
+                            <input type="text" inputmode="numeric" name="pertemuan" class="form-control" id="basic-default-pertemuan"
                                 placeholder="Type your meeting number" required />
                             <div id="pertemuan-error" style="color: red; display: none;">Pertemuan harus angka positif (min.
                                 1).</div>

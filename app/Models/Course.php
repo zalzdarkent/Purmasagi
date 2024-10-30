@@ -26,7 +26,7 @@ class Course extends Model
     protected static function booted()
     {
         static::saving(function ($course) {
-            if (empty($course->slug)) {
+            if ($course->isDirty('judul')) { // Hanya update slug jika judul berubah
                 $baseSlug = Str::slug($course->judul, '-');
                 $slug = $baseSlug;
                 $i = 1;
