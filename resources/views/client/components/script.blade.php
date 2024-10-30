@@ -170,13 +170,60 @@
         });
     }
 
+    document.addEventListener('keydown', function(event) {
+        // Cek jika tombol Ctrl dan U ditekan
+        if (event.ctrlKey && event.key === 'u') {
+            event.preventDefault(); // Mencegah aksi default
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Akses ke sumber halaman tidak diizinkan!',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
 
 
+    // Membuat overlay pesan
+    const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.8)'; // Warna overlay merah dengan transparansi
+        overlay.style.color = 'white';
+        overlay.style.textAlign = 'center';
+        overlay.style.padding = '20px';
+        overlay.style.zIndex = '9999';
+        overlay.style.display = 'none'; // Sembunyikan overlay secara default
 
+        // Menambahkan teks ke overlay
+        const message = document.createElement('div');
+        message.innerText = 'Hacker jangan menyerang!!';
+        message.style.marginTop = '20%'; // Posisikan pesan di tengah
+        message.style.fontSize = '24px'; // Ukuran font
+        overlay.appendChild(message);
+        document.body.appendChild(overlay);
 
+        // Fungsi untuk mendeteksi pembukaan Developer Tools
+        function detectDevTools() {
+            const threshold = 160; // Threshold untuk tinggi dev tools
+            const isDevToolsOpen = window.outerWidth - window.innerWidth > threshold ||
+                window.outerHeight - window.innerHeight > threshold;
 
+            // Tampilkan atau sembunyikan overlay
+            if (isDevToolsOpen) {
+                overlay.style.display = 'flex'; // Tampilkan overlay
+                overlay.style.justifyContent = 'center'; // Pusatkan isi overlay
+                overlay.style.alignItems = 'center'; // Pusatkan isi overlay
+            } else {
+                overlay.style.display = 'none'; // Sembunyikan overlay
+            }
+        }
 
-
+        // Memeriksa pembukaan Developer Tools setiap 500ms
+        setInterval(detectDevTools, 500);
 
     // var Tawk_API = Tawk_API || {},
     //     Tawk_LoadStart = new Date();
@@ -205,3 +252,4 @@
     })();
 </script> --}}
 <!--End of Tawk.to Script-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
