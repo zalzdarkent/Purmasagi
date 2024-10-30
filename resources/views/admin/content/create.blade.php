@@ -90,7 +90,7 @@
                                     <span>Click To Upload</span>
                                 </label>
                             </div>
-                            <div id="file-list" class="file-list"></div>
+                            <div id="file-list" class="file-list" style="margin: 10px 0px 10px 0px"></div>
                             <div id="fileError" style="display:none; color:red;">File size exceeds 20MB.</div>
                         </div>
                         <button type="submit" class="btn btn-primary" id="saveButton">Save</button> <!-- Tombol Save -->

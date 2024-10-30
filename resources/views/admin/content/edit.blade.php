@@ -62,7 +62,7 @@
                                         // Extract the file name from the file path
                                         $fileName = basename($filePath);
                                     @endphp
-                                    <span class="badge bg-primary file-badge" style="margin-right: 5px;">
+                                    <span class="badge bg-primary file-badge" style="margin: 5px 5px 5px 5px;">
                                         {{ $fileName }} <!-- Display the file name -->
                                         <button type="button" class="btn btn-sm btn-danger delete-existing-file"
                                             data-file-path="{{ $filePath }}" style="margin-left: 5px;">

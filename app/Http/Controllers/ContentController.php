@@ -72,7 +72,7 @@ class ContentController extends Controller
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
-                $path = $file->storeAs('uploads', $originalName, 'public'); // Menyimpan file dengan nama asli
+                $path = $file->storeAs('contents', $originalName, 'public'); // Menyimpan file dengan nama asli
                 $filePaths[] = $path;
             }
         }
@@ -147,7 +147,7 @@ class ContentController extends Controller
                 $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
                 $timestamp = time(); // Menambahkan timestamp agar nama unik
                 $uniqueFileName = $timestamp . '_' . $originalName; // Gabungkan timestamp dan nama asli
-                $path = $file->storeAs('uploads', $uniqueFileName, 'public'); // Menyimpan file dengan nama unik
+                $path = $file->storeAs('contents', $uniqueFileName, 'public'); // Menyimpan file dengan nama unik
 
                 // Tambahkan file path baru ke daftar file yang ada
                 $existingFiles[] = $path;
