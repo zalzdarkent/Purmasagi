@@ -99,8 +99,7 @@
                             <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                 <h3 class="text-base font-semibold text-gray-900">Keluar dari akun</h3>
                                 <div class="mt-2">
-                                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin keluar? Semua data Anda
-                                        akan dihapus secara permanen.</p>
+                                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin keluar?</p>
                                 </div>
                             </div>
                         </div>
