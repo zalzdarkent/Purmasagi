@@ -125,6 +125,12 @@
         // Memeriksa pembukaan Developer Tools setiap 500ms
         setInterval(detectDevTools, 500);
     </script>
+    <script>
+        console.log('%cBerhenti!', 'color: red; font-size: 30px; font-weight: bold;');
+        console.log('%cHacker jangan menyerang!!!', 'color: red; font-size: 30px; font-weight: bold;');
+        console.log('%cIni adalah fitur browser yang ditujukan untuk developer. Jika seseorang meminta Anda menyalin-menempel sesuatu di sini untuk mengaktifkan fitur Purmasagi atau "meretas" akun seseorang, itu adalah penipuan dan akan memberinya akses ke akun Purmasagi Anda.', 'font-size: 18px; color: white;');
+        console.log('%cLihat https://github.com/zalzdarkent untuk informasi selengkapnya.', 'font-size: 16px; color: white;');
+    </script>
 </body>
 
 </html>
