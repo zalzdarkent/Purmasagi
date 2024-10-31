@@ -186,44 +186,126 @@
 
     // Membuat overlay pesan
     const overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.8)'; // Warna overlay merah dengan transparansi
-        overlay.style.color = 'white';
-        overlay.style.textAlign = 'center';
-        overlay.style.padding = '20px';
-        overlay.style.zIndex = '9999';
-        overlay.style.display = 'none'; // Sembunyikan overlay secara default
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.8)'; // Warna overlay merah dengan transparansi
+    overlay.style.color = 'white';
+    overlay.style.textAlign = 'center';
+    overlay.style.padding = '20px';
+    overlay.style.zIndex = '9999';
+    overlay.style.display = 'none'; // Sembunyikan overlay secara default
 
-        // Menambahkan teks ke overlay
-        const message = document.createElement('div');
-        message.innerText = 'Hacker jangan menyerang!!';
-        message.style.marginTop = '20%'; // Posisikan pesan di tengah
-        message.style.fontSize = '24px'; // Ukuran font
-        overlay.appendChild(message);
-        document.body.appendChild(overlay);
+    // Menambahkan teks ke overlay
+    const message = document.createElement('div');
+    message.innerText = 'Hacker jangan menyerang!!';
+    message.style.marginTop = '20%'; // Posisikan pesan di tengah
+    message.style.fontSize = '24px'; // Ukuran font
+    overlay.appendChild(message);
+    document.body.appendChild(overlay);
 
-        // Fungsi untuk mendeteksi pembukaan Developer Tools
-        function detectDevTools() {
-            const threshold = 160; // Threshold untuk tinggi dev tools
-            const isDevToolsOpen = window.outerWidth - window.innerWidth > threshold ||
-                window.outerHeight - window.innerHeight > threshold;
+    // Fungsi untuk mendeteksi pembukaan Developer Tools
+    function detectDevTools() {
+        const threshold = 160; // Threshold untuk tinggi dev tools
+        const isDevToolsOpen = window.outerWidth - window.innerWidth > threshold ||
+            window.outerHeight - window.innerHeight > threshold;
 
-            // Tampilkan atau sembunyikan overlay
-            if (isDevToolsOpen) {
-                overlay.style.display = 'flex'; // Tampilkan overlay
-                overlay.style.justifyContent = 'center'; // Pusatkan isi overlay
-                overlay.style.alignItems = 'center'; // Pusatkan isi overlay
-            } else {
-                overlay.style.display = 'none'; // Sembunyikan overlay
-            }
+        // Tampilkan atau sembunyikan overlay
+        if (isDevToolsOpen) {
+            overlay.style.display = 'flex'; // Tampilkan overlay
+            overlay.style.justifyContent = 'center'; // Pusatkan isi overlay
+            overlay.style.alignItems = 'center'; // Pusatkan isi overlay
+        } else {
+            overlay.style.display = 'none'; // Sembunyikan overlay
         }
+    }
 
-        // Memeriksa pembukaan Developer Tools setiap 500ms
-        setInterval(detectDevTools, 500);
+    // Memeriksa pembukaan Developer Tools setiap 500ms
+    setInterval(detectDevTools, 500);
+
+    Notiflix.Confirm.init({
+        okButtonBackground: '#4F46E5', // Green button
+        cancelButtonBackground: '#F44336', // Red button
+        okButtonColor: '#FFFFFF', // White text on 'Yes' button
+        cancelButtonColor: '#FFFFFF', // White text on 'No' button
+        titleColor: '#333333', // Dark gray title
+        messageColor: '#555555', // Gray message
+    });
+
+    // function confirmLogout() {
+    //     Notiflix.Confirm.show(
+    //         'Konfirmasi Keluar',
+    //         'Apakah Anda yakin ingin keluar?',
+    //         'Ya',
+    //         'Tidak',
+    //         function okCallback() {
+    //             document.getElementById('logout-form').submit();
+    //         },
+    //         function cancelCallback() {
+    //             // User canceled the logout, do nothing
+    //         }
+    //     );
+    // }
+
+    function confirmLogout() {
+        const modal = document.getElementById('logout-modal');
+        modal.classList.remove('hidden'); // Menampilkan modal
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('logout-modal');
+        modal.classList.add('hidden'); // Menyembunyikan modal
+    }
+
+    function logout() {
+        document.getElementById('logout-form').submit(); // Mengirim form logout
+    }
+
+    function ubahData() {
+        const form = document.getElementById('update-form');
+        const formData = new FormData(form);
+        document.getElementById('update-modal').classList.remove('hidden');
+    }
+
+    function updateProfile() {
+        document.getElementById('update-form').submit();
+    }
+
+    function tutupModal() {
+        document.getElementById('update-modal').classList.add('hidden');
+    }
+
+    // function ubahData() {
+    //     Notiflix.Confirm.show(
+    //         'Konfirmasi Keluar',
+    //         'Apakah Anda yakin ingin ubah data anda?',
+    //         'Ya',
+    //         'Tidak',
+    //         function okCallback() {
+    //             document.getElementById('update-form').submit();
+    //         },
+    //         function cancelCallback() {
+    //             // User canceled the logout, do nothing
+    //         }
+    //     );
+    // }
+
+    // document.getElementById('saveButton').addEventListener('click', function() {
+    //     Notiflix.Confirm.show(
+    //         'Konfirmasi',
+    //         'Apakah Anda yakin ingin merubah data anda??',
+    //         'Ya',
+    //         'Tidak',
+    //         function() {
+    //             document.querySelector('form').submit(); // Submit the form if "Yes" is clicked
+    //         },
+    //         function() {
+    //             // Do nothing if "No" is clicked
+    //         }
+    //     );
+    // });
 
     // var Tawk_API = Tawk_API || {},
     //     Tawk_LoadStart = new Date();
@@ -255,7 +337,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
     console.log('%cBerhenti!', 'color: red; font-size: 30px; font-weight: bold;');
-    console.log('%cHacker jangan menyerang!!!', 'color: red; font-size: 30px; font-weight: bold;');
-    console.log('%cIni adalah fitur browser yang ditujukan untuk developer. Jika seseorang meminta Anda menyalin-menempel sesuatu di sini untuk mengaktifkan fitur Purmasagi atau "meretas" akun seseorang, itu adalah penipuan dan akan memberinya akses ke akun Purmasagi Anda.', 'font-size: 18px; color: white;');
-    console.log('%cLihat https://github.com/zalzdarkent untuk informasi selengkapnya.', 'font-size: 16px; color: white;');
+    console.log('%cHacker jangan mencuri!!!', 'color: red; font-size: 30px; font-weight: bold;');
+    console.log(
+        '%cIni adalah fitur browser yang ditujukan untuk developer. Jika seseorang meminta Anda menyalin-menempel sesuatu di sini untuk mengaktifkan fitur Purmasagi atau "meretas" akun seseorang, itu adalah penipuan dan akan memberinya akses ke akun Purmasagi Anda.',
+        'font-size: 18px; color: white;');
+    console.log('%cLihat https://github.com/zalzdarkent untuk informasi selengkapnya.',
+        'font-size: 16px; color: white;');
 </script>
