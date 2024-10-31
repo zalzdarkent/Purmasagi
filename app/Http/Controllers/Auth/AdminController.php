@@ -76,7 +76,7 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:admin,email,' . $admin->id,
-            'password' => 'nullable|string|min:8|confirmed', // Menggunakan nullable agar password tidak wajib diubah
+            'password' => 'nullable|string|min:6|confirmed', // Menggunakan nullable agar password tidak wajib diubah
             'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048', // Sesuaikan ukuran jika perlu
         ]);
 

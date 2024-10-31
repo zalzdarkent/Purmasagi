@@ -115,7 +115,7 @@
             const password = document.getElementById('password').value;
             const passwordError = document.getElementById('passwordError');
             if (password.length < 6) {
-                passwordError.textContent = 'Password harus memiliki minimal 8 karakter.';
+                passwordError.textContent = 'Password harus memiliki minimal 6 karakter.';
             } else {
                 passwordError.textContent = '';
             }
@@ -174,14 +174,21 @@
         // Cek jika tombol Ctrl dan U ditekan
         if (event.ctrlKey && event.key === 'u') {
             event.preventDefault(); // Mencegah aksi default
-            Swal.fire({
-                icon: 'warning',
-                title: 'Oops...',
-                text: 'Akses ke sumber halaman tidak diizinkan!',
-                confirmButtonText: 'OK'
-            });
+            const modal = document.getElementById('ctrlu-modal')
+            modal.classList.remove('hidden');
+            // Swal.fire({
+            //     icon: 'warning',
+            //     title: 'Oops...',
+            //     text: 'Akses ke sumber halaman tidak diizinkan!',
+            //     confirmButtonText: 'OK'
+            // });
         }
     });
+
+    function tutupModalCtrlu() {
+        const modal = document.getElementById('ctrlu-modal');
+        modal.classList.add('hidden'); // Menyembunyikan modal
+    }
 
 
     // Membuat overlay pesan
