@@ -71,9 +71,20 @@ class ContentController extends Controller
         $filePaths = [];
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
-                $path = $file->storeAs('contents', $originalName, 'public'); // Menyimpan file dengan nama asli
-                $filePaths[] = $path;
+                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileExtension = $file->getClientOriginalExtension();
+                $uniqueFileName = $fileName . '.' . $fileExtension;
+
+                // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+                $index = 1;
+                while (Storage::exists('public/contents/' . $uniqueFileName)) {
+                    $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+                    $index++;
+                }
+
+                // Simpan file dengan nama unik di folder 'public/contents'
+                $path = $file->storeAs('public/contents', $uniqueFileName);
+                $filePaths[] = str_replace('public/', '', $path); // Simpan path tanpa 'public/' untuk konsistensi
             }
         }
 
@@ -144,19 +155,25 @@ class ContentController extends Controller
         // Proses upload file baru tanpa menghapus file yang sudah ada
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $originalName = $file->getClientOriginalName(); // Mengambil nama asli file
-                $timestamp = time(); // Menambahkan timestamp agar nama unik
-                $uniqueFileName = $timestamp . '_' . $originalName; // Gabungkan timestamp dan nama asli
-                $path = $file->storeAs('contents', $uniqueFileName, 'public'); // Menyimpan file dengan nama unik
+                $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileExtension = $file->getClientOriginalExtension();
+                $uniqueFileName = $fileName . '.' . $fileExtension;
 
-                // Tambahkan file path baru ke daftar file yang ada
-                $existingFiles[] = $path;
+                // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+                $index = 1;
+                while (Storage::exists('public/contents/' . $uniqueFileName)) {
+                    $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+                    $index++;
+                }
+
+                // Simpan file dengan nama unik di folder 'public/contents'
+                $path = $file->storeAs('public/contents', $uniqueFileName);
+                $existingFiles[] = str_replace('public/', '', $path); // Simpan path tanpa 'public/' untuk konsistensi
             }
         }
 
         // Simpan file path baru dan lama ke database
         $data->file_paths = json_encode($existingFiles);
-        // dd($data);
 
         // Simpan perubahan ke database
         $data->save();

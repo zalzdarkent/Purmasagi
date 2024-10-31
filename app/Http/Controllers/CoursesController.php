@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Content;
 use App\Models\Course;
+use App\Models\Content;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
@@ -58,21 +59,28 @@ class CoursesController extends Controller
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10048', // Validasi file gambar
         ]);
 
-        // Proses untuk menyimpan file gambar
         if ($request->hasFile('thumbnail')) {
-            // Ambil file gambar
             $file = $request->file('thumbnail');
-            $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
+            $uniqueFileName = $fileName . '.' . $fileExtension;
 
-            // Simpan file ke dalam folder 'public/thumbnails'
-            $file->storeAs('public/thumbnails', $fileName); // Menggunakan Storage facade untuk menyimpan
+            // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+            $index = 1;
+            while (Storage::exists('public/thumbnails/' . $uniqueFileName)) {
+                $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+                $index++;
+            }
+
+            // Simpan file dengan nama unik ke folder 'public/thumbnails'
+            $file->storeAs('public/thumbnails', $uniqueFileName);
 
             // Buat entri data course dengan thumbnail dan admin_id
             Course::create([
-                'admin_id' => auth()->id(), // Menyimpan ID admin yang sedang login
+                'admin_id' => auth()->id(),
                 'judul' => $validasi['judul'],
                 'deskripsi' => $validasi['deskripsi'],
-                'thumbnail' => 'thumbnails/' . $fileName, // Simpan path thumbnail
+                'thumbnail' => 'thumbnails/' . $uniqueFileName, // Simpan path thumbnail
             ]);
 
             return redirect()->route('course.index')->with('success', 'Course has been saved');
@@ -133,26 +141,35 @@ class CoursesController extends Controller
         if ($request->hasFile('thumbnail')) {
             // Ambil file thumbnail baru
             $file = $request->file('thumbnail');
-            $fileName = $file->getClientOriginalName(); 
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
+            $uniqueFileName = $fileName . '.' . $fileExtension;
 
-            // Simpan file baru ke folder 'public/thumbnails'
-            $file->storeAs('public/thumbnails', $fileName); 
+            // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+            $index = 1;
+            while (Storage::exists('public/thumbnails/' . $uniqueFileName)) {
+                $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+                $index++;
+            }
+
+            // Simpan file baru ke folder 'public/thumbnails' dengan nama yang unik
+            $file->storeAs('public/thumbnails', $uniqueFileName);
 
             // Update path thumbnail pada data course
-            $course->update(['thumbnail' => 'thumbnails/' . $fileName]);
+            $course->update(['thumbnail' => 'thumbnails/' . $uniqueFileName]);
 
             // Hapus file thumbnail lama jika ada
             if ($oldThumbnailPath) {
                 $oldFilePath = storage_path('app/public/' . $oldThumbnailPath);
                 if (file_exists($oldFilePath)) {
-                    unlink($oldFilePath); 
+                    unlink($oldFilePath);
                 }
             }
         }
 
-        // Redirect kembali dengan pesan sukses
-        return redirect()->route('course.index')->with('success', 'Course has been updated successfully');
+        return redirect()->route('course.index')->with('success', 'Course updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.

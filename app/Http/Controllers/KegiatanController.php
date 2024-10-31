@@ -51,10 +51,20 @@ class KegiatanController extends Controller
 
         // Ambil file gambar
         $file = $request->file('gambar_kegiatan');
-        $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
+        $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileExtension = $file->getClientOriginalExtension();
+        $uniqueFileName = $fileName . '.' . $fileExtension;
 
-        // Menyimpan gambar ke storage dengan nama asli
-        $gambarPath = $file->storeAs('kegiatan', $fileName, 'public'); // Menggunakan storeAs untuk menyimpan dengan nama asli
+        // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+        $index = 1;
+        while (Storage::exists('public/kegiatan/' . $uniqueFileName)) {
+            $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+            $index++;
+        }
+
+        // Menyimpan gambar ke storage dengan nama unik
+        $gambarPath = $file->storeAs('public/kegiatan', $uniqueFileName);
+        $gambarPath = str_replace('public/', '', $gambarPath); // Menghilangkan 'public/' dari path untuk konsistensi
 
         // Membuat data kegiatan dengan menambahkan path gambar
         Kegiatan::create([
@@ -116,12 +126,24 @@ class KegiatanController extends Controller
                 Storage::disk('public')->delete($kegiatan->gambar_kegiatan);
             }
 
-            // Menyimpan gambar baru ke storage dengan nama asli
+            // Mengambil file gambar baru
             $file = $request->file('gambar_kegiatan');
-            $fileName = $file->getClientOriginalName(); // Mengambil nama asli file yang diupload
-            $gambarPath = $file->storeAs('kegiatan', $fileName, 'public'); // Menyimpan dengan nama asli
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
+            $uniqueFileName = $fileName . '.' . $fileExtension;
 
-            // Menambahkan path gambar baru ke data
+            // Cek jika file dengan nama yang sama sudah ada, tambahkan indeks
+            $index = 1;
+            while (Storage::exists('public/kegiatan/' . $uniqueFileName)) {
+                $uniqueFileName = $fileName . "({$index})." . $fileExtension;
+                $index++;
+            }
+
+            // Menyimpan gambar baru dengan nama unik
+            $gambarPath = $file->storeAs('public/kegiatan', $uniqueFileName);
+            $gambarPath = str_replace('public/', '', $gambarPath); // Menghilangkan 'public/' dari path untuk konsistensi
+
+            // Menambahkan path gambar baru ke data yang akan diupdate
             $dataToUpdate['gambar_kegiatan'] = $gambarPath;
         }
 
@@ -130,7 +152,6 @@ class KegiatanController extends Controller
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan has been updated');
     }
-
 
 
     /**
