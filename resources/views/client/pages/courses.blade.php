@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Courses')
+@section('title', 'Kelas')
 
 @section('container')
     {{-- Hero --}}
