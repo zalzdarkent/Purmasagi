@@ -1,6 +1,8 @@
 @extends('client.layouts.app')
 
-@section('title', 'Beranda')
+@section('title', 'Selamat Datang di Purmasagi - Platform Edukasi Terpercaya')
+@section('description', 'Purmasagi adalah platform edukasi terdepan yang menyediakan akses ke berbagai materi pembelajaran, informasi sekolah, dan aktivitas belajar interaktif untuk siswa. Bergabunglah dengan komunitas belajar yang mendukung perkembangan pendidikan secara efektif dan menyenangkan.')
+@section('keywords', 'edukasi, belajar online, platform edukasi, informasi sekolah, komunitas belajar, siswa, guru, pembelajaran interaktif')
 
 @section('container')
     <div class="mx-auto px-2 py-10 lg:px-20">

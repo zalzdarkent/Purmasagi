@@ -2,12 +2,16 @@
 <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
+<meta name="description" content="@yield('description', 'Default description')">
+<meta name="keywords" content="@yield('keywords', 'default, keywords')">
+<meta name="author" content="Nama Aplikasi">
+<meta name="robots" content="index, follow">
 <title>@yield('title') | Purmasagi</title>
 
 <meta name="description" content="" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{asset("assets/img/favicon/logo.svg")}}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/logo.svg') }}" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
