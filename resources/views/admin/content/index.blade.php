@@ -141,7 +141,7 @@
                     const notFoundMessage = document.createElement('div');
                     notFoundMessage.className = 'alert alert-info text-center mt-3';
                     notFoundMessage.style.display = 'none';
-                    notFoundMessage.textContent = 'No matching activity found';
+                    notFoundMessage.textContent = 'No matching content found';
                     document.querySelector('.table-responsive').after(notFoundMessage);
 
                     // Fungsi untuk melakukan pencarian
