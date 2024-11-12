@@ -192,45 +192,45 @@
 
 
     // Membuat overlay pesan
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.8)'; // Warna overlay merah dengan transparansi
-    overlay.style.color = 'white';
-    overlay.style.textAlign = 'center';
-    overlay.style.padding = '20px';
-    overlay.style.zIndex = '9999';
-    overlay.style.display = 'none'; // Sembunyikan overlay secara default
+    // const overlay = document.createElement('div');
+    // overlay.style.position = 'fixed';
+    // overlay.style.top = '0';
+    // overlay.style.left = '0';
+    // overlay.style.width = '100%';
+    // overlay.style.height = '100%';
+    // overlay.style.backgroundColor = 'rgba(255, 0, 0, 0.8)'; // Warna overlay merah dengan transparansi
+    // overlay.style.color = 'white';
+    // overlay.style.textAlign = 'center';
+    // overlay.style.padding = '20px';
+    // overlay.style.zIndex = '9999';
+    // overlay.style.display = 'none'; // Sembunyikan overlay secara default
 
-    // Menambahkan teks ke overlay
-    const message = document.createElement('div');
-    message.innerText = 'Hacker jangan menyerang!!';
-    message.style.marginTop = '20%'; // Posisikan pesan di tengah
-    message.style.fontSize = '24px'; // Ukuran font
-    overlay.appendChild(message);
-    document.body.appendChild(overlay);
+    // // Menambahkan teks ke overlay
+    // const message = document.createElement('div');
+    // message.innerText = 'Hacker jangan menyerang!!';
+    // message.style.marginTop = '20%'; // Posisikan pesan di tengah
+    // message.style.fontSize = '24px'; // Ukuran font
+    // overlay.appendChild(message);
+    // document.body.appendChild(overlay);
 
-    // Fungsi untuk mendeteksi pembukaan Developer Tools
-    function detectDevTools() {
-        const threshold = 160; // Threshold untuk tinggi dev tools
-        const isDevToolsOpen = window.outerWidth - window.innerWidth > threshold ||
-            window.outerHeight - window.innerHeight > threshold;
+    // // Fungsi untuk mendeteksi pembukaan Developer Tools
+    // function detectDevTools() {
+    //     const threshold = 160; // Threshold untuk tinggi dev tools
+    //     const isDevToolsOpen = window.outerWidth - window.innerWidth > threshold ||
+    //         window.outerHeight - window.innerHeight > threshold;
 
-        // Tampilkan atau sembunyikan overlay
-        if (isDevToolsOpen) {
-            overlay.style.display = 'flex'; // Tampilkan overlay
-            overlay.style.justifyContent = 'center'; // Pusatkan isi overlay
-            overlay.style.alignItems = 'center'; // Pusatkan isi overlay
-        } else {
-            overlay.style.display = 'none'; // Sembunyikan overlay
-        }
-    }
+    //     // Tampilkan atau sembunyikan overlay
+    //     if (isDevToolsOpen) {
+    //         overlay.style.display = 'flex'; // Tampilkan overlay
+    //         overlay.style.justifyContent = 'center'; // Pusatkan isi overlay
+    //         overlay.style.alignItems = 'center'; // Pusatkan isi overlay
+    //     } else {
+    //         overlay.style.display = 'none'; // Sembunyikan overlay
+    //     }
+    // }
 
-    // Memeriksa pembukaan Developer Tools setiap 500ms
-    setInterval(detectDevTools, 500);
+    // // Memeriksa pembukaan Developer Tools setiap 500ms
+    // setInterval(detectDevTools, 500);
 
     Notiflix.Confirm.init({
         okButtonBackground: '#4F46E5', // Green button
