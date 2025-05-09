@@ -58,10 +58,10 @@
                                         alt="Purmasagi Logo" />
                                 </span>
                                 <span class="app-brand-text demo text-body fw-bolder ms-2"
-                                    style="text-transform:capitalize !important;">{{ env('APP_NAME') }}</span>
+                                    style="text-transform:capitalize !important;">{{ env('APP_NAME') ?? 'Purmasagi' }}</span>
                             </div>
                             <!-- /Logo -->
-                            <h4 class="mb-4">Selamat datang di {{ env('APP_NAME') }}! 👋</h4>
+                            <h4 class="mb-4">Selamat datang di {{ env('APP_NAME') ?? 'Purmasagi' }}! 👋</h4>
 
                             <form id="formAuthentication" class="mb-8" action="{{ route('admin.login.submit') }}"
                                 method="POST">

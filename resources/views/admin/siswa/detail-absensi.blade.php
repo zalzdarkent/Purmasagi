@@ -36,10 +36,10 @@
                     <!-- Guru Info -->
                     <div class="col-md-6">
                         <div class="d-flex align-items-center">
-                            {{-- <div class="flex-shrink-0 me-3">
-                                <img src="{{ asset('assets/admin/img/avatars/2.png') }}" alt="Avatar"
-                                    class="rounded-circle" style="width: 60px;">
-                            </div> --}}
+                            <div class="flex-shrink-0 me-3">
+                                <img src="{{ $absensi->guru->foto_profil ? asset('storage/' . $absensi->guru->foto_profil) : asset('assets/img/avatars/1.png') }}" 
+                                    alt="Avatar" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                            </div>
                             <div>
                                 <h5 class="mb-1">{{ optional($absensi->guru)->name ?? '-' }}</h5>
                                 <p class="text-muted mb-0"><i class="bx bx-briefcase"></i> Pengajar:

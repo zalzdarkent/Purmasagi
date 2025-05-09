@@ -48,7 +48,7 @@
                     <tbody class="table-border-bottom-0">
                         @if ($contents->isEmpty())
                             <tr>
-                                <td colspan="3" class="text-center">No data available</td>
+                                <td colspan="5" class="text-center">No data available</td>
                             </tr>
                         @else
                             @foreach ($contents as $content)

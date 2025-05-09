@@ -22,57 +22,65 @@ use App\Http\Controllers\SiswaController;
 */
 
 // Client Route
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group(['prefix' => '/', 'as' => 'client.'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses');
+    Route::get('/activities', [KegiatanController::class, 'indexActivitiesClient'])->name('activities');
+    Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teachers');
 
-Route::get('/courses', [CoursesController::class, 'indexCoursesClient'])->name('courses.client');
+    // Authentication Routes
+    Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
+    Route::post('/register', [SiswaController::class, 'register'])->name('register');
+    Route::get('/login/siswa', [SiswaController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login/siswa', [SiswaController::class, 'login'])->name('login');
+    Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
 
-Route::get('/activities', [KegiatanController::class, 'indexActivitiesClient'])->name('activities');
-Route::get('/teachers', [AdminController::class, 'indexForClient'])->name('teachers');
+    // Authenticated Routes
+    Route::middleware('auth:siswa')->group(function () {
+        Route::get('/course/{slug}', [CoursesController::class, 'show'])->name('courses.show');
+        Route::get('/profile', [SiswaController::class, 'showProfile'])->name('profile');
+        Route::post('/profile', [SiswaController::class, 'updateProfile'])->name('profile.update');
+    });
 
-Route::get('/register', [SiswaController::class, 'showRegistrationForm'])->name('register.form');
-Route::post('/register', [SiswaController::class, 'register'])->name('register');
-
-Route::get('/login/siswa', [SiswaController::class, 'showLoginForm'])->name('login.siswa.form');
-Route::post('/login/siswa', [SiswaController::class, 'login'])->name('login.siswa');
-
-Route::post('/logout', [SiswaController::class, 'logout'])->name('logout');
-
-Route::middleware('auth:siswa')->group(function () {
-    Route::get('/course/{slug}', [CoursesController::class, 'show'])->name('courses.show');
-
-    Route::get('/profile', [SiswaController::class, 'showProfile'])->name('profile');
-    Route::post('/profile', [SiswaController::class, 'updateProfile'])->name('profile.update');
+    // Temporary Route
+    Route::get('/login', function () {
+        return view('client.pages.select-role');
+    })->name('login.select');
 });
 
-Route::get('/login', function () {
-    return view('client.pages.select-role');
-})->name('login');
+// Admin Routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    // Authentication Routes
+    Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
-// temporary route
+    // Authenticated Admin Routes
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('course', CoursesController::class);
+        Route::resource('content', ContentController::class);
+        Route::post('/content/delete-file', [ContentController::class, 'deleteFile'])->name('content.delete-file');
+        Route::resource('kegiatan', KegiatanController::class);
+        Route::resource('logo', LogoController::class);
 
+        // Profile Routes
+        Route::post('profile/update', [AdminController::class, 'updateProfile'])->name('profile.update');
+        Route::get('profile/edit', [AdminController::class, 'editProfile'])->name('profile.edit');
 
-// Route untuk halaman login admin
-Route::get('admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
-Route::post('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+        // Guru Routes
+        Route::get('daftar-guru', [AdminController::class, 'index'])->name('guru.index');
+        Route::get('tambah-guru', [AdminController::class, 'create'])->name('guru.create');
+        Route::post('store-guru', [AdminController::class, 'store'])->name('guru.store');
+        Route::delete('hapus-guru/{id}', [AdminController::class, 'destroy'])->name('guru.destroy');
 
-// Route yang memerlukan login admin
-Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard'); // Mengarahkan ke dashboard jika sudah login
-    Route::resource('course', CoursesController::class); // Akses ke resource courses
-    Route::resource('content', ContentController::class);
-    Route::post('/content/delete-file', [ContentController::class, 'deleteFile'])->name('content.delete-file');
-    Route::resource('kegiatan', KegiatanController::class);
-    Route::resource('logo', LogoController::class);
-    Route::post('profile/update', [AdminController::class, 'updateProfile'])->name('update.profile');
-    Route::get('profile/edit', [AdminController::class, 'editProfile'])->name('edit.profile');
-    Route::get('daftar-guru', [AdminController::class, 'index'])->name('guru.index');
-    Route::get('tambah-guru', [AdminController::class, 'create'])->name('guru.create');
-    Route::post('store-guru', [AdminController::class, 'store'])->name('guru.store');
-    Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
-    Route::delete('hapus-guru/{id}', [AdminController::class, 'destroy'])->name('guru.destroy');
-    Route::delete('hapus-siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
-    Route::get('daftar-absen', [SiswaController::class, 'daftarAbsenSiswa'])->name('siswa.absen');
-    Route::post('absen-siswa', [SiswaController::class, 'absensiSiswa'])->name('siswa.absen.store');
-    Route::get('absen-siswa/{id}', [SiswaController::class, 'detailAbsensi'])->name('siswa.absen.show');
+        // Siswa Routes
+        Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
+        Route::delete('hapus-siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+
+        // Absensi Routes
+        Route::get('daftar-absen', [SiswaController::class, 'daftarAbsenSiswa'])->name('absen.index');
+        Route::post('absen-siswa', [SiswaController::class, 'absensiSiswa'])->name('absen.store');
+        Route::get('absen-siswa/{id}', [SiswaController::class, 'detailAbsensi'])->name('absen.show');
+    });
 });
