@@ -29,11 +29,12 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Daftar Siswa</h5>
                 <div class="col-auto">
-                    <input type="text" id="searchInput" class="form-control" style="width: 250px;" placeholder="Cari Siswa...">
+                    <input type="text" id="searchInput" class="form-control" style="width: 250px;"
+                        placeholder="Cari Siswa...">
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table" id="myTable">
                     <thead>
                         <tr>
                             <th>Nama Admin</th>
@@ -72,11 +73,11 @@
                     </tbody>
                 </table>
             </div>
-            {{-- @if ($siswas instanceof \Illuminate\Pagination\LengthAwarePaginator && $siswas->hasPages())
+            @if ($siswas instanceof \Illuminate\Pagination\LengthAwarePaginator && $siswas->hasPages())
                 <div class="d-flex justify-content-center mt-4">
                     {{ $siswas->links() }}
                 </div>
-            @endif --}}
+            @endif
             <script>
                 // Tunggu sampai DOM sepenuhnya dimuat
                 document.addEventListener('DOMContentLoaded', function() {
@@ -148,5 +149,8 @@
                 }
             });
         }
+        $(document).ready(function() {
+            $('#myTable').DataTable();
+        });
     </script>
 @endsection

@@ -72,4 +72,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('daftar-siswa', [SiswaController::class, 'index'])->name('siswa.index');
     Route::delete('hapus-guru/{id}', [AdminController::class, 'destroy'])->name('guru.destroy');
     Route::delete('hapus-siswa/{id}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+    Route::get('daftar-absen', [SiswaController::class, 'daftarAbsenSiswa'])->name('siswa.absen');
+    Route::post('absen-siswa', [SiswaController::class, 'absensiSiswa'])->name('siswa.absen.store');
+    Route::get('absen-siswa/{id}', [SiswaController::class, 'detailAbsensi'])->name('siswa.absen.show');
 });

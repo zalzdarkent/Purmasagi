@@ -13,17 +13,17 @@
     <li class="menu-item {{ Route::is('course.*') || Route::is('content.*') ? 'open active' : '' }}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons bx bx-book"></i>
-            <div data-i18n="Account Settings">Kursus</div>
+            <div data-i18n="Account Settings">Pembelajaran</div>
         </a>
         <ul class="menu-sub">
             <li class="menu-item {{ Route::is('course.create') ? 'active' : '' }}">
                 <a href="{{ route('course.create') }}" class="menu-link">
-                    <div data-i18n="Account">Kursus</div>
+                    <div data-i18n="Account">Pelajaran</div>
                 </a>
             </li>
             <li class="menu-item {{ Route::is('content.index') ? 'active' : '' }}">
                 <a href="{{ route('content.index') }}" class="menu-link">
-                    <div data-i18n="Notifications">Konten</div>
+                    <div data-i18n="Notifications">Materi</div>
                 </a>
             </li>
         </ul>
@@ -71,7 +71,7 @@
         <li class="menu-item {{ Route::is('guru.*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-chalkboard"></i>
-                <div data-i18n="Account Settings">Manajemen User</div>
+                <div data-i18n="Account Settings">Manajemen Guru</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ Route::is('guru.create') ? 'active' : '' }}">
@@ -92,12 +92,35 @@
         <li class="menu-item {{ Route::is('siswa.*') ? 'open active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-group"></i>
-                <div data-i18n="Account Settings">Manajemen User</div>
+                <div data-i18n="Account Settings">Manajemen Siswa</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ Route::is('siswa.index') ? 'active' : '' }}">
                     <a href="{{ route('siswa.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Daftar Siswa</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('siswa.absen') ? 'active' : '' }}">
+                    <a href="{{ route('siswa.absen') }}" class="menu-link">
+                        <div data-i18n="Notifications">Daftar Hadir Siswa</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endif
+    @if (Auth::user()->role == 'guru')
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Siswa</span>
+        </li>
+        <li class="menu-item {{ Route::is('siswa.*') ? 'open active' : '' }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Account Settings">Manajemen Siswa</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('siswa.absen') ? 'active' : '' }}">
+                    <a href="{{ route('siswa.absen') }}" class="menu-link">
+                        <div data-i18n="Notifications">Daftar Hadir Siswa</div>
                     </a>
                 </li>
             </ul>

@@ -57,7 +57,19 @@
     {{-- Main --}}
     <div class="mx-auto my-6 max-w-2xl px-8 text-gray-700 sm:px-6">
         {{-- <h2 class="mb-6 text-2xl font-semibold text-gray-800">Content</h2> --}}
+        @if (session('success'))
+            <div class="alert-dismissible fade show alert alert-success" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
+        @if (session('error'))
+            <div class="alert-danger alert-dismissible fade show alert" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         {{-- Pertemuan 1 dan Modal --}}
         @if ($contents->count() > 0)
             @foreach ($contents as $content)
@@ -102,6 +114,13 @@
                                     @endif
                                 @endforeach
                             </div>
+                            <div class="mt-4 justify-end">
+                                <button data-modal-target="absen-modal" data-modal-toggle="absen-modal"
+                                    class="rounded-lg bg-green-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 md:text-sm"
+                                    onclick="handleAbsen({{ $content->id }})">
+                                    Absen
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -142,6 +161,97 @@
                 <h2 class="text-center text-gray-500">Mohon maaf, belum ada pertemuan yang tersedia saat ini.</h2>
             </div>
         @endif
-
     </div>
+
+    {{-- Modal Form Absen --}}
+    <!-- Tempatkan modal ini di LUAR -->
+    <div id="absen-modal" tabindex="-1" aria-hidden="true"
+        class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+        <div class="relative max-h-full w-full max-w-md p-4">
+            <div class="relative rounded-lg bg-white shadow dark:bg-gray-700">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between rounded-t border-b p-4 dark:border-gray-600 md:p-5">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white lg:text-2xl">Form Absen</h3>
+                    <button type="button"
+                        class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-hide="absen-modal">
+                        <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close</span>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="space-y-6 p-6">
+                    <form id="absen-form" method="POST" action="{{ route('siswa.absen.store') }}">
+                        @csrf
+                        {{-- Hidden Inputs --}}
+                        <input type="hidden" name="id_siswa" value="{{ auth()->user()->id }}">
+                        <input type="hidden" name="id_guru" value="{{ $course->admin_id }}">
+                        <input type="hidden" name="id_course" value="{{ $course->id }}">
+                        <input type="hidden" id="modal-id-content" name="id_content" value="">
+                        <!-- Nilai kosong -->
+
+                        {{-- Status --}}
+                        <div class="mb-4">
+                            <label for="status"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                            <select id="status" name="status"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                onchange="toggleKeteranganInput()" required>
+                                <option value="" disabled selected>Pilih</option>
+                                <option value="hadir">Hadir</option>
+                                <option value="izin">Izin</option>
+                                <option value="sakit">Sakit</option>
+                            </select>
+                        </div>
+
+                        {{-- Keterangan (Hidden by Default) --}}
+                        <div class="mb-4 hidden" id="keterangan-container">
+                            <label for="keterangan"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Keterangan</label>
+                            <textarea id="keterangan" name="keterangan"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                rows="3"></textarea>
+                        </div>
+
+                        {{-- Submit Button --}}
+                        <button type="submit"
+                            class="w-full rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300">
+                            Kirim
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleAbsen(contentId) {
+            // Isi input id_content secara dinamis
+            document.getElementById('modal-id-content').value = contentId;
+
+            // Tampilkan modal (jika pakai Flowbite atau Tailwind UI)
+            const modal = document.getElementById('absen-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+            }
+        }
+
+        function toggleKeteranganInput() {
+            const status = document.getElementById('status').value;
+            const keteranganContainer = document.getElementById('keterangan-container');
+
+            if (status === 'izin' || status === 'sakit') {
+                keteranganContainer.classList.remove('hidden');
+            } else {
+                keteranganContainer.classList.add('hidden');
+            }
+        }
+    </script>
 @endsection
