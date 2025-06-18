@@ -359,10 +359,53 @@
                 navigator.geolocation.clearWatch(watchId);
                 watchId = null;
             }
+            const loadingIndicator = document.getElementById('loading-location');
+            const successMessage = document.getElementById('location-success');
+            
+            loadingIndicator.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            
+            // Reset variables
+            startTime = Date.now();
             bestAccuracy = Infinity;
             bestPosition = null;
-            startTime = Date.now();
+            
+            // Try getting location again
             getLocation();
+        }
+
+        function handleLocationError(error) {
+            console.error("Error getting location:", error);
+            const loadingIndicator = document.getElementById('loading-location');
+            const successMessage = document.getElementById('location-success');
+            loadingIndicator.classList.add('hidden');
+            
+            let errorMessage = "Terjadi kesalahan saat mendapatkan lokasi: ";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage += "Akses lokasi ditolak. Mohon izinkan akses lokasi di browser Anda.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage += "Informasi lokasi tidak tersedia. Pastikan GPS aktif dan Anda berada di area terbuka.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage += "Waktu mendapatkan lokasi habis. Silakan coba lagi dengan menekan tombol 'Coba Lagi'.";
+                    break;
+                default:
+                    errorMessage += "Terjadi kesalahan yang tidak diketahui.";
+            }
+
+            // Show error message and retry button
+            successMessage.innerHTML = `
+                <div class="mb-2 rounded-lg border border-red-400 bg-red-100 p-4 text-red-700">
+                    <p>${errorMessage}</p>
+                    <button onclick="resetLocation()" 
+                            class="mt-2 w-full rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-500">
+                        Coba Lagi
+                    </button>
+                </div>
+            `;
+            successMessage.classList.remove('hidden');
         }
 
         function handleAbsen(contentId) {
@@ -417,7 +460,7 @@
 
                 const options = {
                     enableHighAccuracy: true,
-                    timeout: 10000, // timeout per attempt
+                    timeout: 30000, // Increased timeout to 30 seconds
                     maximumAge: 0
                 };
 
@@ -425,14 +468,12 @@
                     function(position) {
                         const accuracy = position.coords.accuracy;
                         const elapsedTime = Date.now() - startTime;
-                        
                         console.log('Current accuracy:', accuracy, 'meters');
 
                         // Update best position if this one is more accurate
                         if (accuracy < bestAccuracy) {
                             bestAccuracy = accuracy;
                             bestPosition = position;
-                            
                             const lat = position.coords.latitude;
                             const lon = position.coords.longitude;
 
@@ -443,12 +484,11 @@
                             // Update map
                             const zoomLevel = Math.min(0.002, Math.max(0.0005, accuracy / 100000));
                             const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-zoomLevel},${lat-zoomLevel},${lon+zoomLevel},${lat+zoomLevel}&layer=mapnik&marker=${lat},${lon}`;
-                            
                             const mapIframe = document.getElementById('map-iframe');
+                            
                             if (mapIframe.src !== mapUrl) {
                                 mapIframe.src = mapUrl;
                             }
-
                             mapPreview.classList.remove('hidden');
                             updateLocationStatus(position);
 
@@ -481,7 +521,8 @@
                         successMessage.classList.remove('hidden');
 
                         // Enable buttons based on accuracy
-                        if (accuracy <= 100) { // Sedikit lebih toleran untuk penggunaan
+                        if (accuracy <= 100) // Sedikit lebih toleran untuk penggunaan
+                        {
                             submitButton.disabled = false;
                             takePhotoBtn.disabled = false;
                             takePhotoBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -492,28 +533,7 @@
                         }
                     },
                     function(error) {
-                        console.error("Error getting location:", error);
-                        loadingIndicator.classList.add('hidden');
-                        
-                        let errorMessage = "Terjadi kesalahan saat mendapatkan lokasi: ";
-                        switch(error.code) {
-                            case error.PERMISSION_DENIED:
-                                errorMessage += "Akses lokasi ditolak.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                errorMessage += "Informasi lokasi tidak tersedia.";
-                                break;
-                            case error.TIMEOUT:
-                                errorMessage += "Waktu mendapatkan lokasi habis.";
-                                break;
-                            default:
-                                errorMessage += "Terjadi kesalahan yang tidak diketahui.";
-                        }
-                        
-                        alert(errorMessage + "\nMohon aktifkan GPS dan pastikan berada di area terbuka.");
-                        submitButton.disabled = true;
-                        takePhotoBtn.disabled = true; // Tetap nonaktifkan tombol foto
-                        takePhotoBtn.classList.add('opacity-50', 'cursor-not-allowed'); // Tambah style disabled
+                        handleLocationError(error);
                     },
                     options
                 );

@@ -114,17 +114,23 @@
                                 <div class="col-md-6">
                                     <h6 class="text-muted fw-bold mb-3">Lokasi Absensi</h6>
                                     @if($absensi->latitude && $absensi->longitude)
-                                        <div class="bg-light p-3 rounded shadow-sm" style="height: 250px;">
-                                            <p class="mb-3">
-                                                <i class="bx bx-map-pin"></i> 
-                                                <strong>Latitude:</strong> {{ $absensi->latitude }}<br>
-                                                <i class="bx bx-map-pin"></i> 
-                                                <strong>Longitude:</strong> {{ $absensi->longitude }}
-                                            </p>
-                                            <a href="https://www.google.com/maps?q={{ $absensi->latitude }},{{ $absensi->longitude }}" 
+                                        <div class="bg-light rounded shadow-sm" style="height: 250px;">
+                                            <iframe 
+                                                width="100%" 
+                                                height="100%" 
+                                                frameborder="0" 
+                                                scrolling="no" 
+                                                marginheight="0" 
+                                                marginwidth="0" 
+                                                src="https://www.openstreetmap.org/export/embed.html?bbox={{ $absensi->longitude - 0.002 }},{{ $absensi->latitude - 0.002 }},{{ $absensi->longitude + 0.002 }},{{ $absensi->latitude + 0.002 }}&layer=mapnik&marker={{ $absensi->latitude }},{{ $absensi->longitude }}"
+                                                style="border: none; border-radius: 0.375rem;">
+                                            </iframe>
+                                        </div>
+                                        <div class="mt-2">
+                                            <a href="https://www.openstreetmap.org/?mlat={{ $absensi->latitude }}&mlon={{ $absensi->longitude }}&zoom=16" 
                                                target="_blank" 
-                                               class="btn btn-primary">
-                                                <i class="bx bx-map"></i> Lihat di Google Maps
+                                               class="btn btn-sm btn-primary">
+                                                <i class="bx bx-map"></i> Buka Peta Lebih Besar
                                             </a>
                                         </div>
                                     @else
