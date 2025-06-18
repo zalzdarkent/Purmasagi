@@ -17,6 +17,9 @@ class Absensi extends Model
         'id_content',
         'status',
         'keterangan',
+        'foto_absensi',
+        'longitude',
+        'latitude',
     ];
     public function siswa()
     {

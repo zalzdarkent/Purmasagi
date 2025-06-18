@@ -28,6 +28,7 @@
                             </div> --}}
                             <div>
                                 <h5 class="mb-1">{{ $absensi->siswa->nama }}</h5>
+                                <p class="text-muted mb-0">Kelas {{ $absensi->siswa->kelas }}</p>
                                 <p class="text-muted mb-0"><i class="bx bx-envelope"></i> {{ $absensi->siswa->email }}</p>
                             </div>
                         </div>
@@ -37,12 +38,13 @@
                     <div class="col-md-6">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3">
-                                <img src="{{ $absensi->guru->foto_profil ? asset('storage/' . $absensi->guru->foto_profil) : asset('assets/img/avatars/1.png') }}" 
-                                    alt="Avatar" class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;">
+                                <img src="{{ $absensi->guru->foto_profil ? asset('storage/' . $absensi->guru->foto_profil) : asset('assets/img/avatars/1.png') }}"
+                                    alt="Avatar" class="rounded-circle"
+                                    style="width: 60px; height: 60px; object-fit: cover;">
                             </div>
                             <div>
                                 <h5 class="mb-1">{{ optional($absensi->guru)->name ?? '-' }}</h5>
-                                <p class="text-muted mb-0"><i class="bx bx-briefcase"></i> Pengajar:
+                                <p class="text-muted mb-0"><i class="bx bx-briefcase"></i> Pelajaran:
                                     {{ optional($absensi->course)->judul ?? '-' }}
                                 </p>
                             </div>
@@ -65,7 +67,8 @@
                             @if ($absensi->status == 'Hadir')
                                 <span class="badge bg-label-success fs-6 py-2 px-3">{{ ucfirst($absensi->status) }}</span>
                             @elseif ($absensi->status == 'Izin')
-                                <span class="badge bg-warning text-dark fs-6 py-2 px-3 text-white">{{ ucfirst($absensi->status) }}</span>
+                                <span
+                                    class="badge bg-warning text-dark fs-6 py-2 px-3 text-white">{{ ucfirst($absensi->status) }}</span>
                             @else
                                 <span class="badge bg-label-danger fs-6 py-2 px-3">{{ ucfirst($absensi->status) }}</span>
                             @endif
@@ -82,9 +85,51 @@
                                         {{ \Carbon\Carbon::parse($absensi->created_at)->tz('Asia/Jakarta')->format('d M Y H:i') }}
                                     </p>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 offset-md-4">
                                     <p class="text-muted mb-1">Keterangan</p>
                                     <p class="fw-semibold">{{ $absensi->keterangan ?? '-' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Foto dan Lokasi Absensi -->
+                    <div class="col-12 mt-3">
+                        <div class="border-top pt-3">
+                            <div class="row">
+                                <!-- Foto Absensi -->
+                                <div class="col-md-6">
+                                    <h6 class="text-muted fw-bold mb-3">Foto Absensi</h6>
+                                    @if($absensi->foto_absensi)
+                                        <img src="{{ asset('storage/' . $absensi->foto_absensi) }}" 
+                                             alt="Foto Absensi" 
+                                             class="img-fluid rounded shadow-sm"
+                                             style="max-height: 250px; width: 100%; object-fit: cover;">
+                                    @else
+                                        <p class="text-muted">Tidak ada foto absensi</p>
+                                    @endif
+                                </div>
+
+                                <!-- Lokasi -->
+                                <div class="col-md-6">
+                                    <h6 class="text-muted fw-bold mb-3">Lokasi Absensi</h6>
+                                    @if($absensi->latitude && $absensi->longitude)
+                                        <div class="bg-light p-3 rounded shadow-sm" style="height: 250px;">
+                                            <p class="mb-3">
+                                                <i class="bx bx-map-pin"></i> 
+                                                <strong>Latitude:</strong> {{ $absensi->latitude }}<br>
+                                                <i class="bx bx-map-pin"></i> 
+                                                <strong>Longitude:</strong> {{ $absensi->longitude }}
+                                            </p>
+                                            <a href="https://www.google.com/maps?q={{ $absensi->latitude }},{{ $absensi->longitude }}" 
+                                               target="_blank" 
+                                               class="btn btn-primary">
+                                                <i class="bx bx-map"></i> Lihat di Google Maps
+                                            </a>
+                                        </div>
+                                    @else
+                                        <p class="text-muted">Data lokasi tidak tersedia</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

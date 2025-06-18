@@ -115,11 +115,21 @@
                                 @endforeach
                             </div>
                             <div class="mt-4 justify-end">
-                                <button data-modal-target="absen-modal" data-modal-toggle="absen-modal"
-                                    class="rounded-lg bg-green-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 md:text-sm"
-                                    onclick="handleAbsen({{ $content->id }})">
-                                    Absen
-                                </button>
+                                @if (in_array($content->id, $absensi))
+                                    {{-- Tombol dinonaktifkan jika sudah absen --}}
+                                    <button
+                                        class="rounded-lg bg-gray-400 px-5 py-2.5 text-center text-xs font-medium text-white cursor-not-allowed md:text-sm"
+                                        type="button" disabled>
+                                        Sudah Absen
+                                    </button>
+                                @else
+                                    {{-- Tombol aktif jika belum absen --}}
+                                    <button data-modal-target="absen-modal" data-modal-toggle="absen-modal"
+                                        class="rounded-lg bg-green-600 px-5 py-2.5 text-center text-xs font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 md:text-sm"
+                                        onclick="handleAbsen({{ $content->id }})">
+                                        Absen
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -185,16 +195,43 @@
                     </button>
                 </div>
 
+                <div id="loading-location" class="hidden text-center mb-4">
+                    <div
+                        class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500 mb-2">
+                    </div>
+                    <p class="text-sm text-gray-600">Mendapatkan lokasi...</p>
+                </div>
+
+                <div id="location-success" class="hidden mb-4">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+                        <span class="block sm:inline">Lokasi berhasil didapatkan!</span>
+                    </div>
+                </div>
+
                 <!-- Modal Body -->
                 <div class="space-y-6 p-6">
-                    <form id="absen-form" method="POST" action="{{ route('siswa.absen.store') }}">
+                    <div id="map-preview" class="hidden mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preview Lokasi</label>
+                        <iframe
+                            id="map-iframe"
+                            class="w-full h-48 rounded-lg"
+                            frameborder="0" 
+                            style="border:0"
+                            allowfullscreen="" 
+                            aria-hidden="false" 
+                            tabindex="0">
+                        </iframe>
+                    </div>
+                    <form id="absen-form" method="POST" action="{{ route('siswa.absen.store') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         {{-- Hidden Inputs --}}
-                        <input type="hidden" name="id_siswa" value="{{ auth()->user()->id }}">
+                        <input type="hidden" name="id_siswa" value="{{ auth()->guard('siswa')->id() }}">
                         <input type="hidden" name="id_guru" value="{{ $course->admin_id }}">
                         <input type="hidden" name="id_course" value="{{ $course->id }}">
                         <input type="hidden" id="modal-id-content" name="id_content" value="">
-                        <!-- Nilai kosong -->
+                        <input type="hidden" id="latitude" name="latitude" value="">
+                        <input type="hidden" id="longitude" name="longitude" value="">
 
                         {{-- Status --}}
                         <div class="mb-4">
@@ -219,39 +256,406 @@
                                 rows="3"></textarea>
                         </div>
 
+                        {{-- Foto Absensi --}}
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Foto Absensi</label>
+                            
+                            {{-- Preview foto --}}
+                            <div id="preview-container" class="hidden mt-2 mb-4">
+                                <img id="preview-image" class="max-w-full h-48 object-cover rounded-lg" src="" alt="Preview">
+                                <button type="button" id="retake-photo" 
+                                    class="mt-2 w-full rounded-lg bg-gray-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300">
+                                    Ambil Ulang Foto
+                                </button>
+                            </div>
+
+                            {{-- Tombol ambil foto --}}
+                            <button type="button" id="take-photo"
+                                class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled>
+                                Buka Kamera
+                            </button>
+
+                            {{-- Input file hidden untuk menyimpan foto --}}
+                            <input type="file" id="foto_absensi" name="foto_absensi" accept="image/*" capture="environment" 
+                                class="hidden" required>
+                        </div>
+
                         {{-- Submit Button --}}
-                        <button type="submit"
+                        <button type="submit" id="submit-btn"
                             class="w-full rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300">
                             Kirim
                         </button>
                     </form>
+                </div>
+
+                <!-- Tambahkan ini di dalam modal body, sebelum preview-container -->
+                <div id="camera-container" class="hidden mb-4">
+                    <video id="camera-view" autoplay playsinline class="w-full h-48 object-cover rounded-lg"></video>
+                    <div class="flex gap-2 mt-2">
+                        <button type="button" id="capture-photo"
+                            class="flex-1 rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300">
+                            Ambil Foto
+                        </button>
+                        <button type="button" id="close-camera"
+                            class="flex-1 rounded-lg bg-gray-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-300">
+                            Tutup Kamera
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function handleAbsen(contentId) {
-            // Isi input id_content secara dinamis
-            document.getElementById('modal-id-content').value = contentId;
+        let watchId = null;
+        let maxWaitTime = 30000; // 30 detik maksimal menunggu
+        let startTime;
+        let bestAccuracy = Infinity;
+        let bestPosition = null;
 
-            // Tampilkan modal (jika pakai Flowbite atau Tailwind UI)
+        function getAccuracyColor(accuracy) {
+            if (accuracy <= 20) return 'bg-green-100 border-green-400 text-green-700';
+            if (accuracy <= 100) return 'bg-yellow-100 border-yellow-400 text-yellow-700';
+            return 'bg-red-100 border-red-400 text-red-700';
+        }
+
+        function getAccuracyText(accuracy) {
+            if (accuracy <= 20) return 'Sangat Akurat';
+            if (accuracy <= 100) return 'Cukup Akurat';
+            return 'Kurang Akurat';
+        }
+
+        function updateLocationStatus(position) {
+            const accuracy = position.coords.accuracy;
+            const successMessage = document.getElementById('location-success');
+            const colorClasses = ['bg-green-100', 'border-green-400', 'text-green-700',
+                                'bg-yellow-100', 'border-yellow-400', 'text-yellow-700',
+                                'bg-red-100', 'border-red-400', 'text-red-700'];
+            
+            // Remove all possible color classes
+            colorClasses.forEach(cls => successMessage.classList.remove(cls));
+            
+            // Add new color classes
+            const newColors = getAccuracyColor(accuracy).split(' ');
+            newColors.forEach(cls => successMessage.classList.add(cls));
+            
+            // Save existing retry button if it exists
+            const existingRetryBtn = successMessage.querySelector('.retry-button');
+            const retryBtnHtml = existingRetryBtn ? existingRetryBtn.outerHTML : '';
+            
+            // Update message
+            successMessage.innerHTML = `
+                <span class="block sm:inline">Lokasi ditemukan - ${getAccuracyText(accuracy)} (${Math.round(accuracy)}m)</span>
+                ${accuracy > 100 ? `
+                <button onclick="resetLocation()" 
+                        class="retry-button mt-2 w-full rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-500">
+                    Coba Dapatkan Lokasi Lebih Akurat
+                </button>` : ''}`;
+        }
+
+        function resetLocation() {
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+            bestAccuracy = Infinity;
+            bestPosition = null;
+            startTime = Date.now();
+            getLocation();
+        }
+
+        function handleAbsen(contentId) {
+            document.getElementById('modal-id-content').value = contentId;
             const modal = document.getElementById('absen-modal');
             if (modal) {
                 modal.classList.remove('hidden');
                 modal.setAttribute('aria-hidden', 'false');
+                getLocation(); // Panggil getLocation saat modal dibuka
             }
         }
 
         function toggleKeteranganInput() {
             const status = document.getElementById('status').value;
             const keteranganContainer = document.getElementById('keterangan-container');
+            const keteranganInput = document.getElementById('keterangan');
 
             if (status === 'izin' || status === 'sakit') {
+                // Tampilkan input dan tambahkan required
                 keteranganContainer.classList.remove('hidden');
+                keteranganInput.setAttribute('required', 'required');
             } else {
+                // Sembunyikan input dan hapus required
                 keteranganContainer.classList.add('hidden');
+                keteranganInput.removeAttribute('required');
+                keteranganInput.value = ''; // Kosongkan keterangan jika hadir
             }
         }
+
+        function getLocation() {
+            const loadingIndicator = document.getElementById('loading-location');
+            const successMessage = document.getElementById('location-success');
+            const submitButton = document.getElementById('submit-btn');
+            const takePhotoBtn = document.getElementById('take-photo');
+            const mapPreview = document.getElementById('map-preview');
+            const mapIframe = document.getElementById('map-iframe');
+
+            loadingIndicator.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            mapPreview.classList.add('hidden'); // Sembunyikan peta saat loading
+            submitButton.disabled = true;
+            takePhotoBtn.disabled = true; // Nonaktifkan tombol foto
+
+            if (navigator.geolocation) {
+                // Reset state
+                if (watchId !== null) {
+                    navigator.geolocation.clearWatch(watchId);
+                }
+                startTime = Date.now();
+                bestAccuracy = Infinity;
+                bestPosition = null;
+
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000, // timeout per attempt
+                    maximumAge: 0
+                };
+
+                watchId = navigator.geolocation.watchPosition(
+                    function(position) {
+                        const accuracy = position.coords.accuracy;
+                        const elapsedTime = Date.now() - startTime;
+                        
+                        console.log('Current accuracy:', accuracy, 'meters');
+
+                        // Update best position if this one is more accurate
+                        if (accuracy < bestAccuracy) {
+                            bestAccuracy = accuracy;
+                            bestPosition = position;
+                            
+                            const lat = position.coords.latitude;
+                            const lon = position.coords.longitude;
+
+                            // Update hidden inputs
+                            document.getElementById('latitude').value = lat;
+                            document.getElementById('longitude').value = lon;
+
+                            // Update map
+                            const zoomLevel = Math.min(0.002, Math.max(0.0005, accuracy / 100000));
+                            const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-zoomLevel},${lat-zoomLevel},${lon+zoomLevel},${lat+zoomLevel}&layer=mapnik&marker=${lat},${lon}`;
+                            
+                            const mapIframe = document.getElementById('map-iframe');
+                            if (mapIframe.src !== mapUrl) {
+                                mapIframe.src = mapUrl;
+                            }
+
+                            mapPreview.classList.remove('hidden');
+                            updateLocationStatus(position);
+
+                            // Tambahkan tombol retry jika akurasi masih rendah
+                            const successMessage = document.getElementById('location-success');
+                            const existingRetryBtn = successMessage.querySelector('.retry-button');
+                            
+                            if (accuracy > 100) {
+                                if (!existingRetryBtn) {
+                                    successMessage.innerHTML += `
+                                        <button onclick="resetLocation()" 
+                                                class="retry-button mt-2 w-full rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-500">
+                                            Coba Dapatkan Lokasi Lebih Akurat
+                                        </button>`;
+                                }
+                            } else if (existingRetryBtn) {
+                                existingRetryBtn.remove();
+                            }
+                        }
+
+                        // If we have good accuracy or have waited too long, stop watching
+                        if (accuracy <= 20 || elapsedTime >= maxWaitTime) {
+                            if (watchId !== null) {
+                                navigator.geolocation.clearWatch(watchId);
+                                watchId = null;
+                            }
+                        }
+
+                        loadingIndicator.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+
+                        // Enable buttons based on accuracy
+                        if (accuracy <= 100) { // Sedikit lebih toleran untuk penggunaan
+                            submitButton.disabled = false;
+                            takePhotoBtn.disabled = false;
+                            takePhotoBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        } else {
+                            submitButton.disabled = true;
+                            takePhotoBtn.disabled = true;
+                            takePhotoBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                        }
+                    },
+                    function(error) {
+                        console.error("Error getting location:", error);
+                        loadingIndicator.classList.add('hidden');
+                        
+                        let errorMessage = "Terjadi kesalahan saat mendapatkan lokasi: ";
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage += "Akses lokasi ditolak.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage += "Informasi lokasi tidak tersedia.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage += "Waktu mendapatkan lokasi habis.";
+                                break;
+                            default:
+                                errorMessage += "Terjadi kesalahan yang tidak diketahui.";
+                        }
+                        
+                        alert(errorMessage + "\nMohon aktifkan GPS dan pastikan berada di area terbuka.");
+                        submitButton.disabled = true;
+                        takePhotoBtn.disabled = true; // Tetap nonaktifkan tombol foto
+                        takePhotoBtn.classList.add('opacity-50', 'cursor-not-allowed'); // Tambah style disabled
+                    },
+                    options
+                );
+            } else {
+                loadingIndicator.classList.add('hidden');
+                alert("Geolocation tidak didukung oleh browser ini");
+                submitButton.disabled = true;
+                takePhotoBtn.disabled = true; // Tetap nonaktifkan tombol foto
+                takePhotoBtn.classList.add('opacity-50', 'cursor-not-allowed'); // Tambah style disabled
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const absenModal = document.getElementById('absen-modal');
+            if (absenModal) {
+                absenModal.addEventListener('shown.bs.modal', getLocation);
+            }
+        });
+
+        // Tambahkan kode untuk handling kamera
+        let stream = null;
+        const takePhotoBtn = document.getElementById('take-photo');
+        const retakePhotoBtn = document.getElementById('retake-photo');
+        const cameraContainer = document.getElementById('camera-container');
+        const cameraView = document.getElementById('camera-view');
+        const captureBtn = document.getElementById('capture-photo');
+        const closeBtn = document.getElementById('close-camera');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const fileInput = document.getElementById('foto_absensi');
+
+        async function startCamera() {
+            try {
+                const latitude = document.getElementById('latitude').value;
+                const longitude = document.getElementById('longitude').value;
+
+                // Cek apakah lokasi sudah didapat
+                if (!latitude || !longitude) {
+                    alert('Mohon izinkan akses lokasi terlebih dahulu');
+                    return;
+                }
+
+                // Pastikan tidak ada stream yang aktif
+                if (stream) {
+                    stopCamera();
+                }
+
+                // Coba akses kamera belakang terlebih dahulu
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: { exact: "environment" }
+                    },
+                    audio: false
+                }).catch(async () => {
+                    // Jika gagal, coba akses kamera depan
+                    return await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: false
+                    });
+                });
+
+                const videoElement = document.getElementById('camera-view');
+                videoElement.srcObject = stream;
+                await videoElement.play();
+                
+                document.getElementById('camera-container').classList.remove('hidden');
+                document.getElementById('take-photo').classList.add('hidden');
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+                alert('Gagal mengakses kamera. Pastikan browser Anda mendukung akses kamera dan izin kamera telah diberikan.');
+            }
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            document.getElementById('camera-container').classList.add('hidden');
+            if (!fileInput.files.length) {
+                document.getElementById('take-photo').classList.remove('hidden');
+            }
+        }
+
+        function capturePhoto() {
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraView.videoWidth;
+            canvas.height = cameraView.videoHeight;
+            canvas.getContext('2d').drawImage(cameraView, 0, 0);
+            
+            // Convert to file
+            canvas.toBlob((blob) => {
+                const file = new File([blob], "foto_absensi.jpg", { type: "image/jpeg" });
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                
+                // Show preview
+                previewImage.src = canvas.toDataURL('image/jpeg');
+                previewContainer.classList.remove('hidden');
+                takePhotoBtn.classList.add('hidden');
+                
+                stopCamera();
+            }, 'image/jpeg', 0.8);
+        }
+
+        takePhotoBtn.addEventListener('click', startCamera);
+        
+        retakePhotoBtn.addEventListener('click', () => {
+            previewContainer.classList.add('hidden');
+            takePhotoBtn.classList.remove('hidden');
+            fileInput.value = '';
+            startCamera();
+        });
+
+        captureBtn.addEventListener('click', capturePhoto);
+        
+        closeBtn.addEventListener('click', () => {
+            stopCamera();
+            if (!fileInput.files.length) {
+                previewContainer.classList.add('hidden');
+                takePhotoBtn.classList.remove('hidden');
+            }
+        });
+
+        // Update form validation
+        document.getElementById('absen-form').addEventListener('submit', function(e) {
+            const latitude = document.getElementById('latitude').value;
+            const longitude = document.getElementById('longitude').value;
+
+            if (!latitude || !longitude) {
+                e.preventDefault();
+                alert('Mohon tunggu hingga lokasi didapatkan');
+                getLocation();
+                return;
+            }
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                e.preventDefault();
+                alert('Mohon ambil foto terlebih dahulu');
+                return;
+            }
+        });
     </script>
 @endsection

@@ -101,7 +101,13 @@ class CoursesController extends Controller
         // Ambil konten terkait dengan course yang ditemukan
         $contents = Content::where('course_id', $course->id)->get();
 
-        return view('client.pages.detail', compact('course', 'contents'));
+        $siswaId = auth('siswa')->id();
+        $absensi = \App\Models\Absensi::where('id_siswa', $siswaId)
+            ->where('id_course', $course->id)
+            ->pluck('id_content') // Ambil hanya id_content yang sudah diabsenkan
+            ->toArray();
+
+        return view('client.pages.detail', compact('course', 'contents', 'absensi'));
     }
 
 

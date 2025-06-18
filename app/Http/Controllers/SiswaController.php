@@ -7,6 +7,7 @@ use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class SiswaController extends Controller
 {
@@ -131,40 +132,64 @@ class SiswaController extends Controller
 
     public function absensiSiswa(Request $request)
     {
-        // Validasi input
+        if (!auth()->guard('siswa')->check()) {
+            return redirect()->route('login')->withErrors(['error' => 'Silakan login terlebih dahulu.']);
+        }
+
         $validated = $request->validate([
             'id_siswa' => 'required|exists:siswa,id',
             'id_guru' => 'required|exists:admin,id',
             'id_course' => 'required|exists:courses,id',
             'id_content' => 'required|exists:contents,id',
             'status' => 'required|in:hadir,izin,sakit',
-            'keterangan' => 'nullable|string|max:255', // Keterangan hanya diperlukan jika status bukan "hadir"
+            'keterangan' => [
+                Rule::requiredIf(fn() => in_array($request->status, ['izin', 'sakit'])),
+                'string',
+                'max:255',
+                'nullable'
+            ],
+            'foto_absensi' => 'required|image|max:2048',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
 
-        // Cek apakah siswa sudah absen untuk kombinasi guru, course, dan content yang sama
-        $existingAbsensi = \App\Models\Absensi::where('id_siswa', $validated['id_siswa'])
-            ->where('id_guru', $validated['id_guru'])
-            ->where('id_course', $validated['id_course'])
-            ->where('id_content', $validated['id_content']) // Validasi hanya untuk pertemuan yang sama
-            ->first();
-
-        if ($existingAbsensi) {
-            return redirect()->back()->withErrors(['error' => 'Anda sudah melakukan absensi untuk pertemuan ini.']);
-        }
-
-        // Jika status adalah "hadir", kosongkan keterangan
-        if ($validated['status'] === 'hadir') {
-            $validated['keterangan'] = null;
-        }
-
         try {
-            // Simpan data ke tabel absensi
-            \App\Models\Absensi::create($validated);
+            if ($validated['id_siswa'] != auth()->guard('siswa')->id()) {
+                return redirect()->back()->withErrors(['error' => 'Unauthorized action.']);
+            }
 
-            // Redirect dengan pesan sukses
+            // dd([
+            //     'request_all' => $request->all(),
+            //     'files' => $request->allFiles(),
+            //     'auth_id' => auth()->guard('siswa')->id(),
+            //     'is_file_present' => $request->hasFile('foto_absensi'),
+            // ]);
+
+            $existingAbsensi = Absensi::where([
+                'id_siswa' => $validated['id_siswa'],
+                'id_guru' => $validated['id_guru'],
+                'id_course' => $validated['id_course'],
+                'id_content' => $validated['id_content'],
+            ])->first();
+
+            if ($existingAbsensi) {
+                return redirect()->back()->withErrors(['error' => 'Anda sudah melakukan absensi untuk pertemuan ini.']);
+            }
+
+            if ($validated['status'] === 'hadir') {
+                $validated['keterangan'] = null;
+            }
+
+            // Handle file upload
+            if ($request->hasFile('foto_absensi')) {
+                $path = $request->file('foto_absensi')->store('absensi', 'public');
+                $validated['foto_absensi'] = $path;
+            }
+
+            Absensi::create($validated);
+
             return redirect()->back()->with('success', 'Absensi berhasil disimpan.');
         } catch (\Exception $e) {
-            // Redirect dengan pesan error jika terjadi kesalahan
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan absensi.']);
         }
     }
@@ -177,7 +202,8 @@ class SiswaController extends Controller
         return view('admin.siswa.absensi', compact('absensi'));
     }
 
-    public function detailAbsensi($id) {
+    public function detailAbsensi($id)
+    {
         $absensi = Absensi::find($id);
         if (!$absensi) {
             return redirect()->back()->withErrors(['error' => 'Data absensi tidak ditemukan.']);

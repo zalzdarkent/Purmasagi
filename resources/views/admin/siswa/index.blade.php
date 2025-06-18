@@ -5,11 +5,11 @@
 @section('container')
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Button to Add Admin -->
-        <div class="d-flex justify-content-start mb-3">
-            <a href="{{ route('guru.create') }}" type="button" class="btn btn-success">
-                Tambah Admin
+        {{-- <div class="d-flex justify-content-start mb-3">
+            <a href="#" type="button" class="btn btn-success">
+                Tambah Siswa
             </a>
-        </div>
+        </div> --}}
 
         @if (session('success'))
             <div class="alert-dismissible fade show alert alert-success" role="alert">
